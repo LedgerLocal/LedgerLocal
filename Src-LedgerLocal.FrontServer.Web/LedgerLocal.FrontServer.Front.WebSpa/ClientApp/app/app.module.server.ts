@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { LayoutInitService } from './service/layoutinit';
 import { OnlineService } from './service/onlineservice';
 import { BlockService } from './service/blockservice';
-import { LedgerLocalStatService } from './service/LedgerLocalstatservice';
 import { CoinService } from './service/coinservice';
 import { AgmCoreModule } from '@agm/core';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
@@ -17,40 +16,6 @@ import { HttpClientModule } from '@angular/common/http';
 //import { AuthInterceptor } from './interceptor/authinterceptor';
 import { BlockUIModule } from 'ng-block-ui';
 
-import {
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatStepperModule,
-} from '@angular/material';
-import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
     bootstrap: sharedConfig.bootstrap,
@@ -58,38 +23,6 @@ import { CdkTableModule } from '@angular/cdk/table';
     imports: [
         ServerModule,
         FormsModule,
-        CdkTableModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatStepperModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatMenuModule,
-        MatNativeDateModule,
-        MatPaginatorModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSidenavModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatSortModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
-        MatTooltipModule,
         BlockUIModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyD7mE5UsGjHkfAmyp--biixclurvhy9i4U'
@@ -100,38 +33,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         ...sharedConfig.imports
     ],
     exports: [
-        CdkTableModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatStepperModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatMenuModule,
-        MatNativeDateModule,
-        MatPaginatorModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSidenavModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatSortModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
-        MatTooltipModule
+        
     ],
     providers: [
         //{
@@ -142,7 +44,6 @@ import { CdkTableModule } from '@angular/cdk/table';
         LayoutInitService,
         OnlineService,
         BlockService,
-        LedgerLocalStatService,
         CoinService
     ]
 })

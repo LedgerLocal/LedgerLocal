@@ -6,8 +6,8 @@
     <AssemblyName>LedgerLocal.FrontServer.Front.Controller</AssemblyName>
     <PackageId>LedgerLocal.FrontServer.Front.Controller</PackageId>
     <ServerGarbageCollection>true</ServerGarbageCollection>
-    <GenerateAssembLedgerLocalonfigurationAttribute>false</GenerateAssembLedgerLocalonfigurationAttribute>
-    <GenerateAssembLedgerLocalompanyAttribute>false</GenerateAssembLedgerLocalompanyAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 

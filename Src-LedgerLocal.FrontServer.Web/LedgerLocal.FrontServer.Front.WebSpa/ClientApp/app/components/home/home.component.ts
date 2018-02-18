@@ -3,8 +3,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 import { Subscription } from 'rxjs/Subscription';
 import { LayoutInitService } from '../../service/layoutinit';
-import { BlockService } from '../../service/blockservice';
-import { LycStatService } from '../../service/lycstatservice';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
@@ -18,8 +16,6 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements AfterViewInit {
 
     private liServiceLocal: LayoutInitService;
-    private lcBlockService: BlockService;
-    private lcLsService: LycStatService;
     public currentBlock = 0;
 
     public currentBlockId = "";
@@ -50,67 +46,10 @@ export class HomeComponent implements AfterViewInit {
     public transactionList: any[];
 
     constructor(private http: Http, @Inject(PLATFORM_ID) private platformId: Object, private blockService: BlockService, 
-        private lsService: LycStatService, private liService: LayoutInitService, 
+        private liService: LayoutInitService, 
         public toastr: ToastsManager) {
 
         this.liServiceLocal = liService;
-        this.lcBlockService = blockService;
-        this.lcLsService = lsService;
-
-        // this.currentBlock = Number(this.lcBlockService.getValue());
-        // this.currentMaxCoin = Number(this.lcLsService.getValue().coinTotal);
-        // this.currentMaxUserCount = Number(this.lcLsService.getValue().userTotal);
-
-        // this.subscription = this.lcBlockService.getMessage().subscribe(message => {
-        //     this.message = message;
-        //     this.currentBlock = Number(this.message.blockHead);
-        //     this.currentBlockId = this.message.blockHeadId;
-        //     this.currentLastWitness = this.message.lastWitness;
-        //     this.isEffectBlock = true;
-
-        //     let timeoutId = setTimeout(() => {
-        //         this.isEffectBlock = false;
-        //     }, 1000);
-
-        //     if (this.currentLastMobileUser != this.message.lastMobileUser) {
-
-        //         this.currentLastMobileUser = this.message.lastMobileUser;
-        //         this.isEffectMobile = true;
-
-        //         let timeoutId2 = setTimeout(() => {
-        //             this.isEffectMobile = false;
-        //         }, 1000);
-        //     }
-        // });
-
-        // this.subscriptionLycStat = this.lcLsService.getMessage().subscribe(message => {
-
-        //     this.transactionList = message.lastEntries;
-
-        //     let a1 = Number(message.coinTotal);
-        //     let a2 = Number(message.userTotal);
-
-        //     if (a1 != this.currentMaxCoin) {
-        //         this.currentMaxCoin = a1;
-
-        //         this.isEffectCoin = true;
-
-        //         let timeoutId = setTimeout(() => {
-        //             this.isEffectCoin = false;
-        //         }, 1000);
-        //     }
-
-        //     if (a2 != this.currentMaxUserCount) {
-        //         this.currentMaxUserCount = a2;
-
-        //         this.isEffectUser = true;
-
-        //         let timeoutId2 = setTimeout(() => {
-        //             this.isEffectUser = false;
-        //         }, 1000);
-        //     }
-
-        // });
     }
 
     ngAfterViewInit() {
@@ -143,9 +82,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     public login() {
-
-
-        
+                        
     }
 
     public handleError(error: Response) {

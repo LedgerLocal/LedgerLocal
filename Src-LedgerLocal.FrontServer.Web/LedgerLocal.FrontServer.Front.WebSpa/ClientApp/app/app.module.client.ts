@@ -8,7 +8,6 @@ import { sharedConfig } from './app.module.shared';
 import { LayoutInitService } from './service/layoutinit';
 import { OnlineService } from './service/onlineservice';
 import { BlockService } from './service/blockservice';
-import { LedgerLocalStatService } from './service/LedgerLocalstatservice';
 import { CoinService } from './service/coinservice';
 import { AgmCoreModule } from '@agm/core';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
@@ -150,7 +149,6 @@ import 'hammerjs';
         LayoutInitService,
         OnlineService,
         BlockService,
-        LedgerLocalStatService,
         CoinService
     ]
 })

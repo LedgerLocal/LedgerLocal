@@ -12,7 +12,7 @@ module.exports = (env) => {
         resolve: { extensions: [ '.js' ] },
         module: {
             rules: [
-                { test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' }
+                { test: /\.(png|woff|woff2|eot|ttf|svg|gif|jpg)(\?|$)/, use: 'url-loader?limit=100000' }
             ]
         },
         entry: {
@@ -41,36 +41,8 @@ module.exports = (env) => {
                 'ng2-toastr/bundles/ng2-toastr.min.css',
 
                 'font-awesome/css/font-awesome.css',
-                
-                // './clip/vendor/themify-icons/themify-icons.min.css',
-
-                // './clip/vendor/animate.css/animate.min.css',
-
-                // './clip/vendor/perfect-scrollbar/perfect-scrollbar.min.css',
-
-                // './clip/vendor/switchery/switchery.min.css',
-
-                // './clip/assets/css/styles.css',
-
-                // './clip/assets/css/plugins.css',
-
-                // './clip/assets/css/themes/theme-1.css',
-
-                // './clip/vendor/modernizr/modernizr.js',
-
-                // './clip/vendor/jquery-cookie/jquery.cookie.js',
-
-                // './clip/vendor/perfect-scrollbar/perfect-scrollbar.min.js',
-
-                // './clip/vendor/switchery/switchery.min.js',
-
-                // './clip/vendor/Chart.js/Chart.min.js',
-
-                // './clip/vendor/jquery.sparkline/jquery.sparkline.min.js',
 
 				'ngx-sharebuttons',
-                
-                'font-awesome/css/font-awesome.css',
 
                 './canvas/js/plugins-custom.js',
 
@@ -89,7 +61,7 @@ module.exports = (env) => {
 
                 './canvas/demos/app-landing/css/colors.css',
 
-                'ngx-sharebuttons/styles/share-buttons.css'
+                'ngx-sharebuttons/styles/share-buttons.css',
 				
 				
                 '@angular/material/prebuilt-themes/deeppurple-amber.css'
