@@ -1,8 +1,6 @@
 import { Component, ViewContainerRef, OnInit, OnDestroy, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { OnlineService } from '../../service/onlineservice';
-import { BlockService } from '../../service/blockservice';
-import { LycStatService } from '../../service/lycstatservice';
 import { LayoutInitService } from '../../service/layoutinit';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -17,8 +15,6 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private lcOnlineService: OnlineService;
-    private lcBlockService: BlockService;
-    private lcLsService: LycStatService;
     private liServiceLocal: LayoutInitService;
     
     public contactname: string;
@@ -38,14 +34,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private http: Http, @Inject(PLATFORM_ID) private platformId: Object, private liService: LayoutInitService,
         private onlineService: OnlineService,
-        private blockService: BlockService, private lsService: LycStatService,
         public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService) {
 
         this.isLoaded = false;
         this.liServiceLocal = liService;
         this.lcOnlineService = onlineService;
-        this.lcBlockService = blockService;
-        this.lcLsService = lsService;
 
         this.toastr.setRootViewContainerRef(vRef);
 
@@ -113,31 +106,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (isPlatformBrowser(this.platformId)) {
             
-            var signalR = require("../../../../scripts/signalr-clientES5-1.0.0-alpha2-final.js");
-
-            let connection = new signalR.HubConnection('/rtlyc');
-
-            connection.on('online', data => {
-
-                this.lcOnlineService.sendMessage(Number(data));
-
-            });
-
-            connection.on('blockNumberRefresh', data => {
-                //InvokeAsync("blockNumberRefresh",  new { HeadBlockNumber = fO1.HeadBlockNumber, HeadBlockId = idLadtBlock, CurrentWitness = fO1.CurrentWitness, LastActiveMobile = numLastMobileUSer });
-                this.lcBlockService.sendMessage(Number(data.headBlockNumber), data.headBlockId, data.currentWitness, Number(data.lastActiveMobile));
-            });
-
-            connection.on('lycStatRefresh', data => {
-
-                this.lcLsService.sendMessage(Number(data.totalUsers), Number(data.allPoints), data.lastCoinLedgerList);
-
-            });
-
-            connection.start();
-            //.then(() => connection.invoke('send', 'Hello'));
-
-
         }
 
         this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(

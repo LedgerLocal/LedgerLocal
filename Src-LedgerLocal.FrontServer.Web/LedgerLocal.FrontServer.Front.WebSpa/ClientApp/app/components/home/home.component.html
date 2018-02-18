@@ -5,23 +5,18 @@
                 <div class="row clearfix">
                     <div class="col-md-6 col-sm-8">
                         <div class="emphasis-title">
-                            <h1 class="font-body">LoyaltyCoin<br>The Future of Shopping</h1>
+                            <h1 class="font-body">LedgerLocal</h1>
 							<br/><br/>
-							<h4>LoyaltyCoin makes your loyalty rewards tradeable - start now to collect everywhere, exhange anytime and redeem whenever and wherever you like</h4>
+							<h4>This is LedgerLocal ...</h4>
                         </div>
                         
                         <!--a [routerLink]="['/invest']" class="button button-large button-white button-light capitalize" style="border-radius: 23px;">White Paper</a--> 
-                        <a href="https://www.youtube-nocookie.com/embed/uLLAZ_yEk2I?rel=0&autoplay=1" class="hero-action-link" data-lightbox="iframe"><i class="icon-play-sign"></i> Watch the video</a>
-                        <!--<a href="https://rebrand.ly/conne94c2" class="button button-large button-white button-light capitalize" style="border-radius: 23px;"><i class="icon-appstore"></i>App Store</a>
-                        <a href="https://rebrand.ly/loyalc19d" class="button button-large button-white button-light capitalize" style="border-radius: 23px;"><i class="icon-android"></i>Play Store</a>
-                        
-                        <div class="topmargin-sm">
-                            <a href="https://www.youtube-nocookie.com/embed/uLLAZ_yEk2I?rel=0" class="hero-action-link" data-lightbox="iframe"><i class="icon-play-sign"></i> Watch the Video</a>
-                        </div>-->
+                        <a href="" class="hero-action-link" data-lightbox="iframe"><i class="icon-play-sign"></i> Watch the video</a>
+
                         <div class="topmargin-sm">
 							<h4>Download our app</h4>
-                            <a href="https://rebrand.ly/conne94c2"><img src="/canvas/loyalty/css/mstore.png" alt="App Store" data-animate="fadeInRight"></a>
-                            <a href="https://rebrand.ly/loyalc19d"><img src="/canvas/loyalty/css/gstore.png" alt="Play Store" data-animate="fadeInRight"></a>
+                            <a href=""><img src="/canvas/loyalty/css/mstore.png" alt="App Store" data-animate="fadeInRight"></a>
+                            <a href=""><img src="/canvas/loyalty/css/gstore.png" alt="Play Store" data-animate="fadeInRight"></a>
                         </div>
                     </div>
                 </div>
@@ -39,281 +34,37 @@
 
     <div class="content-wrap">
 
-        <!-- Subscribe -->
-        <!--div class="container clearfix bottommargin-lg">
-
-            <div class="subscribe-widget">
-                <h3 class="text-center" >Subscribe for our <span>Newsletter</span>.</h3>
-                <div class="widget-subscribe-form-result"></div>
-                <form id="widget-subscribe-form2" action="include/subscribe.php" role="form" method="post" class="nobottommargin">
-                    <div class="input-group input-group-lg divcenter" style="max-width:600px;">
-                        <span class="input-group-addon"><i class="icon-email"></i></span>
-                        <input [(ngModel)]="contactemail" type="email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
-                        <span class="input-group-btn">
-                            <button (click)="sendNewsletter()" class="btn btn-default" type="submit">Subscribe now</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div-->
-        
-        <!--div class="section dark notopmargin nobottommargin" style="padding-top: 60px;">
-            <div class="container center clearfix">
-
-                <div class="heading-block">
-                    <h2>Our own blockchain</h2>
-                    <span>Live data</span>
-                </div>
-
-                <div class="col_one_third">
-                    <div [ngClass]="isEffectBlock ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
-                        <div class="fbox-icon">
-                            <a><i class="icon-share i-alt"></i></a>
-                        </div>
-                        <h1>{{ currentBlock }}</h1>
-                        <p>Header block</p>
-
-                    </div>
-                </div>
-
-                <div class="col_one_third">
-                    <div [ngClass]="isEffectBlock ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
-                        <div class="fbox-icon">
-                            <a><i class="icon-bookmark i-alt"></i></a>
-                        </div>
-                        <h1>{{ currentBlockId }}</h1>
-                        <p>Header block suffix</p>
-
-                    </div>
-                </div>
-
-                <div class="col_one_third col_last">
-                    <div [ngClass]="isEffectBlock ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
-                        <div class="fbox-icon">
-                            <a><i class="icon-building i-alt"></i></a>
-                        </div>
-                        <h1>{{ currentLastWitness }}</h1>
-                        <p>Last witness</p>
-
-                    </div>
-                </div>
-                
-                
-                <div class="divider"><i class="icon-circle"></i></div>
-                
-       
-
-                <div class="col_one_third">
-                    <div [ngClass]="isEffectMobile ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
-                        <div class="fbox-icon">
-                            <a><i class="icon-mobile i-alt"></i></a>
-                        </div>
-                        <h1>{{ currentLastMobileUser }}</h1>
-                        <p>Users last 24 hours</p>
-
-                    </div>
-                </div>
-
-                <div class="col_one_third">
-                    <div [ngClass]="isEffectUser ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
-                        <div class="fbox-icon">
-                            <a><i class="icon-users i-alt"></i></a>
-                        </div>
-                        <h1>{{ currentMaxUserCount }}</h1>
-                        <p>Total users</p>
-                    </div>
-                </div>
-
-                <div class="col_one_third col_last">
-                    <div [ngClass]="isEffectCoin ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
-                        <div class="fbox-icon">
-                            <a><i class="icon-gift i-alt"></i></a>
-                        </div>
-                        <h1>{{ currentMaxCoin }}</h1>
-                        <p>Total points collected</p>
-                    </div>
-                </div>
-
-            </div>
-        </div-->
-
-        <!--div class="section notopmargin">
-            <div class="container center clearfix">
-
-                <div class="heading-block">
-                    <h2>Last transactions</h2>
-                    <span>Transactions in our partner shops and exchanges on the blockchain</span>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Last 10 transactions</div>
-
-                    <table class="table">
-                       <!-- <thead>
-                            <tr>
-                                <th>Location</th>
-                                <th>Credit/Debit</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>-->
-                        <!--tbody>
-                            <tr *ngFor="let item of transactionList; let i = index">
-                                <td><strong><i class="icon-map-marker"></i> Zurich</strong></td>
-                                <td><a class="button button-mini button-circle button-{{ item.debit > 0 ? 'red' : 'green' }}"><i class="icon-gift"></i> {{ item.credit > 0 ? '+ ' + item.credit : '- ' + item.debit }} Points</a></td>
-                                <td class="text-muted"><i class="icon-calendar"></i> {{ item.createdOn | date:'dd-MM-yyyy' }} <i class="icon-clock"></i> {{ item.createdOn | date:'HH:mm' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div-->
         
         
         <!-- Customer benefits -->
         <div class="container clearfix">
 			<div class="row topmargin-lg bottommargin-sm">
 				<div class="heading-block center">
-					<h2>Customer benefits</h2>
+					<h2>This is new !</h2>
 				</div>
-				<div class="col-md-4 col-sm-6 bottommargin">
+				<div class="col-md-12 col-sm-12 bottommargin">
 					<div class="feature-box fbox-right topmargin" data-animate="fadeIn">
 						<div class="fbox-icon">
 							<a><i class="icon-ok"></i></a>
 						</div>
-						<p>Collect loyalty points everywhere simply on your phone.</p>
+						<p>Phone</p>
 					</div>
 					<div class="feature-box fbox-right topmargin" data-animate="fadeIn" data-delay="200">
 						<div class="fbox-icon">
 							<a><i class="icon-ok"></i></a>
 						</div>
-						<p>One app for all your loyalty programs.</p>
+						<p>Integrated</p>
 					</div>
 					<div class="feature-box fbox-right topmargin" data-animate="fadeIn" data-delay="400">
 						<div class="fbox-icon">
 							<a><i class="icon-ok"></i></a>
 						</div>
-						<p>Benefit from immediate rewards; all digital without any paper waste.</p>
-					</div>
-				</div>
-				<div class="col-md-4 hidden-sm bottommargin center">
-					<img src="/canvas/loyalty/css/iphone7.png" alt="iphone 2">
-				</div>
-				<div class="col-md-4 col-sm-6 bottommargin">
-					<div class="feature-box topmargin" data-animate="fadeIn">
-						<div class="fbox-icon">
-							<a><i class="icon-ok"></i></a>
-						</div>
-						<p>Enable exchange of loyalty points between customers (peer-to-peer).</p>
-					</div>
-					<div class="feature-box topmargin" data-animate="fadeIn" data-delay="200">
-						<div class="fbox-icon">
-							<a><i class="icon-ok"></i></a>
-						</div>
-						<p>Exchange anytime and use rewards whenever & wherever you like.</p>
-					</div>
-					<div class="feature-box topmargin" data-animate="fadeIn" data-delay="400">
-						<div class="fbox-icon">
-							<a><i class="icon-ok"></i></a>
-						</div>
-						<p>Direct communication with personalized offers.</p>
+						<p>Social</p>
 					</div>
 				</div>
 			</div>
 		</div>
         
-        <!-- Collect Section -->
-        <div class="container clearfix topmargin-sm">
-            
-            <div id="section-nextgen" class="page-section bottommargin-lg">
-                <div class="row clearfix">
-
-                    <div class="col-md-7 center">
-                        <img src="/canvas/loyalty/css/iphone-watch.png" alt="Collect" data-animate="fadeInLeft">
-                    </div>
-
-                    <div class="col-md-5">
-                        <div class="topmargin-lg hidden-xs hidden-sm"></div>
-                        <!--img src="/canvas/demos/app-landing/images/section/section-1-icon.png" alt="" style="display: block;" class="bottommargin-sm"-->
-                        <div class="emphasis-title bottommargin-sm">
-                            <!--span class="before-heading">Plug into the</span-->
-                            <h2 style="font-size: 42px;" class="font-body ls1 t400">Collect everywhere</h2>
-                        </div>
-                        <p style="color: #777;" class="lead">Benefit from immediate rewards, all simply on your phone, digital without any paper waste</p>
-                        
-                        <div class="topmargin-sm">
-                            <a href="https://rebrand.ly/conne94c2"><img src="/canvas/loyalty/css/mstore.png" alt="App Store" data-animate="fadeInRight"></a>
-                            <a href="https://rebrand.ly/loyalc19d"><img src="/canvas/loyalty/css/gstore.png" alt="Play Store" data-animate="fadeInRight"></a>
-                        </div>
-                    
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="line"></div>
-            
-            <div class="clear"></div>
-
-            <!-- Exchange Section -->
-            <div id="section-stunning-graphics" class="page-section topmargin bottommargin-lg">
-                <div class="row clearfix">
-
-                    <div class="col-md-5">
-                        <div class="topmargin-lg hidden-xs hidden-sm"></div>
-                        <!--img src="/canvas/demos/app-landing/images/section/section-2-icon.png" alt="" style="display: block;" class="bottommargin-sm"-->
-                        <div class="emphasis-title bottommargin-sm">
-                            <!--span class="before-heading">Retina Ready &#x7E; 534 PPI</span-->
-                            <h2 style="font-size: 42px;" class="font-body ls1 t400">Exchange anytime</h2>
-                        </div>
-                        <p style="color: #777;" class="lead">Exchange rewards between member programs with other customers (peer-to-peer)</p>
-                        <!--a class="section-more-link">Learn More <i class="icon-angle-right"></i></a-->
-                        
-                        <div class="topmargin-sm">
-                            <a href="https://rebrand.ly/conne94c2"><img src="/canvas/loyalty/css/mstore.png" alt="App Store" data-animate="fadeInLeft"></a>
-                            <a href="https://rebrand.ly/loyalc19d"><img src="/canvas/loyalty/css/gstore.png" alt="Play Store" data-animate="fadeInLeft"></a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-7 center">
-                        <img src="/canvas/loyalty/css/iphone-nexus.png" alt="Stunning Graphics" data-animate="fadeInRight">
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="line"></div>
-            
-            <div class="clear"></div>
-
-
-        </div>
-
-		<!-- Redeem Section -->
-		<div id="section-secured-solutions" class="page-section section nopadding topmargin-sm" style="background: url('/canvas/loyalty/css/iphone-3d-bg.png') no-repeat left bottom; background-size: 100% auto;" data-height-lg="700" data-height-md="700" data-height-sm="450" data-height-xs="450" data-height-xxs="450">
-			<div class="container clearfix">
-				<div class="row clearfix">
-					<div class="col-md-5 col-md-offset-6">
-						<div class="topmargin-lg hidden-xs hidden-sm"></div>
-						<div class="topmargin-lg hidden-xs hidden-sm"></div>
-						<!--img src="/canvas/demos/app-landing/images/section/section-3-icon.png" alt="" style="display: block;" class="bottommargin-sm"-->
-						<div class="emphasis-title bottommargin-sm">
-							<!--span class="before-heading">Privacy Protected</span-->
-							<h2 style="font-size: 42px;" class="font-body ls1 t400">Redeem with choice</h2>
-						</div>
-						<p style="color: #777;" class="lead">Use your rewards whenever and wherever you like</p>
-						<!--a class="section-more-link">Learn More <i class="icon-angle-right"></i></a-->
-						<div class="topmargin-sm">
-                            <a href="https://rebrand.ly/conne94c2"><img src="/canvas/loyalty/css/mstore.png" alt="App Store" data-animate="fadeInRight"></a>
-                            <a href="https://rebrand.ly/loyalc19d"><img src="/canvas/loyalty/css/gstore.png" alt="Play Store" data-animate="fadeInRight"></a>
-                        </div>
-					</div>
-				</div>
-			</div>
-			<div class="video-wrap" style="position: absolute; height: 100%; z-index: 1;">
-				<div class="video-overlay hidden-xs hidden-sm" style="background: url('/canvas/loyalty/css/iphone-3d.png') no-repeat left top; background-size: auto 100%;" data-animate="fadeInLeft"></div>
-			</div>
-		</div>
-
         <!-- Subscribe -->
         <div class="container clearfix bottommargin-lg">
 
@@ -334,86 +85,6 @@
 		
         <div class="clear bottommargin"></div>
         
-        <!-- Screenshot Section -->
-        <div id="section-gallery" class="page-section nopadding nomargin">
-
-            <div class="container topmargin bottommargin-lg center clearfix">
-
-                <h3 class="ls1 t400" style="font-size: 32px; margin-bottom: 10px;">Our mobile application</h3>
-                <p class="lead divcenter" style="max-width: 600px">Fully customizable for each retailer.</p>
-
-            </div>
-
-            <div class="owl-carousel owl-carousel-full image-carousel carousel-widget bottommargin" data-margin="20" data-center="true" data-loop="true" data-nav="false" data-pagi="true" data-items-xxs="2" data-items-xs="2" data-items-sm="4" data-items-md="4" data-items-lg="6" data-stage-padding="30" data-lightbox="gallery">
-
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/79.jpg"><img src="/canvas/loyalty/gallery/79.jpg" alt="Image 1"></a>
-                </div>
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/80.jpg"><img src="/canvas/loyalty/gallery/80.jpg" alt="Image 2"></a>
-                </div>
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/81.jpg"><img src="/canvas/loyalty/gallery/81.jpg" alt="Image 3"></a>
-                </div>
-               <!-- <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/82.jpg"><img src="/canvas/loyalty/gallery/82.jpg" alt="Image 4"></a>
-                </div>
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/83.jpg"><img src="/canvas/loyalty/gallery/83.jpg" alt="Image 5"></a>
-                </div>
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/84.jpg"><img src="/canvas/loyalty/gallery/84.jpg" alt="Image 5"></a>
-                </div>-->
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/85.jpg"><img src="/canvas/loyalty/gallery/85.jpg" alt="Image 5"></a>
-                </div>
-                <!-- <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/86.jpg"><img src="/canvas/loyalty/gallery/86.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/87.jpg"><img src="/canvas/loyalty/gallery/87.jpg" alt="Image 5"></a>
-                </div>
-                <!-- <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/88.jpg"><img src="/canvas/loyalty/gallery/88.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/89.jpg"><img src="/canvas/loyalty/gallery/89.jpg" alt="Image 5"></a>
-                </div>-->
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/90.jpg"><img src="/canvas/loyalty/gallery/90.jpg" alt="Image 5"></a>
-                </div>
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/91.jpg"><img src="/canvas/loyalty/gallery/91.jpg" alt="Image 5"></a>
-                </div>
-                <!-- <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/92.jpg"><img src="/canvas/loyalty/gallery/92.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/93.jpg"><img src="/canvas/loyalty/gallery/93.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/94.jpg"><img src="/canvas/loyalty/gallery/94.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/95.jpg"><img src="/canvas/loyalty/gallery/95.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/96.jpg"><img src="/canvas/loyalty/gallery/96.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/97.jpg"><img src="/canvas/loyalty/gallery/97.jpg" alt="Image 5"></a>
-                </div>
-                <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/98.jpg"><img src="/canvas/loyalty/gallery/98.jpg" alt="Image 5"></a>
-                </div>
-                 <div class="oc-item">
-                    <a data-lightbox="gallery-item" href="/canvas/loyalty/gallery/99.jpg"><img src="/canvas/loyalty/gallery/99.jpg" alt="Image 5"></a>
-                </div>-->
-
-            </div>
-
-		</div>
-
     </div>
 
 </section>

@@ -16,23 +16,11 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements AfterViewInit {
 
     private liServiceLocal: LayoutInitService;
-    public currentBlock = 0;
 
-    public currentBlockId = "";
-    public currentLastWitness = "";
-    public currentLastMobileUser = 0;
-
-    public currentMaxCoin = 0;
-    public currentMaxUserCount = 0;
     public message: any;
     public subscription: Subscription;
     public subscriptionLycStat: Subscription;
     public articleList: any[];
-
-    public isEffectBlock = false;
-    public isEffectUser = false;
-    public isEffectCoin = false;
-    public isEffectMobile = false;
 
     public contactemail: string;
 
@@ -45,7 +33,8 @@ export class HomeComponent implements AfterViewInit {
 
     public transactionList: any[];
 
-    constructor(private http: Http, @Inject(PLATFORM_ID) private platformId: Object, private blockService: BlockService, 
+    constructor(private http: Http, 
+	    @Inject(PLATFORM_ID) private platformId: Object,
         private liService: LayoutInitService, 
         public toastr: ToastsManager) {
 
