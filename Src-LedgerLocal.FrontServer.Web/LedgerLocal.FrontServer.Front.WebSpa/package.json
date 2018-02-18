@@ -22,7 +22,7 @@
     "@types/core-js": "0.9.43",
     "@types/isotope-layout": "3.0.2",
     "@types/jquery": "1.10.33",
-    "@types/lodash": "4.14.81",
+    "@types/lodash": "^4.14.104",
     "@types/node": "8.0.47",
     "angular-auth-oidc-client": "3.0.3",
     "angular2-template-loader": "0.6.2",
