@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>LedgerLocal.Common.Core</AssemblyName>
+    <PackageId>LedgerLocal.Common.Core</PackageId>
+    <GenerateAssembLedgerLocalonfigurationAttribute>false</GenerateAssembLedgerLocalonfigurationAttribute>
+    <GenerateAssembLedgerLocalompanyAttribute>false</GenerateAssembLedgerLocalompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="FluentAssertions.Json" Version="4.20.0" />
+  </ItemGroup>
+
+</Project>

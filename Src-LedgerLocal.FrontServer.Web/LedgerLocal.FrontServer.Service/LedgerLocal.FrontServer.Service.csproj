@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>LedgerLocal.FrontServer.Service</AssemblyName>
+    <PackageId>LedgerLocal.FrontServer.Service</PackageId>
+    <GenerateAssembLedgerLocalonfigurationAttribute>false</GenerateAssembLedgerLocalonfigurationAttribute>
+    <GenerateAssembLedgerLocalompanyAttribute>false</GenerateAssembLedgerLocalompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Accord.Video" Version="3.7.0" />
+    <PackageReference Include="Audit.NET" Version="8.3.0" />
+    <PackageReference Include="Audit.WebApi" Version="8.3.0" />
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-001" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="NEST" Version="5.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="NReco.VideoConverter.LT" Version="1.1.2" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+    <PackageReference Include="System.Reactive.Core" Version="3.1.1" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="3.1.1" />
+    <PackageReference Include="System.Reactive.Linq" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Web.Mvc\LedgerLocal.Common.Web.Mvc.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.WebApi\LedgerLocal.Common.WebApi.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Data.FullDomain\LedgerLocal.FrontServer.Data.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Data.Repository.FullDomain\LedgerLocal.FrontServer.Data.Repository.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Dto\LedgerLocal.FrontServer.Dto.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Model.FullDomain\LedgerLocal.FrontServer.Model.FullDomain.csproj" />
+  </ItemGroup>
+
+</Project>

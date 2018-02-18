@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>LedgerLocal.FrontServer.Data.FullDomain</AssemblyName>
+    <PackageId>LedgerLocal.FrontServer.Data.FullDomain</PackageId>
+    <GenerateAssembLedgerLocalonfigurationAttribute>false</GenerateAssembLedgerLocalonfigurationAttribute>
+    <GenerateAssembLedgerLocalompanyAttribute>false</GenerateAssembLedgerLocalompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Web.Mvc\LedgerLocal.Common.Web.Mvc.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.WebApi\LedgerLocal.Common.WebApi.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Model.FullDomain\LedgerLocal.FrontServer.Model.FullDomain.csproj" />
+  </ItemGroup>
+
+</Project>

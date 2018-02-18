@@ -1,0 +1,149 @@
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const merge = require('webpack-merge');
+
+module.exports = (env) => {
+    const extractCSS = new ExtractTextPlugin('vendor.css');
+    const isDevBuild = !(env && env.prod);
+    //const isDevBuild = !(env && env.prod);
+    const sharedConfig = {
+        stats: { modules: false },
+        resolve: { extensions: [ '.js' ] },
+        module: {
+            rules: [
+                { test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' }
+            ]
+        },
+        entry: {
+            vendor: [
+                '@angular/animations',
+                '@angular/common',
+                '@angular/compiler',
+                '@angular/core',
+                '@angular/forms',
+                '@angular/http',
+                '@angular/platform-browser',
+                '@angular/platform-browser-dynamic',
+                '@angular/router',
+                
+                'bootstrap',
+                'bootstrap/dist/css/bootstrap.css',
+                'es6-shim',
+                'es6-promise',
+                'event-source-polyfill',
+                'jquery',
+                'lodash',
+                'zone.js',
+
+                'ng2-toastr',
+
+                'ng2-toastr/bundles/ng2-toastr.min.css',
+
+                'font-awesome/css/font-awesome.css',
+                
+                // './clip/vendor/themify-icons/themify-icons.min.css',
+
+                // './clip/vendor/animate.css/animate.min.css',
+
+                // './clip/vendor/perfect-scrollbar/perfect-scrollbar.min.css',
+
+                // './clip/vendor/switchery/switchery.min.css',
+
+                // './clip/assets/css/styles.css',
+
+                // './clip/assets/css/plugins.css',
+
+                // './clip/assets/css/themes/theme-1.css',
+
+                // './clip/vendor/modernizr/modernizr.js',
+
+                // './clip/vendor/jquery-cookie/jquery.cookie.js',
+
+                // './clip/vendor/perfect-scrollbar/perfect-scrollbar.min.js',
+
+                // './clip/vendor/switchery/switchery.min.js',
+
+                // './clip/vendor/Chart.js/Chart.min.js',
+
+                // './clip/vendor/jquery.sparkline/jquery.sparkline.min.js',
+
+				'ngx-sharebuttons',
+                
+                'font-awesome/css/font-awesome.css',
+
+                './canvas/js/plugins-custom.js',
+
+                './canvas/style.css',
+                './canvas/css/dark.css',
+
+                './canvas/demos/app-landing/app-landing.css',
+                './canvas/css/font-icons.css',
+                './canvas/one-page/css/et-line.css',
+                './canvas/css/animate.css',
+                './canvas/css/magnific-popup.css',
+                './canvas/demos/app-landing/css/fonts.css',
+                './canvas/css/components/bs-switches.css',
+
+                './canvas/css/responsive.css',
+
+                './canvas/demos/app-landing/css/colors.css',
+
+                'ngx-sharebuttons/styles/share-buttons.css'
+				
+				
+                '@angular/material/prebuilt-themes/deeppurple-amber.css'
+            ]
+        },
+        output: {
+            publicPath: '/dist/',
+            filename: '[name].js',
+            library: '[name]_[hash]'
+        },
+        plugins: [
+            new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }), // Maps these identifiers to the jQuery package (because Bootstrap expects it to be a global variable)
+            new webpack.ContextReplacementPlugin(/\@angular\b.*\b(bundles|linker)/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/11580
+            new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/14898
+            new webpack.IgnorePlugin(/^vertx$/) // Workaround for https://github.com/stefanpenner/es6-promise/issues/100
+        ]
+    };
+
+    const clientBundleConfig = merge(sharedConfig, {
+        output: { path: path.join(__dirname, 'wwwroot', 'dist') },
+        module: {
+            rules: [
+                { test: /\.css(\?|$)/, use: extractCSS.extract({ use: isDevBuild ? 'css-loader' : 'css-loader?minimize' }) }
+            ]
+        },
+        plugins: [
+            extractCSS,
+            new webpack.DllPlugin({
+                path: path.join(__dirname, 'wwwroot', 'dist', '[name]-manifest.json'),
+                name: '[name]_[hash]'
+            })
+        ].concat(isDevBuild ? [] : [
+            new webpack.optimize.UglifyJsPlugin()
+        ])
+    });
+
+    const serverBundleConfig = merge(sharedConfig, {
+        target: 'node',
+        resolve: { mainFields: ['main'] },
+        output: {
+            path: path.join(__dirname, 'ClientApp', 'dist'),
+            libraryTarget: 'commonjs2',
+        },
+        module: {
+            rules: [ { test: /\.css(\?|$)/, use: ['to-string-loader', isDevBuild ? 'css-loader' : 'css-loader?minimize' ] } ]
+        },
+        entry: { vendor: ['aspnet-prerendering'] },
+        plugins: [
+            new webpack.DllPlugin({
+                path: path.join(__dirname, 'ClientApp', 'dist', '[name]-manifest.json'),
+                name: '[name]_[hash]'
+            })
+        ]
+    });
+
+    return [clientBundleConfig, serverBundleConfig];
+}

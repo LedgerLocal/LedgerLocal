@@ -1,0 +1,58 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <IsPackable>false</IsPackable>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.6.16" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.16" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="5.3.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="3.3.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Files not to show in IDE -->
+    <None Remove="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Remove="yarn.lock" />
+
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="ClientApp\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Web.Mvc\LedgerLocal.Common.Web.Mvc.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.WebApi\LedgerLocal.Common.WebApi.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Data.FullDomain\LedgerLocal.FrontServer.Data.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Data.Repository.FullDomain\LedgerLocal.FrontServer.Data.Repository.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Dto\LedgerLocal.FrontServer.Dto.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Front.ApiController\LedgerLocal.FrontServer.Front.ApiController.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Front.Bootstrap\LedgerLocal.FrontServer.Front.Bootstrap.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Front.Controller\LedgerLocal.FrontServer.Front.Controller.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Model.FullDomain\LedgerLocal.FrontServer.Model.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.FrontServer.Service\LedgerLocal.FrontServer.Service.csproj" />
+  </ItemGroup>
+  <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,0 +1,562 @@
+<section id="slider" class="full-screen slider-parallax nobottommargin" style="top: -100px; margin-bottom: -100px;">
+	<div class="slider-parallax-inner" style="background: url('/canvas/loyalty/css/hero1.jpg') center center no-repeat; background-size: cover;">
+		<div class="hidden-sm hidden-xs" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: transparent url('/canvas/loyalty/css/ipad-section.png') bottom right no-repeat;"></div>
+		<div class="vertical-middle" style="z-index: 2;">
+			<div class="container dark clearfix">
+				<div class="row clearfix">
+					<div class="col-md-6 col-sm-8">
+						<div class="emphasis-title">
+							<h2>The future of shopping</h2>
+							<p class="lead topmargin-sm">Earn everywhere, exchange anytime and collect what you like.</p>
+							<a href="/publication/LoyaltyCoin-Whitepaper_V1.0.pdf" class="button button-large button-white button-light capitalize" style="border-radius: 23px;">Download PDF</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="video-wrap" style="position: absolute; height: 100%; z-index: 1;">
+			<div class="video-overlay" style="background: rgba(0,0,0,0.2);"></div>
+		</div>
+	</div>
+</section>
+
+<section id="content">
+	<div class="content-wrap">
+		<!-- Desc -->
+		<div class="section notopmargin">
+			<div class="container clearfix">
+				<div class="col_half topmargin-lg">
+					<img src="/canvas/loyalty/css/iphone-solid.png" alt="Image" class="center-block">
+				</div>
+				<div class="col_half col_last">
+					<div class="heading-block">
+						<h3>LoyaltyCoin – the future of shopping</h3>
+						<span>Blockchain based loyalty platform, enabling exchange of rewards between customers (decentralized; peer-to-peer)</span>
+					</div>
+					<p>Customers gain simplicity and choice to collect everywhere, exchange anytime and use loyalty rewards wherever and whenever they like, all simply on their phone. 
+For our loyalty program partners we design new, unique and tailored digital loyalty programs or integrate their existing program into our growing ecosystem. We offer them a simple set-up, direct access to communicate and activate customers, reach to new customers and full customer journey data analytics. Blockchain technology enables us to set up an ecosystem with global network benefits for customers without any need for contractual nor financial liabilities between the different loyalty program partners. Since September 2017 customers and partners use our mobile app and blockchain to collect and exchange their loyalty points at our partner shops. Join today our growing ecosystem; download app or contact us to become a member of our partner network.</p>
+				</div>
+			</div>
+		</div>
+		
+        <div class="section dark notopmargin nobottommargin" style="padding-top: 60px;">
+            <div class="container center clearfix">
+
+                <div class="heading-block">
+                    <h2>Our own blockchain</h2>
+                    <span>Live data</span>
+                </div>
+
+                <div class="col_one_third">
+                    <div [ngClass]="isEffectBlock ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
+                        <div class="fbox-icon">
+                            <a><i class="icon-share i-alt"></i></a>
+                        </div>
+                        <h1>{{ currentBlock }}</h1>
+                        <p>Header block</p>
+
+                    </div>
+                </div>
+
+                <div class="col_one_third">
+                    <div [ngClass]="isEffectBlock ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
+                        <div class="fbox-icon">
+                            <a><i class="icon-bookmark i-alt"></i></a>
+                        </div>
+                        <h1>{{ currentBlockId }}</h1>
+                        <p>Header block suffix</p>
+
+                    </div>
+                </div>
+
+                <div class="col_one_third col_last">
+                    <div [ngClass]="isEffectBlock ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
+                        <div class="fbox-icon">
+                            <a><i class="icon-building i-alt"></i></a>
+                        </div>
+                        <h1>{{ currentLastWitness }}</h1>
+                        <p>Last witness</p>
+
+                    </div>
+                </div>
+                
+                
+                <div class="divider"><i class="icon-circle"></i></div>
+                
+       
+
+                <div class="col_one_third">
+                    <div [ngClass]="isEffectMobile ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
+                        <div class="fbox-icon">
+                            <a><i class="icon-mobile i-alt"></i></a>
+                        </div>
+                        <h1>{{ currentLastMobileUser }}</h1>
+                        <p>Users last Week</p>
+
+                    </div>
+                </div>
+
+                <div class="col_one_third">
+                    <div [ngClass]="isEffectUser ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
+                        <div class="fbox-icon">
+                            <a><i class="icon-users i-alt"></i></a>
+                        </div>
+                        <h1>{{ currentMaxUserCount }}</h1>
+                        <p>Total users</p>
+                    </div>
+                </div>
+
+                <div class="col_one_third col_last">
+                    <div [ngClass]="isEffectCoin ? 'feature-box fbox-center fbox-outline fbox-effect' : 'feature-box fbox-center fbox-outline fbox-effect fbox-dark'">
+                        <div class="fbox-icon">
+                            <a><i class="icon-gift i-alt"></i></a>
+                        </div>
+                        <h1>{{ currentMaxCoin }}</h1>
+                        <p>Total points collected</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section notopmargin">
+            <div class="container center clearfix">
+
+                <div class="heading-block">
+                    <h2>Last transactions</h2>
+                    <span>Transactions in our partner shops and exchanges on the blockchain</span>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Last 10 transactions</div>
+
+                    <table class="table">
+                       <!-- <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Credit/Debit</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>-->
+                        <tbody>
+                            <tr *ngFor="let item of transactionList; let i = index">
+                                <td><strong><i class="icon-map-marker"></i> Zurich</strong></td>
+                                <td><a class="button button-mini button-circle button-{{ item.debit > 0 ? 'red' : 'green' }}"><i class="icon-gift"></i> {{ item.credit > 0 ? '+ ' + item.credit : '- ' + item.debit }} Points</a></td>
+                                <td class="text-muted"><i class="icon-calendar"></i> {{ item.createdOn | date:'dd-MM-yyyy' }} <i class="icon-clock"></i> {{ item.createdOn | date:'HH:mm' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+		
+		
+		
+		<!-- icone -->
+		<div class="container clearfix">
+			<hr>
+			<div class="title-block topmargin-lg">
+				<h2>User <span>benefits</span></h2>
+				<span>Choice</span>
+			</div>
+			
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-shopping-cart i-alt"></i></a>
+					</div>
+					<h3>Collect everywhere</h3>
+				</div>
+			</div>
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-exchange i-alt"></i></a>
+					</div>
+					<h3>Exchange anytime</h3>
+				</div>
+			</div>
+			<div class="col_one_third col_last">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-heart i-alt"></i></a>
+					</div>
+					<h3>Redeem what you like</h3>
+				</div>
+			</div>
+			<div class="divider"><i class="icon-circle"></i></div>
+			<div class="title-block">
+				<h2><span></span></h2>
+				<span>Simplicity</span>
+			</div>
+			
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-mobile i-alt"></i></a>
+					</div>
+					<h3>All on your phone</h3>
+				</div>
+			</div>
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-user i-alt"></i></a>
+					</div>
+					<h3>One single login</h3>
+				</div>
+			</div>
+			<div class="col_one_third col_last">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-leaf i-alt"></i></a>
+					</div>
+					<h3>Fully digital</h3>
+				</div>
+			</div>
+			<div class="divider"><i class="icon-circle"></i></div>
+			
+			<div class="title-block">
+				<h2>Partner <span>benefits</span></h2>
+				<span>Understand your customers better</span>
+			</div>
+			
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-thumbs-up2 i-alt"></i></a>
+					</div>
+					<h3>Know your loyal customers</h3>
+				</div>
+			</div>
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-eye i-alt"></i></a>
+					</div>
+					<h3>Learn what customers like most</h3>
+				</div>
+			</div>
+			<div class="col_one_third col_last">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-line-bar-graph i-alt"></i></a>
+					</div>
+					<h3>Analyse full customer journey</h3>
+				</div>
+			</div>
+			
+			<div class="divider"><i class="icon-circle"></i></div>
+			
+			<div class="title-block">
+				<h2> <span></span></h2>
+				<span>Benefits to join an innovative platform</span>
+			</div>
+			
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-signin i-alt"></i></a>
+					</div>
+					<h3>Gain access to customers</h3>
+				</div>
+			</div>
+			<div class="col_one_third">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-flag2 i-alt"></i></a>
+					</div>
+					<h3>Customize touch & feel</h3>
+				</div>
+			</div>
+			<div class="col_one_third col_last">
+				<div class="feature-box fbox-center fbox-bg fbox-outline fbox-dark fbox-effect">
+					<div class="fbox-icon">
+						<a><i class="icon-money i-alt"></i></a>
+					</div>
+					<h3>Join simple set-up for best price</h3>
+				</div>
+			</div>
+			
+			<div class="divider"><i class="icon-circle"></i></div>
+			
+			<!-- Core team -->
+			<div class="title-block">
+				<h2>Core <span>team</span></h2>
+				<span>List of people who matter in our company</span>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/TG.jpg" alt="John Doe">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Thomas</h4><span>CEO</span></div>
+							<a href="http://www.tgconsulting.ch" class="social-icon inline-block si-small si-light si-rounded si-wordpress">
+								<i class="icon-globe"></i>
+								<i class="icon-globe"></i>
+							</a>
+							<a href="https://ch.linkedin.com/in/thomasgoetschmann1981/en" class="social-icon inline-block si-small si-light si-rounded si-LinkedIn">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/NG.jpg" alt="Josh Clark">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Nicolas</h4><span>CTO</span></div>
+							<a href="http://www.btc-consulting.org" class="social-icon inline-block si-small si-light si-rounded si-wordpress">
+								<i class="icon-globe"></i>
+								<i class="icon-globe"></i>
+							</a>
+							<a href="http://www.linkedin.com/in/nicolas-genko-5360b23" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/AL.jpg" alt="Mary Jane">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Alexandre</h4><span>Lead developer</span></div>
+							<a href="https://ch.linkedin.com/in/alexandrelazar/en" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/HMH.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Hans-Michael</h4><span>Chairman of the board</span></div>
+							<a href="https://ch.linkedin.com/in/hans-michael-hauser-a5277597/en" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/ES.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Eric</h4><span>Board member - Legal</span></div>
+							<a href="http://www.linkedin.com/in/eric-sibbern-46b4b450" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/SR.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Stéphane</h4><span>Board member - Retail</span></div>
+							<a href="https://www.linkedin.com/in/st%C3%A9phane-rueff-3027a541/" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!--div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/TA.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Teresa</h4><span>Marketing & Sales</span></div>
+							<a href="https://www.linkedin.com/in/teresa-allesch-a2069362/" class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div-->
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/AA.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Alexis</h4><span>DevOps engineer</span></div>
+							<a class="social-icon inline-block si-small si-light si-rounded si-linkedin">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/PB.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Philippe</h4><span>Bounty manager</span></div>
+							<a href="https://bitcointalk.org/index.php?action=profile;u=1096608" class="social-icon inline-block si-small si-light si-rounded si-wordpress">
+								<i class="icon-bitcoin"></i>
+								<i class="icon-bitcoin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!--div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/AA.jpg" alt="Nix Maxwell">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Grigori</h4><span>Graphics support</span></div>
+							<a href="http://www.chagry.com" class="social-icon inline-block si-small si-light si-rounded si-wordpress">
+								<i class="icon-globe"></i>
+								<i class="icon-globe"></i>
+							</a>
+							<a href="https://github.com/chagry" class="social-icon inline-block si-small si-light si-rounded si-github">
+								<i class="icon-github-circled"></i>
+								<i class="icon-github-circled"></i>
+							</a>
+						</div>
+					</div>
+				</div-->
+			</div>
+			
+			<!-- Advosory board -->
+			<div class="title-block">
+				<h2>Advisory <span>board</span></h2>
+				<span>List of people</span>
+			</div>
+			<div class="row">
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/NS.jpg" alt="">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Nicolas</h4><span>Strategic advisor</span></div>
+							<a href="https://www.linkedin.com/in/nschobinger/" class="social-icon inline-block si-small si-light si-rounded si-LinkedIn">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 bottommargin">
+					<div class="team">
+						<div class="team-image">
+							<img src="/canvas/loyalty/team/SD.jpg" alt="">
+						</div>
+						<div class="team-desc">
+							<div class="team-title"><h4>Samuel</h4><span>Communication advisor - Voluntary mandate</span></div>
+							<a href="https://www.linkedin.com/in/samuel-dionne-73757a9a/" class="social-icon inline-block si-small si-light si-rounded si-LinkedIn">
+								<i class="icon-linkedin"></i>
+								<i class="icon-linkedin"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Partner -->
+			<div class="fancy-title title-border">
+				<h2>LoyaltyCoin in the press</h2>
+			</div>
+			<div id="oc-fbox" class="owl-carousel fbox-carousel carousel-widget" data-margin="40" data-pagi="false" data-autoplay="5000" data-items-xxs="2" data-items-sm="3" data-items-lg="4">
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="https://www.startupticker.ch/en/news/november-2017/loyaltycoin-macht-treuepunkte-tauschbar-dank-blockchain" target="_blank"><img src="/canvas/loyalty/media/p1.jpg" alt=""></a>
+					</div>
+				</div>
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="http://www.luzernerzeitung.ch/nachrichten/wirtschaft/finalisten-stehen-fest;art9642,1139532" target="_blank"><img src="/canvas/loyalty/media/p2.jpg" alt=""></a>
+					</div>
+				</div>
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="http://www.inside-it.ch/articles/49396" target="_blank"><img src="/canvas/loyalty/media/p3.jpg" alt=""></a>
+					</div>
+				</div>
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="https://medium.com/@kim.d/the-game-changer-loyalty-program-using-blockchain-technologies-3f9483336aed" target="_blank"><img src="/canvas/loyalty/media/p4.jpg" alt=""></a>
+					</div>
+				</div>
+				<!--<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a><img src="/canvas/loyalty/partner/p2.jpg" alt=""></a>
+					</div>
+				</div>-->
+			</div>
+			
+			<!-- Partner -->
+			<div class="fancy-title title-border">
+				<h2>Partner</h2>
+			</div>
+			<div id="oc-fbox" class="owl-carousel fbox-carousel carousel-widget" data-margin="40" data-pagi="false" data-autoplay="5000" data-items-xxs="2" data-items-sm="3" data-items-lg="4">
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="https://www.dunelondon.com/" target="_blank"><img src="/canvas/loyalty/partner/p1.jpg" alt=""></a>
+					</div>
+				</div>
+				<!--<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a><img src="/canvas/loyalty/partner/p2.jpg" alt=""></a>
+					</div>
+				</div>-->
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="http://www.phase-eight.com/eu" target="_blank"><img src="/canvas/loyalty/partner/p3.jpg" alt=""></a>
+					</div>
+				</div>
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="https://github.com/cryptonomex/graphene" target="_blank"><img src="/canvas/loyalty/partner/p4.jpg" alt=""></a>
+					</div>
+				</div>
+				<div class="oc-item">
+					<div class="feature-box fbox-center">
+						<a href="https://cryptovalley.swiss/" target="_blank"><img src="/canvas/loyalty/partner/p5.jpg" alt=""></a>
+					</div>
+				</div>
+			</div>
+			<!-- Subscribe -->
+			<div class="container clearfix bottommargin-lg topmargin-lg">
+				<div class="subscribe-widget">
+					<h3 class="text-center" >Subscribe for our <span>Newsletter</span>.</h3>
+					<div class="widget-subscribe-form-result"></div>
+					<form id="widget-subscribe-form2" action="include/subscribe.php" role="form" method="post" class="nobottommargin">
+						<div class="input-group input-group-lg divcenter" style="max-width:600px;">
+							<span class="input-group-addon"><i class="icon-email"></i></span>
+							<input [(ngModel)]="contactemail" type="email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
+							<span class="input-group-btn">
+								<button (click)="sendNewsletter()" class="btn btn-default" type="submit">Subscribe Now</button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
