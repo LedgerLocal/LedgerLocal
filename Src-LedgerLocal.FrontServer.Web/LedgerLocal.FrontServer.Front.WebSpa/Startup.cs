@@ -53,11 +53,11 @@ namespace LedgerLocal.FrontServer.Api.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
             Configuration = builder.Build();
 
-            var seqServerUrl = Configuration["SeqServer"];
+            //var seqServerUrl = Configuration["SeqServer"];
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
-                .WriteTo.Seq(seqServerUrl)
+                //.WriteTo.Seq(seqServerUrl)
                 .CreateLogger();
         }
 
@@ -161,14 +161,8 @@ namespace LedgerLocal.FrontServer.Api.Web
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            //app.UseHangfireDashboard();
-            //app.UseHangfireServer();
-
             app.UseMvc(routes =>
             {
-                //routes.MapRoute("hangfirecurs", "hangfire/*");
-                //routes.MapRoute("hangfire", "hangfire");
-
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
