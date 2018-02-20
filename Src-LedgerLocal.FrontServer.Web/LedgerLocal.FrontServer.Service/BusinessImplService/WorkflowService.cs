@@ -1,5 +1,4 @@
 ﻿using LedgerLocal.FrontServer.Data.FullDomain.Infrastructure;
-using LedgerLocal.FrontServer.Model.FullDomain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,8 +17,8 @@ namespace LedgerLocal.FrontServer.Service
 {
     public class WorkflowService : IWorkflowService
     {
-        private readonly ILedgerLocalDbFullDomainRepository<WorkflowContainer> _workflowRepository;
-        private readonly ILedgerLocalDbFullDomainRepository<WorkflowGenericAttributeMap> _workflowGenericAttributeMapRepository;
+        private readonly ILedgerLocalDbFullDomainRepository<Workflowcontainer> _workflowRepository;
+        private readonly ILedgerLocalDbFullDomainRepository<Workflowgenericattributemap> _workflowGenericAttributeMapRepository;
         private readonly ILedgerLocalDbFullDomainRepository<Data.FullDomain.User> _userRepository;
         private readonly ILedgerLocalDbFullDomainUnitOfWork _unitOfWork;
         
@@ -30,8 +29,8 @@ namespace LedgerLocal.FrontServer.Service
         private IMapper _mapper;
 
         public WorkflowService(ILogger<WorkflowService> logger,
-            ILedgerLocalDbFullDomainRepository<WorkflowContainer> workflowRepository,
-            ILedgerLocalDbFullDomainRepository<WorkflowGenericAttributeMap> workflowGenericAttributeMapRepository,
+            ILedgerLocalDbFullDomainRepository<Workflowcontainer> workflowRepository,
+            ILedgerLocalDbFullDomainRepository<Workflowgenericattributemap> workflowGenericAttributeMapRepository,
             ILedgerLocalDbFullDomainRepository<Data.FullDomain.User> userRepository,
             ILedgerLocalDbFullDomainUnitOfWork unitOfWork,
             IAttributeService attributeService,
@@ -49,17 +48,17 @@ namespace LedgerLocal.FrontServer.Service
             _mapper = mapperConfiguration.CreateMapper();
         }
 
-        public async Task<WorkflowContainer> CreateWorkflow(WorkflowCreateOrUpdate info)
+        public async Task<Workflowcontainer> CreateWorkflow(WorkflowCreateOrUpdate info)
         {
             Check.Require(info != null, "WorkflowCreateOrUpdate must be valid.");
 
             var now = DateTime.UtcNow;
 
-            var p = _mapper.Map<WorkflowCreateOrUpdate, WorkflowContainer>(info);
-            p.CreatedOn = now;
-            p.ModifiedOn = now;
-            p.CreatedBy = "System";
-            p.ModifiedBy = "System";
+            var p = _mapper.Map<WorkflowCreateOrUpdate, Workflowcontainer>(info);
+            p.Createdon = now;
+            p.Modifiedon = now;
+            p.Createdby = "System";
+            p.Modifiedby = "System";
 
             var lstAttr = new List<Genericattribute>();
 
@@ -83,15 +82,15 @@ namespace LedgerLocal.FrontServer.Service
 
             foreach(var la1 in lstAttr)
             {
-                var vlam = new WorkflowGenericAttributeMap();
-                vlam.GenericAttributeId = la1.Genericattributeid;
-                vlam.WorkflowContainerId = p.WorkflowContainerId;
+                var vlam = new Workflowgenericattributemap();
+                vlam.Genericattributeid = la1.Genericattributeid;
+                vlam.Workflowcontainerid = p.Workflowcontainerid;
                 vlam.Active = true;
 
-                vlam.CreatedOn = now;
-                vlam.ModifiedOn = now;
-                vlam.CreatedBy = "System";
-                vlam.ModifiedBy = "System";
+                vlam.Createdon = now;
+                vlam.Modifiedon = now;
+                vlam.Createdby = "System";
+                vlam.Modifiedby = "System";
 
                 await _workflowGenericAttributeMapRepository.AddAsync(vlam);
             }
@@ -109,14 +108,14 @@ namespace LedgerLocal.FrontServer.Service
                     .Include("WorkflowGenericAttributeMap.GenericAttribute")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
-                    .Where(x => x.WorkflowContainerId == p.WorkflowContainerId).First();
+                    .Where(x => x.Workflowcontainerid == p.Workflowcontainerid).First();
             return p1;
         }
 
         public async Task<WorkflowDescription> CreateWorkflowAsync(WorkflowCreateOrUpdate workflow)
         {
             var p = await CreateWorkflow(workflow);
-            return _mapper.Map<WorkflowContainer, WorkflowDescription>(p);
+            return _mapper.Map<Workflowcontainer, WorkflowDescription>(p);
         }
 
         public async Task<WorkflowDescription> UpdateWorkflowAsync(WorkflowCreateOrUpdate workflow)
@@ -124,12 +123,12 @@ namespace LedgerLocal.FrontServer.Service
             var p1 = _workflowRepository.DbSet
                                 .Include("Category")
                                 .Include("WorkflowGenericAttributeMap")
-                                .Where(x => x.WorkflowContainerId.ToString() == workflow.WorkflowId).First();
+                                .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId).First();
 
             var dateNow = DateTime.UtcNow;
 
-            var voucherUpdated = _mapper.Map<WorkflowCreateOrUpdate, WorkflowContainer>(workflow, p1);
-            voucherUpdated.ModifiedOn = dateNow;
+            var voucherUpdated = _mapper.Map<WorkflowCreateOrUpdate, Workflowcontainer>(workflow, p1);
+            voucherUpdated.Modifiedon = dateNow;
 
             await _workflowRepository.UpdateAsync(voucherUpdated);
 
@@ -146,33 +145,33 @@ namespace LedgerLocal.FrontServer.Service
                         .DbSet
                                 .Include("GenericAttribute")
                                 .Include("WorkflowContainer")
-                        .Where(x => x.WorkflowContainerId.ToString() == workflow.WorkflowId).ToListAsync();
+                        .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId).ToListAsync();
 
                 foreach (var kv in workflow.Arguments)
                 {
                     var fdAttr = lstAttributes
-                                    .Where(x => x.GenericAttribute.TypeString == kv.Key && x.GenericAttribute.ValueString == kv.Value.ToString())
+                                    .Where(x => x.Genericattribute.Typestring == kv.Key && x.Genericattribute.Valuestring == kv.Value.ToString())
                                     .FirstOrDefault();
 
                     if (fdAttr == null)
                     {
                         var ga = await _attributeService.CreateOrGetAttribute(kv.Key, kv.Value.ToString(), null, kv.Value);
 
-                        var vlam = new WorkflowGenericAttributeMap();
-                        vlam.GenericAttributeId = ga.Genericattributeid;
-                        vlam.WorkflowContainerId = p1.WorkflowContainerId;
+                        var vlam = new Workflowgenericattributemap();
+                        vlam.Genericattributeid = ga.Genericattributeid;
+                        vlam.Workflowcontainerid = p1.Workflowcontainerid;
                         vlam.Active = true;
 
-                        vlam.CreatedOn = dateNow;
-                        vlam.ModifiedOn = dateNow;
-                        vlam.CreatedBy = "System";
-                        vlam.ModifiedBy = "System";
+                        vlam.Createdon = dateNow;
+                        vlam.Modifiedon = dateNow;
+                        vlam.Createdby = "System";
+                        vlam.Modifiedby = "System";
 
                         await _workflowGenericAttributeMapRepository.AddAsync(vlam);
                     }
                     else
                     {
-                        fdAttr.ModifiedOn = dateNow;
+                        fdAttr.Modifiedon = dateNow;
                         await _workflowGenericAttributeMapRepository.UpdateAsync(fdAttr);
                     }
                 }
@@ -187,8 +186,8 @@ namespace LedgerLocal.FrontServer.Service
                 var lstAttributesToDelete = await _workflowGenericAttributeMapRepository
                     .DbSet
                     .Include("GenericAttribute")
-                    .Where(x => x.WorkflowContainerId.ToString() == workflow.WorkflowId
-                        && x.ModifiedOn != dateNow).ToListAsync();
+                    .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId
+                        && x.Modifiedon != dateNow).ToListAsync();
 
                 foreach(var deleteAttr in lstAttributesToDelete)
                 {
@@ -209,20 +208,20 @@ namespace LedgerLocal.FrontServer.Service
                     .Include("WorkflowGenericAttributeMap.GenericAttribute")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
-                    .Where(x => x.WorkflowContainerId.ToString() == workflow.WorkflowId).First();
+                    .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId).First();
 
-            return _mapper.Map<WorkflowContainer, WorkflowDescription>(pFinal);
+            return _mapper.Map<Workflowcontainer, WorkflowDescription>(pFinal);
         }
 
         public async Task<IList<WorkflowDescription>> GetAllWorkflowAsync()
         {
-            IList<WorkflowContainer> vl = null;
+            IList<Workflowcontainer> vl = null;
 
             await Task.Factory.StartNew(() =>
             {
                 var dbContext = (IDbContextService)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(IDbContextService));
                 dbContext.RefreshFullDomain();
-                var wr1 = (ILedgerLocalDbFullDomainRepository<WorkflowContainer>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<WorkflowContainer>));
+                var wr1 = (ILedgerLocalDbFullDomainRepository<Workflowcontainer>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<Workflowcontainer>));
 
 
                 vl = wr1.DbSet
@@ -233,29 +232,29 @@ namespace LedgerLocal.FrontServer.Service
                     .ToList();
             });
 
-            return _mapper.Map<IEnumerable<WorkflowContainer>, IEnumerable<WorkflowDescription>>(vl).ToList();
+            return _mapper.Map<IEnumerable<Workflowcontainer>, IEnumerable<WorkflowDescription>>(vl).ToList();
         }
 
         public async Task<WorkflowDescription> GetWorkflowByIdAsync(string workflowId)
         {
-            IList<WorkflowContainer> vl = null;
+            IList<Workflowcontainer> vl = null;
 
             await Task.Factory.StartNew(() =>
             {
                 var dbContext = (IDbContextService)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(IDbContextService));
                 dbContext.RefreshFullDomain();
-                var wr1 = (ILedgerLocalDbFullDomainRepository<WorkflowContainer>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<WorkflowContainer>));
+                var wr1 = (ILedgerLocalDbFullDomainRepository<Workflowcontainer>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<Workflowcontainer>));
 
                 vl = wr1.DbSet
                     .Include("WorkflowGenericAttributeMap")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
                     .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
-                    .Where(x => x.WorkflowContainerId.ToString() == workflowId)
+                    .Where(x => x.Workflowcontainerid.ToString() == workflowId)
                     .ToList();
             });
 
-            return _mapper.Map<WorkflowContainer, WorkflowDescription>(vl.First());
+            return _mapper.Map<Workflowcontainer, WorkflowDescription>(vl.First());
         }
 
     }

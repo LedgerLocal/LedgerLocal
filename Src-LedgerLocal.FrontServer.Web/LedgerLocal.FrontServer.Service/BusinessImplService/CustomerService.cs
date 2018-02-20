@@ -1,5 +1,4 @@
 ﻿using LedgerLocal.FrontServer.Data.FullDomain.Infrastructure;
-using LedgerLocal.FrontServer.Model.FullDomain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +12,7 @@ using LedgerLocal.Common.Core;
 using Newtonsoft.Json;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using LedgerLocal.FrontServer.Data.FullDomain;
 
 namespace LedgerLocal.FrontServer.Service
 {
@@ -48,10 +48,10 @@ namespace LedgerLocal.FrontServer.Service
             var now = DateTime.UtcNow;
 
             var p = _mapper.Map<CustomerCreateOrUpdate, People>(info);
-            p.CreatedOn = now;
-            p.ModifiedOn = now;
-            p.CreatedBy = "System";
-            p.ModifiedBy = "System";
+            p.Createdon = now;
+            p.Modifiedon = now;
+            p.Createdby = "System";
+            p.Modifiedby = "System";
 
             await _peopleRepository.AddAsync(p);
 
@@ -72,10 +72,10 @@ namespace LedgerLocal.FrontServer.Service
             var now = DateTime.UtcNow;
 
             var u = _mapper.Map<CustomerCreateOrUpdate, User>(info);
-            u.CreatedOn = now;
-            u.ModifiedOn = now;
-            u.CreatedBy = "System";
-            u.ModifiedBy = "System";
+            u.Createdon = now;
+            u.Modifiedon = now;
+            u.Createdby = "System";
+            u.Modifiedby = "System";
 
             var peEntity = await CreatePeople(info);
             u.People = peEntity;
@@ -124,7 +124,7 @@ namespace LedgerLocal.FrontServer.Service
                 us = _userRepository.DbSet
                     .Include("People")
                     .Include("People.Phone")
-                    .Where(x => x.UserId.ToString() == customerId)
+                    .Where(x => x.Userid.ToString() == customerId)
                 .ToList();
             });
 
@@ -136,15 +136,15 @@ namespace LedgerLocal.FrontServer.Service
             var u1 = _userRepository.DbSet
                     .Include("People")
                     .Include("People.Phone")
-                    .Where(x => x.UserId.ToString() == customer.CustomerId).First();
+                    .Where(x => x.Userid.ToString() == customer.CustomerId).First();
 
             var dateNow = DateTime.UtcNow;
 
             var people = _mapper.Map<CustomerCreateOrUpdate, People>(customer, u1.People);
-            people.ModifiedOn = dateNow;
+            people.Modifiedon = dateNow;
 
             var user = _mapper.Map<CustomerCreateOrUpdate, User>(customer, u1);
-            user.ModifiedOn = dateNow;
+            user.Modifiedon = dateNow;
 
             CustomerProfile cp = null;
 

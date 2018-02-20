@@ -1,5 +1,4 @@
 ﻿using LedgerLocal.FrontServer.Api.Web.Models;
-using LedgerLocal.FrontServer.Model.FullDomain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

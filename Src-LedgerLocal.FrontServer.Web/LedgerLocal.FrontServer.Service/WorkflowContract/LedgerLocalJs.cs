@@ -27,15 +27,7 @@ namespace LedgerLocal.FrontServer.Service.WorkflowContract
                 return ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ICustomerService)) as ICustomerService;
             }
         }
-        
-        public IPolicyService PolicyService
-        {
-            get
-            {
-                return ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(IPolicyService)) as IPolicyService;
-            }
-        }
-        
+               
         public IWorkflowService WorkflowService
         {
             get

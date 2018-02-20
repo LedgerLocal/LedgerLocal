@@ -89,7 +89,6 @@ namespace LedgerLocal.FrontServer.Api.Web
             services.AddTransient(typeof(ICustomerService), typeof(CustomerService));
 
             services.AddTransient(typeof(IAttributeService), typeof(AttributeService));
-            services.AddTransient(typeof(IPolicyService), typeof(PolicyService));
 
             
             
