@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain.Infrastructure
 {
-    public class LedgerLocalDbFullDomainUnitOfWorkBase : UnitOfWorkBase<LedgerLocalDbMainContext>, ILedgerLocalDbFullDomainUnitOfWork
+    public class LedgerLocalDbFullDomainUnitOfWorkBase : UnitOfWorkBase<LedgerLocalDbContext>, ILedgerLocalDbFullDomainUnitOfWork
     {
         private readonly Microsoft.Extensions.Logging.ILogger<LedgerLocalDbFullDomainUnitOfWorkBase> _logger;
 
         public LedgerLocalDbFullDomainUnitOfWorkBase(ILogger<LedgerLocalDbFullDomainUnitOfWorkBase> logger,
-            IDatabaseFactory<LedgerLocalDbMainContext> databaseFactory)
+            IDatabaseFactory<LedgerLocalDbContext> databaseFactory)
             : base(databaseFactory)
         {
             _logger = logger;

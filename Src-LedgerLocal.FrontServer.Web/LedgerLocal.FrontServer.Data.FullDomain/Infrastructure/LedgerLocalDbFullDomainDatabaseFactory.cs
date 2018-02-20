@@ -3,19 +3,19 @@ using Common.Data.Infrastructure;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain.Infrastructure
 {
-    public class LedgerLocalDbFullDomainDatabaseFactory : Disposable, IDatabaseFactory<LedgerLocalDbMainContext>
+    public class LedgerLocalDbFullDomainDatabaseFactory : Disposable, IDatabaseFactory<LedgerLocalDbContext>
     {
-        private LedgerLocalDbMainContext _dataContext;
+        private LedgerLocalDbContext _dataContext;
         private readonly object _syncObject = new object();
         private readonly string _connectionString;
 
         public LedgerLocalDbFullDomainDatabaseFactory(string connectionString)
         {
             _connectionString = connectionString;
-            _dataContext = new LedgerLocalDbMainContext(_connectionString);
+            _dataContext = new LedgerLocalDbContext(_connectionString);
         }
 
-        public LedgerLocalDbMainContext Get()
+        public LedgerLocalDbContext Get()
         {
             if (_dataContext != null)
             {
@@ -47,10 +47,15 @@ namespace LedgerLocal.FrontServer.Data.FullDomain.Infrastructure
                     if (_dataContext != null)
                     {
                         _dataContext.Dispose();
-                        _dataContext = new LedgerLocalDbMainContext(_connectionString);
+                        _dataContext = new LedgerLocalDbContext(_connectionString);
                     }
                 }
             }
+        }
+
+        public string ConnectionString()
+        {
+            return _connectionString;
         }
     }
 }

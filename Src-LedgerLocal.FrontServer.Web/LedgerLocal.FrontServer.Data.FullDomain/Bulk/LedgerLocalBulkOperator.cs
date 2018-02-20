@@ -33,9 +33,9 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
 {
     public class LedgerLocalBulkOperator : ILedgerLocalBulkOperator
     {
-        private IDatabaseFactory<LedgerLocalDbMainContext> _databaseFactory;
+        private IDatabaseFactory<LedgerLocalDbContext> _databaseFactory;
 
-        public LedgerLocalBulkOperator(IDatabaseFactory<LedgerLocalDbMainContext> databaseFactory)
+        public LedgerLocalBulkOperator(IDatabaseFactory<LedgerLocalDbContext> databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }

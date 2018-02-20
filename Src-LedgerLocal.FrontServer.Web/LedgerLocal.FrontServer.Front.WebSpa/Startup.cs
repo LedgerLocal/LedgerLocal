@@ -54,7 +54,7 @@ namespace LedgerLocal.FrontServer.Api.Web
             Configuration = builder.Build();
 
             //var seqServerUrl = Configuration["SeqServer"];
-            Log.Logger = new LoggerConfiguration()
+            Serilog.Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
                 //.WriteTo.Seq(seqServerUrl)
@@ -71,7 +71,7 @@ namespace LedgerLocal.FrontServer.Api.Web
             var connectionString = @"Server=;Database=LedgerLocal;User Id=;Password="; // Configuration["ConnectionStrings:DefaultConnection"];
 
             //EF
-            services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbMainContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
+            services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
 
             services.AddScoped(typeof(ILedgerLocalDbFullDomainRepository<>), typeof(LedgerLocalDbFullDomainRepositoryBase<>));
 
@@ -140,7 +140,7 @@ namespace LedgerLocal.FrontServer.Api.Web
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             loggerFactory.AddSerilog();
-            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+            appLifetime.ApplicationStopped.Register(Serilog.Log.CloseAndFlush);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

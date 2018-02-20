@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+
+    <!--<OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>-->
+    
     <AssemblyName>LedgerLocal.FrontServer.Data.FullDomain</AssemblyName>
     <PackageId>LedgerLocal.FrontServer.Data.FullDomain</PackageId>
     <GenerateAssembLedgerLocalonfigurationAttribute>false</GenerateAssembLedgerLocalonfigurationAttribute>
@@ -12,9 +16,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
   </ItemGroup>
@@ -26,5 +31,10 @@
     <ProjectReference Include="..\LedgerLocal.Common.WebApi\LedgerLocal.Common.WebApi.csproj" />
     <ProjectReference Include="..\LedgerLocal.FrontServer.Model.FullDomain\LedgerLocal.FrontServer.Model.FullDomain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
 
 </Project>

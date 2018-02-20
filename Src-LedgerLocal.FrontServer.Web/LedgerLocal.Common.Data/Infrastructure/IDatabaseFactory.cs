@@ -8,5 +8,7 @@ namespace Common.Data.Infrastructure
         T Get();
 
         void Refresh();
+
+        string ConnectionString();
     }
 }

@@ -11,9 +11,9 @@ namespace LedgerLocal.FrontServer.Service
 {
     public class DbContextService : IDbContextService
     {
-        private readonly IDatabaseFactory<LedgerLocalDbMainContext> _databaseFactory;
+        private readonly IDatabaseFactory<LedgerLocalDbContext> _databaseFactory;
 
-        public DbContextService(IDatabaseFactory<LedgerLocalDbMainContext> databaseFactory)
+        public DbContextService(IDatabaseFactory<LedgerLocalDbContext> databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
