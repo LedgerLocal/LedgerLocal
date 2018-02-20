@@ -68,7 +68,7 @@ namespace LedgerLocal.FrontServer.Api.Web
 
             //dependency injection
 
-            var connectionString = @"Server=;Database=LedgerLocal;User Id=;Password="; // Configuration["ConnectionStrings:DefaultConnection"];
+            var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
             //EF
             services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
