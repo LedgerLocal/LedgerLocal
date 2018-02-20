@@ -18,7 +18,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Cultureid { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public char Body { get; set; }
+        public string Body { get; set; }
         public bool Iscomponent { get; set; }
         public bool Isentrypoint { get; set; }
         public bool Hasarguments { get; set; }

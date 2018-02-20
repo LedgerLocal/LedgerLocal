@@ -20,15 +20,15 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Metakeyword { get; set; }
         public string Metadescription { get; set; }
         public string Keywords { get; set; }
-        public char Body { get; set; }
+        public string Body { get; set; }
         public bool? Ishtml { get; set; }
         public bool Activate { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }
         public string Createdby { get; set; }
         public string Modifiedby { get; set; }
-        public char? Imagethumb { get; set; }
-        public char? Imagepost { get; set; }
+        public string Imagethumb { get; set; }
+        public string Imagepost { get; set; }
 
         public Culture Culture { get; set; }
         public User User { get; set; }

@@ -14,7 +14,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Productid { get; set; }
         public int Cultureid { get; set; }
         public int? Taxweeeid { get; set; }
-        public char Description { get; set; }
+        public string Description { get; set; }
         public string Shortdescription { get; set; }
         public int? Warranty { get; set; }
         public decimal Baseunitprice { get; set; }

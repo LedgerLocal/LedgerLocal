@@ -13,7 +13,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Action { get; set; }
         public string Controller { get; set; }
         public string Logger { get; set; }
-        public char Logmessage { get; set; }
+        public string Logmessage { get; set; }
         public string Loginfo { get; set; }
     }
 }

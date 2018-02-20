@@ -10,9 +10,9 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int? Orderitemid { get; set; }
         public int? Returnmaterialreasonid { get; set; }
         public string Itemname { get; set; }
-        public char? Itemdescription { get; set; }
-        public char? Note { get; set; }
-        public char Reason { get; set; }
+        public string Itemdescription { get; set; }
+        public string Note { get; set; }
+        public string Reason { get; set; }
         public bool Replace { get; set; }
         public int Quantity { get; set; }
         public int Quantityreceived { get; set; }

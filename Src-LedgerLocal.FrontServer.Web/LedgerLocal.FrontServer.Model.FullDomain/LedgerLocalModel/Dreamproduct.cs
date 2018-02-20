@@ -14,7 +14,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Productid { get; set; }
         public int? Userid { get; set; }
         public int? Vote { get; set; }
-        public char? Content { get; set; }
+        public string Content { get; set; }
         public int? Views { get; set; }
         public string Name { get; set; }
         public DateTime Createdon { get; set; }

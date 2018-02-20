@@ -7,13 +7,12 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using LedgerLocal.FrontServer.Api.Web.Models;
 using System.Threading.Tasks;
-using LedgerLocal.FrontServer.Service.LedgerLocalServiceContract;
-using LedgerLocal.FrontServer.Model.FullDomain;
 using LedgerLocal.Common.Core;
 using Newtonsoft.Json;
 using AutoMapper;
 using LedgerLocal.FrontServer.Service.Contract;
 using Microsoft.Extensions.Logging;
+using LedgerLocal.FrontServer.Data.FullDomain;
 
 namespace LedgerLocal.FrontServer.Service
 {
@@ -21,7 +20,7 @@ namespace LedgerLocal.FrontServer.Service
     {
         private readonly ILedgerLocalDbFullDomainRepository<WorkflowContainer> _workflowRepository;
         private readonly ILedgerLocalDbFullDomainRepository<WorkflowGenericAttributeMap> _workflowGenericAttributeMapRepository;
-        private readonly ILedgerLocalDbFullDomainRepository<User> _userRepository;
+        private readonly ILedgerLocalDbFullDomainRepository<Data.FullDomain.User> _userRepository;
         private readonly ILedgerLocalDbFullDomainUnitOfWork _unitOfWork;
         
         private readonly IAttributeService _attributeService;
@@ -33,7 +32,7 @@ namespace LedgerLocal.FrontServer.Service
         public WorkflowService(ILogger<WorkflowService> logger,
             ILedgerLocalDbFullDomainRepository<WorkflowContainer> workflowRepository,
             ILedgerLocalDbFullDomainRepository<WorkflowGenericAttributeMap> workflowGenericAttributeMapRepository,
-            ILedgerLocalDbFullDomainRepository<User> userRepository,
+            ILedgerLocalDbFullDomainRepository<Data.FullDomain.User> userRepository,
             ILedgerLocalDbFullDomainUnitOfWork unitOfWork,
             IAttributeService attributeService,
             MapperConfiguration mapperConfiguration)
@@ -62,7 +61,7 @@ namespace LedgerLocal.FrontServer.Service
             p.CreatedBy = "System";
             p.ModifiedBy = "System";
 
-            var lstAttr = new List<GenericAttribute>();
+            var lstAttr = new List<Genericattribute>();
 
             if (info.Arguments != null && info.Arguments.Count > 0)
             {
@@ -85,7 +84,7 @@ namespace LedgerLocal.FrontServer.Service
             foreach(var la1 in lstAttr)
             {
                 var vlam = new WorkflowGenericAttributeMap();
-                vlam.GenericAttributeId = la1.GenericAttributeId;
+                vlam.GenericAttributeId = la1.Genericattributeid;
                 vlam.WorkflowContainerId = p.WorkflowContainerId;
                 vlam.Active = true;
 
@@ -160,7 +159,7 @@ namespace LedgerLocal.FrontServer.Service
                         var ga = await _attributeService.CreateOrGetAttribute(kv.Key, kv.Value.ToString(), null, kv.Value);
 
                         var vlam = new WorkflowGenericAttributeMap();
-                        vlam.GenericAttributeId = ga.GenericAttributeId;
+                        vlam.GenericAttributeId = ga.Genericattributeid;
                         vlam.WorkflowContainerId = p1.WorkflowContainerId;
                         vlam.Active = true;
 

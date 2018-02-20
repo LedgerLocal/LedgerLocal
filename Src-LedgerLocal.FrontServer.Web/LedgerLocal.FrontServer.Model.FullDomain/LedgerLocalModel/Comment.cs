@@ -13,7 +13,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Commentid { get; set; }
         public int Articleid { get; set; }
         public int Userid { get; set; }
-        public char Body { get; set; }
+        public string Body { get; set; }
         public bool Activate { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }

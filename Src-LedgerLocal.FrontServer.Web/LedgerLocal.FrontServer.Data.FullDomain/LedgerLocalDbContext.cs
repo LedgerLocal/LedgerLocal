@@ -493,8 +493,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Activate).HasColumnName("activate");
 
                 entity.Property(e => e.Body)
-                    .HasColumnName("body")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("body");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -509,12 +508,10 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Cultureid).HasColumnName("cultureid");
 
                 entity.Property(e => e.Imagepost)
-                    .HasColumnName("imagepost")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("imagepost");
 
                 entity.Property(e => e.Imagethumb)
-                    .HasColumnName("imagethumb")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("imagethumb");
 
                 entity.Property(e => e.Ishtml).HasColumnName("ishtml");
 
@@ -1512,8 +1509,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Articleid).HasColumnName("articleid");
 
                 entity.Property(e => e.Body)
-                    .HasColumnName("body")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("body");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -1700,8 +1696,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Activate).HasColumnName("activate");
 
                 entity.Property(e => e.Content)
-                    .HasColumnName("content")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("content");
 
                 entity.Property(e => e.Contentblockid).HasColumnName("contentblockid");
 
@@ -1887,8 +1882,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Coinledgerid).HasColumnName("coinledgerid");
 
                 entity.Property(e => e.Couponcode)
-                    .HasColumnName("couponcode")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("couponcode");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -2179,8 +2173,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("nextval('dream.dreamcomment_commentid_seq'::regclass)");
 
                 entity.Property(e => e.Content)
-                    .HasColumnName("content")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("content");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -2274,8 +2267,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("nextval('dream.dreamproduct_productid_seq'::regclass)");
 
                 entity.Property(e => e.Content)
-                    .HasColumnName("content")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("content");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -2434,18 +2426,15 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Typelabelstring)
-                    .HasColumnName("typelabelstring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("typelabelstring");
 
                 entity.Property(e => e.Typestring).HasColumnName("typestring");
 
                 entity.Property(e => e.Valuelabelstring)
-                    .HasColumnName("valuelabelstring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("valuelabelstring");
 
                 entity.Property(e => e.Valuestring)
-                    .HasColumnName("valuestring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("valuestring");
 
                 entity.HasOne(d => d.Genericattributetype)
                     .WithMany(p => p.Genericattribute)
@@ -2479,8 +2468,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Metatypelabel)
-                    .HasColumnName("metatypelabel")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("metatypelabel");
 
                 entity.Property(e => e.Metatypestring).HasColumnName("metatypestring");
 
@@ -2517,16 +2505,14 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasColumnType("numeric(12, 4)");
 
                 entity.Property(e => e.Valuelabelstring)
-                    .HasColumnName("valuelabelstring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("valuelabelstring");
 
                 entity.Property(e => e.Valuenumber)
                     .HasColumnName("valuenumber")
                     .HasColumnType("numeric(12, 4)");
 
                 entity.Property(e => e.Valuestring)
-                    .HasColumnName("valuestring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("valuestring");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Genericattributetype)
@@ -2553,16 +2539,13 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Label)
-                    .HasColumnName("label")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("label");
 
                 entity.Property(e => e.Metatypelabel)
-                    .HasColumnName("metatypelabel")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("metatypelabel");
 
                 entity.Property(e => e.Metatypestring)
-                    .HasColumnName("metatypestring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("metatypestring");
 
                 entity.Property(e => e.Modifiedby)
                     .IsRequired()
@@ -2575,8 +2558,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("name");
 
                 entity.Property(e => e.Sort)
                     .HasColumnName("sort")
@@ -2599,16 +2581,14 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasColumnType("numeric(12, 4)");
 
                 entity.Property(e => e.Valuelabelstring)
-                    .HasColumnName("valuelabelstring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("valuelabelstring");
 
                 entity.Property(e => e.Valuenumber)
                     .HasColumnName("valuenumber")
                     .HasColumnType("numeric(12, 4)");
 
                 entity.Property(e => e.Valuestring)
-                    .HasColumnName("valuestring")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("valuestring");
             });
 
             modelBuilder.Entity<Globalsetting>(entity =>
@@ -3217,8 +3197,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasColumnName("loglevel");
 
                 entity.Property(e => e.Logmessage)
-                    .HasColumnName("logmessage")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("logmessage");
 
                 entity.Property(e => e.Thread)
                     .IsRequired()
@@ -3234,8 +3213,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("nextval('dbo.mailertemplate_mailertemplateid_seq'::regclass)");
 
                 entity.Property(e => e.Body)
-                    .HasColumnName("body")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("body");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -4190,8 +4168,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("note");
 
                 entity.Property(e => e.Orderid).HasColumnName("orderid");
 
@@ -4262,8 +4239,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("description");
 
                 entity.Property(e => e.Estimatedshippingcost)
                     .HasColumnName("estimatedshippingcost")
@@ -5193,8 +5169,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Activate).HasColumnName("activate");
 
                 entity.Property(e => e.Content)
-                    .HasColumnName("content")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("content");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -5374,8 +5349,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("nextval('dbo.printtemplate_printtemplateid_seq'::regclass)");
 
                 entity.Property(e => e.Body)
-                    .HasColumnName("body")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("body");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -5709,8 +5683,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Cultureid).HasColumnName("cultureid");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("description");
 
                 entity.Property(e => e.Discountpercent)
                     .HasColumnName("discountpercent")
@@ -6173,8 +6146,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Approved).HasColumnName("approved");
 
                 entity.Property(e => e.Body)
-                    .HasColumnName("body")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("body");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -6502,8 +6474,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("nextval('dbo.returnmaterial_returnid_seq'::regclass)");
 
                 entity.Property(e => e.Comment)
-                    .HasColumnName("comment")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("comment");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -6580,8 +6551,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Itemdescription)
-                    .HasColumnName("itemdescription")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("itemdescription");
 
                 entity.Property(e => e.Itemname)
                     .IsRequired()
@@ -6598,8 +6568,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("note");
 
                 entity.Property(e => e.Orderitemid).HasColumnName("orderitemid");
 
@@ -6610,8 +6579,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Quantityreturnedtoinventory).HasColumnName("quantityreturnedtoinventory");
 
                 entity.Property(e => e.Reason)
-                    .HasColumnName("reason")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("reason");
 
                 entity.Property(e => e.Replace).HasColumnName("replace");
 
@@ -6654,8 +6622,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("description");
 
                 entity.Property(e => e.Modifiedby)
                     .IsRequired()
@@ -7790,8 +7757,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                 entity.Property(e => e.Cultureid).HasColumnName("cultureid");
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("description");
 
                 entity.Property(e => e.Modifiedby)
                     .IsRequired()
@@ -7940,8 +7906,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("'2018-02-19'::date");
 
                 entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("note");
 
                 entity.Property(e => e.Supplierid).HasColumnName("supplierid");
 
@@ -8362,8 +8327,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasColumnType("date");
 
                 entity.Property(e => e.Comment)
-                    .HasColumnName("comment")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("comment");
 
                 entity.Property(e => e.Createdby)
                     .IsRequired()
@@ -8432,18 +8396,15 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasColumnName("password");
 
                 entity.Property(e => e.Passwordanswer)
-                    .HasColumnName("passwordanswer")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("passwordanswer");
 
                 entity.Property(e => e.Passwordhint)
-                    .HasColumnName("passwordhint")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("passwordhint");
 
                 entity.Property(e => e.Peopleid).HasColumnName("peopleid");
 
                 entity.Property(e => e.Picture)
-                    .HasColumnName("picture")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("picture");
 
                 entity.Property(e => e.Referalcode).HasColumnName("referalcode");
 
@@ -8555,8 +8516,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
                     .HasDefaultValueSql("nextval('dbo.workflowcontainer_workflowcontainerid_seq'::regclass)");
 
                 entity.Property(e => e.Body)
-                    .HasColumnName("body")
-                    .HasColumnType("char(1)");
+                    .HasColumnName("body");
 
                 entity.Property(e => e.Categoryid).HasColumnName("categoryid");
 

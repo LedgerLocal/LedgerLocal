@@ -8,7 +8,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Contentblockculturemapid { get; set; }
         public int? Contentblockid { get; set; }
         public int? Cultureid { get; set; }
-        public char Content { get; set; }
+        public string Content { get; set; }
         public bool Activate { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }

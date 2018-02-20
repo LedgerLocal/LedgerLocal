@@ -13,7 +13,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Productreviewid { get; set; }
         public int Productid { get; set; }
         public DateTime Reviewdate { get; set; }
-        public char Body { get; set; }
+        public string Body { get; set; }
         public bool Approved { get; set; }
         public int Cultureid { get; set; }
         public int? Userid { get; set; }

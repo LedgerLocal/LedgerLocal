@@ -62,7 +62,7 @@ namespace LedgerLocal.FrontServer.Service
 
             var ga = await _attributeService.CreateOrGetAttribute(info.KeyValue, info.ItemValue.ToString(), null, info.ItemValue);
 
-            pam.GenericAttributeId = ga.GenericAttributeId;
+            pam.GenericAttributeId = ga.Genericattributeid;
 
             await _LedgerLocalPolicyGenericAttributeMapRepository.AddAsync(pam);
 
@@ -103,8 +103,8 @@ namespace LedgerLocal.FrontServer.Service
             p1.Name = policy.Name;
 
             var ga = await _attributeService.CreateOrGetAttribute(policy.KeyValue, policy.ItemValue.ToString(), null, policy.ItemValue);
-
-            p1.GenericAttributeId = ga.GenericAttributeId;
+            
+            p1.GenericAttributeId = ga.Genericattributeid;
             p1.ModifiedOn = dateNow;
 
             await _LedgerLocalPolicyGenericAttributeMapRepository.UpdateAsync(p1);

@@ -42,9 +42,9 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public DateTime? Lastactivitydate { get; set; }
         public DateTime? Lastpasswordchangeddate { get; set; }
         public DateTime? Lastlockoutdate { get; set; }
-        public char? Passwordhint { get; set; }
-        public char? Comment { get; set; }
-        public char? Passwordanswer { get; set; }
+        public string Passwordhint { get; set; }
+        public string Comment { get; set; }
+        public string Passwordanswer { get; set; }
         public int? Locked { get; set; }
         public DateTime? Lockeduntil { get; set; }
         public int? Failedlogincount { get; set; }
@@ -54,7 +54,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public DateTime Modifiedon { get; set; }
         public string Createdby { get; set; }
         public string Modifiedby { get; set; }
-        public char? Picture { get; set; }
+        public string Picture { get; set; }
         public DateTime? Birthdate { get; set; }
         public string Mobilelanguage { get; set; }
         public long? Referalcode { get; set; }

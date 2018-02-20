@@ -1,8 +1,5 @@
 ﻿using LedgerLocal.FrontServer.Data.FullDomain.Infrastructure;
-using LedgerLocal.FrontServer.Enum;
 using LedgerLocal.FrontServer.Model.FullDomain;
-using LedgerLocal.FrontServer.Model.FullDomain.Model;
-using LedgerLocal.FrontServer.Service.Contract;
 using LedgerLocal.Common.Core;
 using System;
 using System.Collections.Generic;
@@ -13,23 +10,24 @@ using LedgerLocal.FrontServer.Service.Json;
 using System.Threading.Tasks;
 using LedgerLocal.FrontServer.Data.FullDomain.Bulk;
 using Microsoft.Extensions.Logging;
+using LedgerLocal.FrontServer.Data.FullDomain;
 
 namespace LedgerLocal.FrontServer.Service.PersistenceService
 {
     public class AttributeService : IAttributeService
     {
-        private readonly ILedgerLocalDbFullDomainRepository<GenericAttribute> _attributeRepository;
-        private readonly ILedgerLocalDbFullDomainRepository<GenericAttributeValue> _attributeValueRepository;
-        private readonly ILedgerLocalDbFullDomainRepository<GenericAttributeType> _attributeTypeRepository;
+        private readonly ILedgerLocalDbFullDomainRepository<Genericattribute> _attributeRepository;
+        private readonly ILedgerLocalDbFullDomainRepository<Genericattributevalue> _attributeValueRepository;
+        private readonly ILedgerLocalDbFullDomainRepository<Genericattributetype> _attributeTypeRepository;
         private readonly ILedgerLocalDbFullDomainUnitOfWork _unitOfWork;
         private readonly ILedgerLocalBulkOperator _LedgerLocalBulkOperator;
 
         private readonly ILogger<AttributeService> _logger;
 
         public AttributeService(ILogger<AttributeService> logger, 
-            ILedgerLocalDbFullDomainRepository<GenericAttribute> attributeRepository,
-            ILedgerLocalDbFullDomainRepository<GenericAttributeValue> attributeValueRepository,
-            ILedgerLocalDbFullDomainRepository<GenericAttributeType> attributeTypeRepository,
+            ILedgerLocalDbFullDomainRepository<Genericattribute> attributeRepository,
+            ILedgerLocalDbFullDomainRepository<Genericattributevalue> attributeValueRepository,
+            ILedgerLocalDbFullDomainRepository<Genericattributetype> attributeTypeRepository,
             ILedgerLocalDbFullDomainUnitOfWork unitOfWork,
             ILedgerLocalBulkOperator LedgerLocalBulkOperator)
         {
@@ -41,7 +39,7 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             _LedgerLocalBulkOperator = LedgerLocalBulkOperator;
         }
 
-        public async Task<Tuple<string, IList<GenericAttribute>>> CreateAttributeBulk(IList<AttributeBulk> attributesCreates)
+        public async Task<Tuple<string, IList<Genericattribute>>> CreateAttributeBulk(IList<AttributeBulk> attributesCreates)
         {
             StringBuilder logger = new StringBuilder();
 
@@ -49,12 +47,12 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             var utcNow = DateTime.UtcNow;
 
-            var lstTuple = new List<Tuple<GenericAttributeType, GenericAttributeValue>>();
+            var lstTuple = new List<Tuple<Genericattributetype, Genericattributevalue>>();
 
-            var attributeTypeRepositoryLocal = (ILedgerLocalDbFullDomainRepository<GenericAttributeType>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<GenericAttributeType>));
-            var maxGaType = attributeTypeRepositoryLocal.DbSet.Max(x => x.GenericAttributeTypeId);
-            var attributeValueRepositoryLocal = (ILedgerLocalDbFullDomainRepository<GenericAttributeValue>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<GenericAttributeValue>));
-            var maxGaValue = attributeValueRepositoryLocal.DbSet.Max(x => x.GenericAttributeValueId);
+            var attributeTypeRepositoryLocal = (ILedgerLocalDbFullDomainRepository<Genericattributetype>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<Genericattributetype>));
+            var maxGaType = attributeTypeRepositoryLocal.DbSet.Max(x => x.Genericattributetypeid);
+            var attributeValueRepositoryLocal = (ILedgerLocalDbFullDomainRepository<Genericattributevalue>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<Genericattributevalue>));
+            var maxGaValue = attributeValueRepositoryLocal.DbSet.Max(x => x.Genericattributevalueid);
 
             foreach (var a1 in attributesCreates)
             {
@@ -63,8 +61,8 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
                 var t1 = CreateBulkTupleTypeValue(a1);
 
-                t1.Item1.GenericAttributeTypeId = maxGaType;
-                t1.Item2.GenericAttributeValueId = maxGaValue;
+                t1.Item1.Genericattributetypeid = maxGaType;
+                t1.Item2.Genericattributevalueid = maxGaValue;
 
                 lstTuple.Add(t1);
             }
@@ -91,9 +89,9 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             var lstTypes = lstTuple.Select(x => x.Item1).ToList();
             var LedgerLocalBulkOperatorLocal1 = (ILedgerLocalBulkOperator)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalBulkOperator));
-            await LedgerLocalBulkOperatorLocal1.BulkInsertBulkCopy<GenericAttributeType>(lstTypes, tuple1, "[System].[GenericAttributeType]", 1000);
+            await LedgerLocalBulkOperatorLocal1.BulkInsertBulkCopy<Genericattributetype>(lstTypes, tuple1, "[System].[Genericattributetype]", 1000);
 
-            logger.AppendLine(string.Format("GenericAttributeType Bulked: {0} rows", lstTypes.Count));
+            logger.AppendLine(string.Format("Genericattributetype Bulked: {0} rows", lstTypes.Count));
 
             var tuple2 = new List<Tuple<string, string>>();
 
@@ -118,32 +116,32 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             var lstValues = lstTuple.Select(x => x.Item2).ToList();
             var LedgerLocalBulkOperatorLocal2 = (ILedgerLocalBulkOperator)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalBulkOperator));
-            await LedgerLocalBulkOperatorLocal2.BulkInsertBulkCopy<GenericAttributeValue>(lstValues, tuple2, "[System].[GenericAttributeValue]", 1000);
+            await LedgerLocalBulkOperatorLocal2.BulkInsertBulkCopy<Genericattributevalue>(lstValues, tuple2, "[System].[Genericattributevalue]", 1000);
 
-            logger.AppendLine(string.Format("GenericAttributeValue Bulked: {0} rows", lstValues.Count));
+            logger.AppendLine(string.Format("Genericattributevalue Bulked: {0} rows", lstValues.Count));
 
-            var lstAttributes = new List<GenericAttribute>();
+            var lstAttributes = new List<Genericattribute>();
 
             var ix1 = 0;
-            var attributeRepositoryLocal = (ILedgerLocalDbFullDomainRepository<GenericAttribute>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<GenericAttribute>));
-            var maxGAttribute = attributeRepositoryLocal.DbSet.Max(x => x.GenericAttributeId);
+            var attributeRepositoryLocal = (ILedgerLocalDbFullDomainRepository<Genericattribute>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<Genericattribute>));
+            var maxGAttribute = attributeRepositoryLocal.DbSet.Max(x => x.Genericattributeid);
 
             foreach (var t1 in lstTuple)
             {
                 maxGAttribute = maxGAttribute + 1;
 
-                var attribute = new GenericAttribute();
-                attribute.GenericAttributeId = maxGAttribute;
-                attribute.GenericAttributeTypeId = t1.Item1.GenericAttributeTypeId;
-                attribute.GenericAttributeValueId = t1.Item2.GenericAttributeValueId;
+                var attribute = new Genericattribute();
+                attribute.Genericattributeid = maxGAttribute;
+                attribute.Genericattributetypeid = t1.Item1.Genericattributetypeid;
+                attribute.Genericattributevalueid = t1.Item2.Genericattributevalueid;
 
-                attribute.TypeString = attributesCreates[ix1].Type;
-                attribute.ValueString = attributesCreates[ix1].Value;
+                attribute.Typestring = attributesCreates[ix1].Type;
+                attribute.Valuestring = attributesCreates[ix1].Value;
 
-                attribute.CreatedOn = utcNow;
-                attribute.ModifiedOn = utcNow;
-                attribute.CreatedBy = "System";
-                attribute.ModifiedBy = "System";
+                attribute.Createdon = utcNow;
+                attribute.Modifiedon = utcNow;
+                attribute.Createdby = "System";
+                attribute.Modifiedby = "System";
 
                 JsonSerializerSettings settings = new JsonSerializerSettings()
                 {
@@ -154,20 +152,20 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
                 if (attributesCreates[ix1].TypeObject != null)
                 {
-                    attribute.TypeLabelString = JsonConvert.SerializeObject(attributesCreates[ix1].TypeObject, settings);
+                    attribute.Typelabelstring = JsonConvert.SerializeObject(attributesCreates[ix1].TypeObject, settings);
                 }
                 else
                 {
-                    attribute.TypeLabelString = EncodeLabel(attributesCreates[ix1].Type);
+                    attribute.Typelabelstring = EncodeLabel(attributesCreates[ix1].Type);
                 }
 
                 if (attributesCreates[ix1].ValueObject != null)
                 {
-                    attribute.ValueLabelString = JsonConvert.SerializeObject(attributesCreates[ix1].ValueObject, settings);
+                    attribute.Valuelabelstring = JsonConvert.SerializeObject(attributesCreates[ix1].ValueObject, settings);
                 }
                 else
                 {
-                    attribute.ValueLabelString = EncodeLabel(attributesCreates[ix1].Value);
+                    attribute.Valuelabelstring = EncodeLabel(attributesCreates[ix1].Value);
                 }
 
                 lstAttributes.Add(attribute);
@@ -189,14 +187,14 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             tuple3.Add(new Tuple<string, string>("ModifiedBy", "ModifiedBy"));
 
             var LedgerLocalBulkOperatorLocal3 = (ILedgerLocalBulkOperator)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalBulkOperator));
-            await LedgerLocalBulkOperatorLocal3.BulkInsertBulkCopy<GenericAttribute>(lstAttributes, tuple3, "[System].[GenericAttribute]", 1000);
+            await LedgerLocalBulkOperatorLocal3.BulkInsertBulkCopy<Genericattribute>(lstAttributes, tuple3, "[System].[Genericattribute]", 1000);
 
-            logger.AppendLine(string.Format("GenericAttribute Bulked: {0} rows", lstAttributes.Count));
+            logger.AppendLine(string.Format("Genericattribute Bulked: {0} rows", lstAttributes.Count));
 
-            return new Tuple<string, IList<GenericAttribute>>(logger.ToString(), lstAttributes);
+            return new Tuple<string, IList<Genericattribute>>(logger.ToString(), lstAttributes);
         }
 
-        public async Task<GenericAttribute> CreateOrGetAttribute(
+        public async Task<Genericattribute> CreateOrGetAttribute(
             string type,
             string value,
             object typeObject = null,
@@ -212,25 +210,25 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             var tupleTypeValue = await CreateOrGetTupleTypeValue(type, value, typeObject, valueObject, typeSort, valueSort, categoryId);
 
-            var findAttribute = _attributeRepository.DbSet.FirstOrDefault(x => x.GenericAttributeTypeId == tupleTypeValue.Item1.GenericAttributeTypeId
-                && x.GenericAttributeValueId == tupleTypeValue.Item2.GenericAttributeValueId);
+            var findAttribute = _attributeRepository.DbSet.FirstOrDefault(x => x.Genericattributetypeid == tupleTypeValue.Item1.Genericattributetypeid
+                && x.Genericattributevalueid == tupleTypeValue.Item2.Genericattributevalueid);
 
             if (findAttribute != null)
             {
                 return findAttribute;
             }
 
-            var attribute = new GenericAttribute();
-            attribute.GenericAttributeTypeId = tupleTypeValue.Item1.GenericAttributeTypeId;
-            attribute.GenericAttributeValueId = tupleTypeValue.Item2.GenericAttributeValueId;
+            var attribute = new Genericattribute();
+            attribute.Genericattributetypeid = tupleTypeValue.Item1.Genericattributetypeid;
+            attribute.Genericattributevalueid = tupleTypeValue.Item2.Genericattributevalueid;
 
-            attribute.TypeString = type;
-            attribute.ValueString = value;
+            attribute.Typestring = type;
+            attribute.Valuestring = value;
 
-            attribute.CreatedOn = utcNow;
-            attribute.ModifiedOn = utcNow;
-            attribute.CreatedBy = "System";
-            attribute.ModifiedBy = "System";
+            attribute.Createdon = utcNow;
+            attribute.Modifiedon = utcNow;
+            attribute.Createdby = "System";
+            attribute.Modifiedby = "System";
 
             JsonSerializerSettings settings = new JsonSerializerSettings()
             {
@@ -241,20 +239,20 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             if (typeObject != null)
             {
-                attribute.TypeLabelString = JsonConvert.SerializeObject(typeObject, settings);
+                attribute.Typelabelstring = JsonConvert.SerializeObject(typeObject, settings);
             }
             else
             {
-                attribute.TypeLabelString = EncodeLabel(type);
+                attribute.Typelabelstring = EncodeLabel(type);
             }
 
             if (valueObject != null)
             {
-                attribute.ValueLabelString = JsonConvert.SerializeObject(valueObject, settings);
+                attribute.Valuelabelstring = JsonConvert.SerializeObject(valueObject, settings);
             }
             else
             {
-                attribute.ValueLabelString = EncodeLabel(value);
+                attribute.Valuelabelstring = EncodeLabel(value);
             }
 
             await _attributeRepository.AddAsync(attribute);
@@ -267,7 +265,7 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             return attribute;
         }
 
-        public GenericAttributeType GetAttributeType(string type, object typeObject = null, int? categoryId = null)
+        public Genericattributetype GetAttributeType(string type, object typeObject = null, int? categoryId = null)
         {
             Check.Require(!string.IsNullOrWhiteSpace(type), "type must be valid.");
 
@@ -280,29 +278,29 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             settings.Converters.Insert(0, new PrimitiveJsonConverter());
 
-            GenericAttributeType foundEntity = null;
+            Genericattributetype foundEntity = null;
 
             if (typeObject != null)
             {
                 var jsonObj = JsonConvert.SerializeObject(typeObject, settings);
                 var found = _attributeTypeRepository.DbSet.FirstOrDefault(x =>
                     string.Compare(x.Name, type, true) == 0
-                    && string.Compare(x.ValueString, jsonObj, true) == 0
-                    && x.CategoryId == categoryId);
+                    && string.Compare(x.Valuestring, jsonObj, true) == 0
+                    && x.Categoryid == categoryId);
                 foundEntity = found;
             }
             else
             {
                 var found2 = _attributeTypeRepository.DbSet.FirstOrDefault(x =>
                     string.Compare(x.Name, type, true) == 0
-                    && x.CategoryId == categoryId);
+                    && x.Categoryid == categoryId);
                 foundEntity = found2;
             }
 
             return foundEntity;
         }
 
-        public GenericAttributeValue GetValue(string value, object valueObject = null)
+        public Genericattributevalue GetValue(string value, object valueObject = null)
         {
             Check.Require(!string.IsNullOrWhiteSpace(value), "value must be valid.");
 
@@ -315,14 +313,14 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             settings.Converters.Insert(0, new PrimitiveJsonConverter());
 
-            GenericAttributeValue foundEntity = null;
+            Genericattributevalue foundEntity = null;
 
             if (valueObject != null)
             {
                 var jsonObj = JsonConvert.SerializeObject(valueObject, settings);
                 var found = _attributeValueRepository.DbSet.FirstOrDefault(x =>
                     string.Compare(x.Name, value, true) == 0
-                    && string.Compare(x.ValueString, jsonObj, true) == 0);
+                    && string.Compare(x.Valuestring, jsonObj, true) == 0);
                 foundEntity = found;
             }
             else
@@ -340,7 +338,7 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             return label.Replace(" ", "-");
         }
 
-        private Tuple<GenericAttributeType, GenericAttributeValue> CreateBulkTupleTypeValue(
+        private Tuple<Genericattributetype, Genericattributevalue> CreateBulkTupleTypeValue(
             AttributeBulk bulkInfo)
         {
             var utcNow = DateTime.UtcNow;
@@ -353,18 +351,18 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             settings.Converters.Insert(0, new PrimitiveJsonConverter());
 
 
-            var typeEntity = new GenericAttributeType();
-            var valueEntity = new GenericAttributeValue();
+            var typeEntity = new Genericattributetype();
+            var valueEntity = new Genericattributevalue();
 
-            typeEntity.CreatedOn = utcNow;
-            typeEntity.ModifiedOn = utcNow;
-            typeEntity.CreatedBy = "System";
-            typeEntity.ModifiedBy = "System";
+            typeEntity.Createdon = utcNow;
+            typeEntity.Modifiedon = utcNow;
+            typeEntity.Createdby = "System";
+            typeEntity.Modifiedby = "System";
 
-            valueEntity.CreatedOn = utcNow;
-            valueEntity.ModifiedOn = utcNow;
-            valueEntity.CreatedBy = "System";
-            valueEntity.ModifiedBy = "System";
+            valueEntity.Createdon = utcNow;
+            valueEntity.Modifiedon = utcNow;
+            valueEntity.Createdby = "System";
+            valueEntity.Modifiedby = "System";
 
             typeEntity.Sort = bulkInfo.TypeSort;
             valueEntity.Sort = bulkInfo.ValueSort;
@@ -373,16 +371,16 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             if (bulkInfo.CategoryId.HasValue)
             {
-                typeEntity.CategoryId = bulkInfo.CategoryId.Value;
+                typeEntity.Categoryid = bulkInfo.CategoryId.Value;
             }
 
             if (bulkInfo.TypeObject != null)
             {
                 var typeObjectJson = JsonConvert.SerializeObject(bulkInfo.TypeObject, settings);
-                typeEntity.ValueString = typeObjectJson;
+                typeEntity.Valuestring = typeObjectJson;
 
-                typeEntity.MetaTypeString = bulkInfo.TypeObject.GetType().Name;
-                typeEntity.MetaTypeLabel = bulkInfo.TypeObject.GetType().AssemblyQualifiedName;
+                typeEntity.Metatypestring = bulkInfo.TypeObject.GetType().Name;
+                typeEntity.Metatypelabel = bulkInfo.TypeObject.GetType().AssemblyQualifiedName;
             }
 
             valueEntity.Name = bulkInfo.Value;
@@ -390,25 +388,25 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             if (bulkInfo.ValueObject != null)
             {
                 var valueObjectJson = JsonConvert.SerializeObject(bulkInfo.ValueObject, settings);
-                valueEntity.ValueString = valueObjectJson;
+                valueEntity.Valuestring = valueObjectJson;
 
-                valueEntity.MetaTypeString = bulkInfo.ValueObject.GetType().Name;
-                valueEntity.MetaTypeLabel = bulkInfo.ValueObject.GetType().AssemblyQualifiedName;
+                valueEntity.Metatypestring = bulkInfo.ValueObject.GetType().Name;
+                valueEntity.Metatypelabel = bulkInfo.ValueObject.GetType().AssemblyQualifiedName;
             }
 
-            GenericAttributeType finalType;
-            GenericAttributeValue finalValue;
+            Genericattributetype finalType;
+            Genericattributevalue finalValue;
             
             finalType = typeEntity;
 
             finalValue = valueEntity;
 
-            var resTuple = new Tuple<GenericAttributeType, GenericAttributeValue>(finalType, finalValue);
+            var resTuple = new Tuple<Genericattributetype, Genericattributevalue>(finalType, finalValue);
 
             return resTuple;
         }
 
-        private async Task<Tuple<GenericAttributeType, GenericAttributeValue>> CreateOrGetTupleTypeValue (
+        private async Task<Tuple<Genericattributetype, Genericattributevalue>> CreateOrGetTupleTypeValue (
             string type,
             string value,
             object typeObject = null,
@@ -448,18 +446,18 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             settings.Converters.Insert(0, new PrimitiveJsonConverter());
 
 
-            var typeEntity = new GenericAttributeType();
-            var valueEntity = new GenericAttributeValue();
+            var typeEntity = new Genericattributetype();
+            var valueEntity = new Genericattributevalue();
 
-            typeEntity.CreatedOn = utcNow;
-            typeEntity.ModifiedOn = utcNow;
-            typeEntity.CreatedBy = "System";
-            typeEntity.ModifiedBy = "System";
+            typeEntity.Createdon = utcNow;
+            typeEntity.Modifiedon = utcNow;
+            typeEntity.Createdby = "System";
+            typeEntity.Modifiedby = "System";
 
-            valueEntity.CreatedOn = utcNow;
-            valueEntity.ModifiedOn = utcNow;
-            valueEntity.CreatedBy = "System";
-            valueEntity.ModifiedBy = "System";
+            valueEntity.Createdon = utcNow;
+            valueEntity.Modifiedon = utcNow;
+            valueEntity.Createdby = "System";
+            valueEntity.Modifiedby = "System";
 
             typeEntity.Sort = typeSort;
             valueEntity.Sort = valueSort;
@@ -468,16 +466,16 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             if (categoryId.HasValue)
             {
-                typeEntity.CategoryId = categoryId.Value;
+                typeEntity.Categoryid = categoryId.Value;
             }
 
             if (typeObject != null)
             {
                 var typeObjectJson = JsonConvert.SerializeObject(typeObject, settings);
-                typeEntity.ValueString = typeObjectJson;
+                typeEntity.Valuestring = typeObjectJson;
 
-                typeEntity.MetaTypeString = typeObject.GetType().Name;
-                typeEntity.MetaTypeLabel = typeObject.GetType().AssemblyQualifiedName;
+                typeEntity.Metatypestring = typeObject.GetType().Name;
+                typeEntity.Metatypelabel = typeObject.GetType().AssemblyQualifiedName;
             }
 
             valueEntity.Name = value;
@@ -485,21 +483,21 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             if (valueObject != null)
             {
                 var valueObjectJson = JsonConvert.SerializeObject(valueObject, settings);
-                valueEntity.ValueString = valueObjectJson;
+                valueEntity.Valuestring = valueObjectJson;
 
-                valueEntity.MetaTypeString = valueObject.GetType().Name;
-                valueEntity.MetaTypeLabel = valueObject.GetType().AssemblyQualifiedName;
+                valueEntity.Metatypestring = valueObject.GetType().Name;
+                valueEntity.Metatypelabel = valueObject.GetType().AssemblyQualifiedName;
             }
 
-            GenericAttributeType finalType;
-            GenericAttributeValue finalValue;
+            Genericattributetype finalType;
+            Genericattributevalue finalValue;
 
             var findType = _attributeTypeRepository.DbSet.FirstOrDefault(
-                x => x.CategoryId == typeEntity.CategoryId
+                x => x.Categoryid == typeEntity.Categoryid
                     && x.Name == typeEntity.Name
-                    && x.ValueString == typeEntity.ValueString
-                    && x.MetaTypeString == typeEntity.MetaTypeString
-                    && x.MetaTypeLabel == typeEntity.MetaTypeLabel);
+                    && x.Valuestring == typeEntity.Valuestring
+                    && x.Metatypestring == typeEntity.Metatypestring
+                    && x.Metatypelabel == typeEntity.Metatypelabel);
 
             if (findType != null)
             {
@@ -521,9 +519,9 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
 
             var findValue = _attributeValueRepository.DbSet.FirstOrDefault(
                 x => x.Name == valueEntity.Name
-                    && x.ValueString == valueEntity.ValueString
-                    && x.MetaTypeString == valueEntity.MetaTypeString
-                    && x.MetaTypeLabel == valueEntity.MetaTypeLabel);
+                    && x.Valuestring == valueEntity.Valuestring
+                    && x.Metatypestring == valueEntity.Metatypestring
+                    && x.Metatypelabel == valueEntity.Metatypelabel);
 
             if (findValue != null)
             {
@@ -543,12 +541,12 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
                 finalValue = valueEntity;
             }
 
-            var resTuple = new Tuple<GenericAttributeType, GenericAttributeValue>(finalType, finalValue);
+            var resTuple = new Tuple<Genericattributetype, Genericattributevalue>(finalType, finalValue);
 
             return resTuple;
         }
 
-        private AttributeEntityObject DeserializeFromTuple(Tuple<GenericAttributeType, GenericAttributeValue> entry)
+        private AttributeEntityObject DeserializeFromTuple(Tuple<Genericattributetype, Genericattributevalue> entry)
         {
 
             var utcNow = DateTime.UtcNow;
@@ -565,28 +563,28 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             res.Type = entry.Item1.Name;
             res.TypeSort = entry.Item1.Sort;
 
-            if (!string.IsNullOrWhiteSpace(entry.Item1.ValueString))
+            if (!string.IsNullOrWhiteSpace(entry.Item1.Valuestring))
             {
-                res.TypeObject = JsonConvert.DeserializeObject(entry.Item1.ValueString, settings);
+                res.TypeObject = JsonConvert.DeserializeObject(entry.Item1.Valuestring, settings);
             }
 
-            res.TypeMetaTypeString = entry.Item1.MetaTypeString;
-            res.TypeMetaTypeFullString = entry.Item1.MetaTypeLabel;
+            res.TypeMetaTypeString = entry.Item1.Metatypestring;
+            res.TypeMetaTypeFullString = entry.Item1.Metatypelabel;
 
             res.Value = entry.Item2.Name;
             res.ValueSort = entry.Item2.Sort;
 
-            if (!string.IsNullOrWhiteSpace(entry.Item2.ValueString))
+            if (!string.IsNullOrWhiteSpace(entry.Item2.Valuestring))
             {
-                res.ValueObject = JsonConvert.DeserializeObject(entry.Item2.ValueString, settings);
+                res.ValueObject = JsonConvert.DeserializeObject(entry.Item2.Valuestring, settings);
             }
 
-            res.ValueMetaTypeString = entry.Item2.MetaTypeString;
-            res.ValueMetaTypeFullString = entry.Item2.MetaTypeLabel;
+            res.ValueMetaTypeString = entry.Item2.Metatypestring;
+            res.ValueMetaTypeFullString = entry.Item2.Metatypelabel;
 
-            if (entry.Item1.CategoryId.HasValue)
+            if (entry.Item1.Categoryid.HasValue)
             {
-                res.CategoryId = entry.Item1.CategoryId.Value;
+                res.CategoryId = entry.Item1.Categoryid.Value;
             }
 
             return res;

@@ -7,7 +7,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
     {
         public int Suppliernoteid { get; set; }
         public int? Supplierid { get; set; }
-        public char Note { get; set; }
+        public string Note { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }
         public string Createdby { get; set; }

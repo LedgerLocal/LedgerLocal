@@ -17,7 +17,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int? Number { get; set; }
         public string Emailaddress { get; set; }
         public string Phonenumber { get; set; }
-        public char Comment { get; set; }
+        public string Comment { get; set; }
         public DateTime Dateofreturn { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }

@@ -9,7 +9,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int? Cultureid { get; set; }
         public int? Supplierid { get; set; }
         public string Shortdescription { get; set; }
-        public char? Description { get; set; }
+        public string Description { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }
         public string Createdby { get; set; }

@@ -8,7 +8,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Printtemplateid { get; set; }
         public int? Printtypeid { get; set; }
         public int? Cultureid { get; set; }
-        public char Body { get; set; }
+        public string Body { get; set; }
         public string Displayname { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }

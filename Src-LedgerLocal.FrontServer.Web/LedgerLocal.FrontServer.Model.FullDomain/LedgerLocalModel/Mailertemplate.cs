@@ -17,7 +17,7 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public int Mailertypeid { get; set; }
         public int Cultureid { get; set; }
         public string Subject { get; set; }
-        public char Body { get; set; }
+        public string Body { get; set; }
         public bool? Ishtml { get; set; }
         public bool? Isdefault { get; set; }
         public DateTime Createdon { get; set; }
