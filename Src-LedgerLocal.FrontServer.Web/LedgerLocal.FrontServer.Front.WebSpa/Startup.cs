@@ -70,6 +70,11 @@ namespace LedgerLocal.FrontServer.Api.Web
 
             var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                connectionString = "Host=91.121.107.37:5432;Database=ledgerlocaldb;Username=lladmin;Password=ll132@";
+            }
+
             //EF
             services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
 
