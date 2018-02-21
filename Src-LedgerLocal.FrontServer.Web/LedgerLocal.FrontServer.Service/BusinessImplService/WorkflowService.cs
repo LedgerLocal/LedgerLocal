@@ -104,10 +104,10 @@ namespace LedgerLocal.FrontServer.Service
 
             var p1 = _workflowRepository.DbSet
                     .Include("Category")
-                    .Include("WorkflowGenericAttributeMap")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
+                    .Include("Workflowgenericattributemap")
+                    .Include("Workflowgenericattributemap.Genericattribute")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributetype")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributevalue")
                     .Where(x => x.Workflowcontainerid == p.Workflowcontainerid).First();
             return p1;
         }
@@ -122,7 +122,7 @@ namespace LedgerLocal.FrontServer.Service
         {
             var p1 = _workflowRepository.DbSet
                                 .Include("Category")
-                                .Include("WorkflowGenericAttributeMap")
+                                .Include("Workflowgenericattributemap")
                                 .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId).First();
 
             var dateNow = DateTime.UtcNow;
@@ -143,8 +143,8 @@ namespace LedgerLocal.FrontServer.Service
             {
                 var lstAttributes = await _workflowGenericAttributeMapRepository
                         .DbSet
-                                .Include("GenericAttribute")
-                                .Include("WorkflowContainer")
+                                .Include("Genericattribute")
+                                .Include("Workflowcontainer")
                         .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId).ToListAsync();
 
                 foreach (var kv in workflow.Arguments)
@@ -185,7 +185,7 @@ namespace LedgerLocal.FrontServer.Service
 
                 var lstAttributesToDelete = await _workflowGenericAttributeMapRepository
                     .DbSet
-                    .Include("GenericAttribute")
+                    .Include("Genericattribute")
                     .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId
                         && x.Modifiedon != dateNow).ToListAsync();
 
@@ -204,10 +204,10 @@ namespace LedgerLocal.FrontServer.Service
 
             var pFinal = _workflowRepository.DbSet
                     .Include("Category")
-                    .Include("WorkflowGenericAttributeMap")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
+                    .Include("Workflowgenericattributemap")
+                    .Include("Workflowgenericattributemap.Genericattribute")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributetype")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributevalue")
                     .Where(x => x.Workflowcontainerid.ToString() == workflow.WorkflowId).First();
 
             return _mapper.Map<Workflowcontainer, WorkflowDescription>(pFinal);
@@ -225,10 +225,10 @@ namespace LedgerLocal.FrontServer.Service
 
 
                 vl = wr1.DbSet
-                    .Include("WorkflowGenericAttributeMap")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
+                    .Include("Workflowgenericattributemap")
+                    .Include("Workflowgenericattributemap.Genericattribute")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributetype")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributevalue")
                     .ToList();
             });
 
@@ -246,10 +246,10 @@ namespace LedgerLocal.FrontServer.Service
                 var wr1 = (ILedgerLocalDbFullDomainRepository<Workflowcontainer>)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(ILedgerLocalDbFullDomainRepository<Workflowcontainer>));
 
                 vl = wr1.DbSet
-                    .Include("WorkflowGenericAttributeMap")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeType")
-                    .Include("WorkflowGenericAttributeMap.GenericAttribute.GenericAttributeValue")
+                    .Include("Workflowgenericattributemap")
+                    .Include("Workflowgenericattributemap.Genericattribute")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributetype")
+                    .Include("Workflowgenericattributemap.Genericattribute.Genericattributevalue")
                     .Where(x => x.Workflowcontainerid.ToString() == workflowId)
                     .ToList();
             });
