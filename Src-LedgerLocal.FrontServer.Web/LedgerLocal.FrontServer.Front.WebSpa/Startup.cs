@@ -72,7 +72,7 @@ namespace LedgerLocal.FrontServer.Api.Web
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                connectionString = "Host=91.121.107.37,5432;Database=ledgerlocaldb;Username=lladmin;Password=ll132@";
+                connectionString = "Host=91.121.107.37;Database=ledgerlocaldb;Username=lladmin;Password=ll132@;Port=5432";
             }
 
             //EF
