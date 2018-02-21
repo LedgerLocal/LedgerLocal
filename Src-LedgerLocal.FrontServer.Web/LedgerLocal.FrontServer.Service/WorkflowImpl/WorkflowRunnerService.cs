@@ -19,14 +19,12 @@ namespace LedgerLocal.FrontServer.Service.WorkflowImpl
 {
     public class WorkflowRunnerService : IWorkflowRunnerService
     {
-        private readonly ICommonMessageService _commonMessageService;
         private readonly IWorkflowService _workflowService;
         private readonly ILogger<WorkflowRunnerService> _logger;
 
-        public WorkflowRunnerService(ILogger<WorkflowRunnerService> logger, ICommonMessageService commonMessageService, IWorkflowService workflowService)
+        public WorkflowRunnerService(ILogger<WorkflowRunnerService> logger, IWorkflowService workflowService)
         {
             _logger = logger;
-            _commonMessageService = commonMessageService;
             _workflowService = workflowService;
         }
 
@@ -75,8 +73,7 @@ namespace LedgerLocal.FrontServer.Service.WorkflowImpl
                     .SetValue("awaitTask", new Action<Task>(async (task) => {
                         await task;
                     }))
-
-                    .SetValue("commonMessageService", _commonMessageService)
+                    
                     .SetValue("LedgerLocalJs", LedgerLocalJs)
                     .SetValue("LedgerLocalArgs", options.DicoArgs);
 
