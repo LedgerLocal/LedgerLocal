@@ -4028,8 +4028,6 @@ function doinit(isHeader: boolean, isHome: boolean): any {
 
   }
 
-  /*
-
   function VerticalTimeline(element) {
     this.element = element;
     this.blocks = this.element.getElementsByClassName("js-cd-block");
@@ -4040,8 +4038,7 @@ function doinit(isHeader: boolean, isHome: boolean): any {
   };
 
   VerticalTimeline.prototype.hideBlocks = function () {
-    //hide timeline blocks which are outside the viewport
-    if (!"classList" in (<any>document.documentElement)) {
+    if (!(<any>document.documentElement.classList)) {
       return;
     }
     var self = this;
@@ -4056,7 +4053,7 @@ function doinit(isHeader: boolean, isHome: boolean): any {
   };
 
   VerticalTimeline.prototype.showBlocks = function () {
-    if (! "classList" in (<any>document.documentElement)) {
+    if (!(<any>document.documentElement.classList)) {
       return;
     }
     var self = this;
@@ -4064,7 +4061,7 @@ function doinit(isHeader: boolean, isHome: boolean): any {
       (function (i) {
         if (self.contents[i].classList.contains("cd-is-hidden")
           && self.blocks[i].getBoundingClientRect().top <= window.innerHeight * self.offset) {
-          // add bounce-in animation
+
           self.images[i].classList.add("cd-timeline__img--bounce-in");
           self.contents[i].classList.add("cd-timeline__content--bounce-in");
           self.images[i].classList.remove("cd-is-hidden");
@@ -4084,7 +4081,6 @@ function doinit(isHeader: boolean, isHome: boolean): any {
       })(i);
     }
 
-    //show timeline blocks on scrolling
     window.addEventListener("scroll", function (event) {
       if (!scrolling) {
         scrolling = true;
@@ -4099,8 +4095,6 @@ function doinit(isHeader: boolean, isHome: boolean): any {
     });
     scrolling = false;
   };
-
-  */
   
 }
 
