@@ -1,0 +1,81 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model RegisterViewModel
+@inject SignInManager<UserManagement.Models.User> SignInManager
+
+@{
+    Layout = "_MemberLayout";
+    ViewData["Title"] = "Register";
+}
+
+<form asp-controller="MemberAccount" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="nobottommargin">
+	<h3>Create a new account</h3>
+
+	<div class="col_full">
+		<label asp-for="Email">Email:</label>
+		<input asp-for="Email" class="form-control not-dark" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+
+	<div class="col_full">
+		<label asp-for="Password">Password:</label>
+		<input asp-for="Password" class="form-control not-dark" />
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	
+	<div class="col_full">
+		<label asp-for="ConfirmPassword">Confirm  Password:</label>
+		<input asp-for="ConfirmPassword" class="form-control" />
+		<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+	</div>
+	
+	<div class="col_full">
+		<input asp-for="IsAgree" class="cbbig">
+		 Yes, I hereby agree to the LedgerLocal Terms Conditions (incl. processing of my personal data for marketing purposes and customer behavior analysis). Click <a target="_blank" href="http://www.ledgerlocal.ch/ledgerlocal/terms-en.html">here</a>  for more information.
+	</div>
+
+
+	<div class="col_full nobottommargin">
+		<div class="text-right">
+			<button type="submit" class="button button-3d button-amber nomargin fleft" id="login-form-submit" name="login-form-submit" value="login">Register</button>
+			<a asp-action="Login">Login -></a>
+		</div>
+	</div>
+</form>
+
+<div class="line line-sm topmargin-sm"></div>
+
+<div class="center">
+	<h4 style="margin-bottom: 15px;">Or Login with</h4>
+	
+	@{
+		var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+		if (loginProviders.Count == 0)
+		{
+			<div>
+				<p>
+					There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+					for details on setting up this ASP.NET application to support logging in via external services.
+				</p>
+			</div>
+		}
+		else
+		{
+			<form asp-controller="MemberAccount" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+				<div>
+					<p>
+						@foreach (var provider in loginProviders)
+						{
+							<button type="submit" class="button button-rounded si-facebook si-colored" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+						}
+					</p>
+				</div>
+			</form>
+		}
+	}
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_MemberValidationScriptsPartial"); }
+}
