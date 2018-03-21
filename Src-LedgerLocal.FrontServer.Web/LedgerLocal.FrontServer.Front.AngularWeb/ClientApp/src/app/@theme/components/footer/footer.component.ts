@@ -23,6 +23,15 @@ export class FooterComponent implements OnInit {
 
   contentBlockList: any;
 
+  public contactname: string;
+  public contactemail: string;
+  public contactphone: string;
+  public contactsubject: string;
+  public contactbody: string;
+
+  public lat: number = 47.166156;
+  public lng: number = 8.515933;
+
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private userService: UserService,
