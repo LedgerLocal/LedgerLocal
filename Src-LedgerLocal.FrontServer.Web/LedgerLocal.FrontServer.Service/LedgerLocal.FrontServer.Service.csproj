@@ -21,14 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Audit.NET" Version="8.3.0" />
-    <PackageReference Include="Audit.WebApi" Version="8.3.0" />
-    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="Audit.NET" Version="11.0.7" />
+    <PackageReference Include="Audit.WebApi" Version="11.0.7" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
     <PackageReference Include="Jint" Version="3.0.0-beta-001" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
-    <PackageReference Include="NEST" Version="5.5.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="NEST" Version="6.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="System.Reactive.Core" Version="3.1.1" />

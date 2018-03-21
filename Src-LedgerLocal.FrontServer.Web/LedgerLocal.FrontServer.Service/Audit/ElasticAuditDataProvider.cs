@@ -196,23 +196,25 @@ namespace LedgerLocal.FrontServer.Service.AuditProvider
         {
             try
             {
-                if (jos == null || jos.Count() < 1)
-                    return;
+                //if (jos == null || jos.Count() < 1)
+                //    return;
 
-                var indxC = jos.Select(c => new { index = new { _index = IndexName, _type = "Audit", _id = c.Item1 } });
+                //var indxC = jos.Select(c => new { index = new { _index = IndexName, _type = "Audit", _id = c.Item1 } });
 
-                var bb = jos.Zip(indxC, (f, s) => new object[] { s, f.Item2 });
-                var bbo = bb.SelectMany(a => a);
+                //var bb = jos.Zip(indxC, (f, s) => new object[] { s, f.Item2 });
+                //var bbo = bb.SelectMany(a => a);
 
-                var clt = Client;
-                if (clt != null)
-                {
-                    var res = await clt.LowLevel.BulkAsync<VoidResponse>(IndexName, "Audit", new PostData<object>(bbo.ToArray()));
-                    if (!(res != null && res.Success))
-                    {
-                        Debug.WriteLine("Error inserting into ES");
-                    }
-                }
+                //var clt = Client;
+                //if (clt != null)
+                //{
+                //    var res = await clt.LowLevel.BulkAsync<VoidResponse>(IndexName, "Audit", new PostData<object>(bbo.ToArray()));
+                //    if (!(res != null && res.Success))
+                //    {
+                //        Debug.WriteLine("Error inserting into ES");
+                //    }
+                //}
+
+                await Task.Run(() => { });
             }
             catch (Exception ex)
             {

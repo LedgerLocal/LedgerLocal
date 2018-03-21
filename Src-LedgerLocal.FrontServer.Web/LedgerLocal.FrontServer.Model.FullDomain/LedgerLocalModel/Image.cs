@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LedgerLocal.FrontServer.Model.FullDomain;
+using System;
 using System.Collections.Generic;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain
 {
-    public partial class Image
+    public partial class Image : BaseEntity
     {
         public Image()
         {
@@ -21,11 +22,6 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Thumburl { get; set; }
         public string Fullimageurl { get; set; }
         public bool Active { get; set; }
-        public DateTime Createdon { get; set; }
-        public DateTime Modifiedon { get; set; }
-        public string Createdby { get; set; }
-        public string Modifiedby { get; set; }
-
         public Imagetype Imagetype { get; set; }
         public ICollection<Articleimagemap> Articleimagemap { get; set; }
         public ICollection<Categoryimagemap> Categoryimagemap { get; set; }

@@ -25,7 +25,7 @@ namespace Common.Data.Infrastructure
         T Get(Expression<Func<T, bool>> where);
         IEnumerable<T> GetAll();
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
-        Task AddAsync(T entity);
+        Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task UpdateAsync(T entity, Expression<Func<T, object>> expId);
         Task DeleteAsync(T entity);

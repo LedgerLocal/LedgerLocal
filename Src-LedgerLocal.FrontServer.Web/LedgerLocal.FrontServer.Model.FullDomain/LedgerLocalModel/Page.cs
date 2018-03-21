@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LedgerLocal.FrontServer.Model.FullDomain;
+using System;
 using System.Collections.Generic;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain
 {
-    public partial class Page
+    public partial class Page : BaseEntity
     {
         public Page()
         {
@@ -25,11 +26,6 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Action { get; set; }
         public string Controller { get; set; }
         public int Sort { get; set; }
-        public DateTime Createdon { get; set; }
-        public DateTime Modifiedon { get; set; }
-        public string Createdby { get; set; }
-        public string Modifiedby { get; set; }
-
         public Category Category { get; set; }
         public Pagetype Pagetype { get; set; }
         public Page Parentpage { get; set; }

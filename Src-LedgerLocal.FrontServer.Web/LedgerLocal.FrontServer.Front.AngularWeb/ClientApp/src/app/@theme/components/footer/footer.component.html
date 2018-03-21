@@ -1,0 +1,118 @@
+<!-- Footer
+    ============================================= -->
+<footer id="footer" class="dark">
+  <div class="container">
+    <!-- Footer Widgets
+    ============================================= -->
+    <div class="footer-widgets-wrap clearfix">
+      <div class="col_two_third">
+        <!-- Contact
+        ============================================= -->
+        <div class="col_one_third">
+          <div class="widget quick-contact-widget clearfix">
+            <h4>Contact our team</h4>
+            <div class="quick-contact-form-result"></div>
+            <div class="row">
+              <div class="col-xs-12">
+                <form id="quick-contact-form" name="template-contactform" action="include/sendemail.php" method="post">
+                  <div class="form-process"></div>
+                  <div class="input-group divcenter">
+                    <span class="input-group-addon"><i class="icon-email2"></i></span>
+                    <input type="text" [(ngModel)]="contactemail" class="required form-control email input-block-level" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address *" />
+                  </div>
+                  <div class="input-group divcenter">
+                    <span class="input-group-addon"><i class="icon-edit"></i></span>
+                    <input [(ngModel)]="contactsubject" type="text" class="required form-control input-block-level" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Subject *" />
+                  </div>
+                  <textarea [(ngModel)]="contactbody" class="required form-control input-block-level short-textarea" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
+                  <input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
+                  <button type="submit" (click)="sendContactInfo()" id="quick-contact-form-submit" name="quick-contact-form-submit" class="btn btn-warning nomargin" value="submit">Send Email</button>
+                </form>
+              </div>
+            </div>
+            <div class="clearfix">
+              <a href="#" class="social-icon si-small si-borderless si-facebook">
+                <i class="icon-facebook"></i>
+                <i class="icon-facebook"></i>
+              </a>
+              <a href="#" class="social-icon si-small si-borderless si-twitter">
+                <i class="icon-twitter"></i>
+                <i class="icon-twitter"></i>
+              </a>
+              <a href="#" class="social-icon si-small si-borderless si-gplus">
+                <i class="icon-gplus"></i>
+                <i class="icon-gplus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Carte
+        ============================================= -->
+        <div class="col_two_third col_last">
+          <div class="widget clearfix">
+            <p>Global Account Penetration</p>
+            <img class="img-rounded" src="/assets/llc/images/page/carte.jpg" alt="LedgerLocal">
+          </div>
+        </div>
+      </div>
+
+      <!-- Amount + Newsletter
+      ============================================= -->
+      <div class="col_one_third col_last">
+        <div class="widget clearfix" style="margin-bottom: -20px;">
+          <div class="row">
+            <div class="col-md-6 bottommargin-sm">
+              <div class="counter counter-small"><span data-from="50" data-to="50000" data-refresh-interval="80" data-speed="3000" data-comma="true"></span> $</div>
+              <h5 class="nobottommargin">Amount collected</h5>
+            </div>
+            <div class="col-md-6 bottommargin-sm">
+              <div class="counter counter-small"><span data-from="100" data-to="65" data-refresh-interval="50" data-speed="2000" data-comma="true"></span> $</div>
+              <h5 class="nobottommargin">Current token price</h5>
+            </div>
+          </div>
+        </div>
+        <div class="widget subscribe-widget clearfix">
+          <h5><strong>Subscribe</strong> to Our Newsletter.</h5>
+          <div class="widget-subscribe-form-result"></div>
+          <form id="widget-subscribe-form" action="include/subscribe.php" role="form" method="post" class="nobottommargin">
+            <div class="input-group divcenter">
+              <span class="input-group-addon"><i class="icon-email2"></i></span>
+              <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Enter your Email">
+              <span class="input-group-btn">
+                <button class="btn btn-success" type="submit">Subscribe</button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <div class="widget clearfix" style="margin-bottom: -20px;">
+          <div class="row">
+            <div class="col-md-6 clearfix bottommargin-sm">
+              <a href="#" class="social-icon si-dark si-colored si-github nobottommargin" style="margin-right: 10px;">
+                <i class="icon-github-circled"></i>
+                <i class="icon-github-circled"></i>
+              </a>
+              <a href="#"><small style="display: block; margin-top: 3px;"><strong>Follow us </strong><br>on GitHub</small></a>
+            </div>
+            <div class="col-md-6 clearfix">
+              <a href="https://t.me/joinchat/G35x3U6U1aOo9FeLHAI3VQ" target="_blank" class="social-icon si-dark si-colored si-aim nobottommargin" style="margin-right: 10px;">
+                <i class="icon-email2"></i>
+                <i class="icon-email2"></i>
+              </a>
+              <a href="https://t.me/joinchat/G35x3U6U1aOo9FeLHAI3VQ" target="_blank"><small style="display: block; margin-top: 3px;"><strong>Follow us</strong><br>to Telegram</small></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- .footer-widgets-wrap end -->
+  </div>
+  <!-- Copyrights
+  ============================================= -->
+  <div id="copyrights">
+    <div class="container clearfix">
+      <div class="col_half">
+        Copyrights &copy; 2017 All Rights Reserved by LedgerLocal.<br>
+        <div class="copyright-links"><a href="#">White Paper</a> / <a href="#">Login</a></div>
+      </div>
+    </div>
+  </div><!-- #copyrights end -->
+</footer><!-- #footer end -->

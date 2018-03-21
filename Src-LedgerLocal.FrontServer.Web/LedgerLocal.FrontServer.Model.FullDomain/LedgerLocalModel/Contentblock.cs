@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LedgerLocal.FrontServer.Model.FullDomain;
+using System;
 using System.Collections.Generic;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain
 {
-    public partial class Contentblock
+    public partial class Contentblock : BaseEntity
     {
         public Contentblock()
         {
@@ -18,14 +19,10 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Description { get; set; }
         public bool Activate { get; set; }
         public int? Sort { get; set; }
-        public DateTime Createdon { get; set; }
-        public DateTime Modifiedon { get; set; }
-        public string Createdby { get; set; }
-        public string Modifiedby { get; set; }
-
         public Contentblocktype Contentblocktype { get; set; }
         public Page Page { get; set; }
         public ICollection<Contentblockculturemap> Contentblockculturemap { get; set; }
         public ICollection<Mailinglistcontentblockmap> Mailinglistcontentblockmap { get; set; }
+        public ICollection<Contentblockimagemap> Contentblockimagemap { get; set; }
     }
 }

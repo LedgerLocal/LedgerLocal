@@ -7,6 +7,7 @@ using System;
 using Newtonsoft.Json;
 using LedgerLocal.FrontServer.Service.Json;
 using LedgerLocal.FrontServer.Data.FullDomain;
+using LedgerLocal.FrontServer.Dto;
 
 namespace LedgerLocal.FrontServer.Service
 {
@@ -26,16 +27,6 @@ namespace LedgerLocal.FrontServer.Service
 
                     //!!!!!! People
 
-                    cfg.CreateMap<People, CustomerCreateOrUpdate>()
-                        .ForMember(d => d.FirstName, opt => opt.MapFrom(f => f.Firstname))
-                        .ForMember(d => d.LastName, opt => opt.MapFrom(f => f.Lastname))
-                        .ForMember(d => d.Email, opt => opt.MapFrom(f => f.Email));
-
-                    cfg.CreateMap<CustomerCreateOrUpdate, People>()
-                        .ForMember(d => d.Firstname, opt => opt.MapFrom(f => f.FirstName))
-                        .ForMember(d => d.Lastname, opt => opt.MapFrom(f => f.LastName))
-                        .ForMember(d => d.Email, opt => opt.MapFrom(f => f.Email));
-
                     //!!!!!! User
                     cfg.CreateMap<User, CustomerCreateOrUpdate>()
                         .ForMember(d => d.CustomerId, opt => opt.MapFrom(f => f.Userid))
@@ -48,12 +39,6 @@ namespace LedgerLocal.FrontServer.Service
                         .ForMember(d => d.Password, opt => opt.MapFrom(f => string.Empty));
 
                     //!!!!! CustomerProfile
-
-                    cfg.CreateMap<User, CustomerProfile>()
-                        .ForMember(d => d.CustomerId, opt => opt.MapFrom(f => f.Userid))
-                        .ForMember(d => d.FirstName, opt => opt.MapFrom(f => f.People.Firstname))
-                        .ForMember(d => d.LastName, opt => opt.MapFrom(f => f.People.Lastname))
-                        .ForMember(d => d.Email, opt => opt.MapFrom(f => f.Email));
 
                                         
                     //!!!!! Workflow
@@ -111,6 +96,49 @@ namespace LedgerLocal.FrontServer.Service
                     //         : context.Mapper.Map<Customer, DetailedCustomerDto>(order.Customer);
                     //     }));
 
+                    //
+
+                    cfg.CreateMap<CultureDto, Culture>();
+
+                    cfg.CreateMap<Culture, CultureDto>();
+
+                    //
+
+                    cfg.CreateMap<PageDto, Page>();
+
+                    cfg.CreateMap<Page, PageDto>();
+
+                    //
+
+                    cfg.CreateMap<ArticleDto, Article>();
+
+                    cfg.CreateMap<Article, ArticleDto>();
+
+                    //
+
+                    cfg.CreateMap<ContentblockDto, Contentblock>();
+
+                    cfg.CreateMap<Contentblock, ContentblockDto>()
+                                             .ForMember(dst => dst.Images, src => src.ResolveUsing((c, cDto, i, context) =>
+                                             {
+                                                 return c.Contentblockimagemap.Count > 0
+                                                 ? context.Mapper.Map<List<Image>, List<ImageDto>>(c.Contentblockimagemap
+                                                 .OrderBy(d => d.Image.Fullimageurl)
+                                                 .Select(d => d.Image).ToList())
+                                                 : Enumerable.Empty<ImageDto>().ToList();
+                                             }));
+
+                    //
+
+                    cfg.CreateMap<ImageDto, Image>();
+
+                    cfg.CreateMap<Image, ImageDto>();
+
+                    //
+
+                    cfg.CreateMap<ContentBlockImageMapDto, Contentblockimagemap>();
+
+                    cfg.CreateMap<Contentblockimagemap, ContentBlockImageMapDto>();
 
                 });
 

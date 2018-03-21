@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LedgerLocal.FrontServer.Model.FullDomain;
+using System;
 using System.Collections.Generic;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain
 {
-    public partial class Article
+    public partial class Article : BaseEntity
     {
         public Article()
         {
@@ -23,10 +24,6 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Body { get; set; }
         public bool? Ishtml { get; set; }
         public bool Activate { get; set; }
-        public DateTime Createdon { get; set; }
-        public DateTime Modifiedon { get; set; }
-        public string Createdby { get; set; }
-        public string Modifiedby { get; set; }
         public string Imagethumb { get; set; }
         public string Imagepost { get; set; }
 

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LedgerLocal.FrontServer.Model.FullDomain;
+using System;
 using System.Collections.Generic;
 
 namespace LedgerLocal.FrontServer.Data.FullDomain
 {
-    public partial class Culture
+    public partial class Culture : BaseEntity
     {
         public Culture()
         {
@@ -31,10 +32,6 @@ namespace LedgerLocal.FrontServer.Data.FullDomain
         public string Defaultweightcode { get; set; }
         public string Defaultsizeunit { get; set; }
         public string Defaultweightunit { get; set; }
-        public DateTime Createdon { get; set; }
-        public DateTime Modifiedon { get; set; }
-        public string Createdby { get; set; }
-        public string Modifiedby { get; set; }
 
         public ICollection<Article> Article { get; set; }
         public ICollection<Categoryculturemap> Categoryculturemap { get; set; }

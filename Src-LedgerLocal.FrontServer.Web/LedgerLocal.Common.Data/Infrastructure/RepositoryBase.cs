@@ -128,9 +128,9 @@ namespace Common.Data.Infrastructure
             return DbSet.Where(where).FirstOrDefault<T>();
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            await DbSet.AddAsync(entity);
+            return (await DbSet.AddAsync(entity)).Entity;
         }
 
         public async Task UpdateAsync(T entity)
