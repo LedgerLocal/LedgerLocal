@@ -29,7 +29,8 @@ export class FooterComponent implements OnInit {
   public contactsubject: string;
   public contactbody: string;
 
-  public sendContactInfo: string;
+  public sendContactInfo() {
+  }
 
   public lat: number = 47.166156;
   public lng: number = 8.515933;
