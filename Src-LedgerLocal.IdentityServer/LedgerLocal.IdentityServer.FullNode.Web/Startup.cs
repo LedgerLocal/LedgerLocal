@@ -14,6 +14,7 @@ using System.Reflection;
 using IdentityServer4.Quickstart.UI;
 using LedgerLocal.IdentityServer.FullNode.Web.Data;
 using LedgerLocal.IdentityServer.FullNode.Web.Services;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LedgerLocal.IdentityServer.FullNode.Web
 {
@@ -27,6 +28,8 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            _environment = env;
 
             if (env.IsDevelopment())
             {
@@ -64,10 +67,21 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             //    options.AppSecret = "secret";
             //});
 
-            services.AddIdentityServer()
-                .AddAspNetIdentity<User>()
-                .AddDeveloperSigningCredential()
-                //.AddTestUsers(TestUsers.Users)
+            var id1 = services.AddIdentityServer()
+                .AddAspNetIdentity<User>();
+
+            if (_environment != null && _environment.IsDevelopment())
+            {
+                id1 = id1.AddDeveloperSigningCredential()
+                    .AddTestUsers(TestUsers.Users);
+            }
+            else
+            {
+                var cert = new X509Certificate2(Configuration["PathCert"], Configuration["PasswordCert"]);
+                id1 = id1.AddSigningCredential(cert);
+            }
+
+            id1
                 // this adds the config data from DB (clients & resources)
                 .AddConfigurationStore(options =>
                 {
@@ -131,6 +145,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.Configure<CertificateOptions>(Configuration);
 
             return services.BuildServiceProvider(validateScopes: true);
         }

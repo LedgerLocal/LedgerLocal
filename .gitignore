@@ -215,3 +215,7 @@ node_modules
 tools
 deps
 packages
+
+
+
+appsettings*
