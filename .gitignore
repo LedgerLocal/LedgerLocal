@@ -217,5 +217,6 @@ deps
 packages
 
 
-
-appsettings*
+appsettings.json
+appsettings.TEST.json
+appsettings.PROD.json
