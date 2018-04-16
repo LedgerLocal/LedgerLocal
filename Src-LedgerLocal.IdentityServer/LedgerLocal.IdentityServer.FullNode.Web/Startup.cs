@@ -177,9 +177,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
-
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -187,6 +184,11 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 .AllowCredentials());
 
             app.UseStaticFiles();
+
+            
+            app.UseIdentityServer();
+            //app.UseAuthentication();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
