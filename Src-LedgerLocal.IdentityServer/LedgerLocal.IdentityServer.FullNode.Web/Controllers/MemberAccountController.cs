@@ -304,44 +304,44 @@ Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.
                             Phone = string.Empty
                         };
 
-                        var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
+                        //var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
 
-                        var _httpClient = new HttpClient();
-                        _httpClient.SetBearerToken(t1);
-                        var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
-                            new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
-                        resFinal1.EnsureSuccessStatusCode();
+                        //var _httpClient = new HttpClient();
+                        //_httpClient.SetBearerToken(t1);
+                        //var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
+                        //    new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
+                        //resFinal1.EnsureSuccessStatusCode();
 
-                        var resModel1String = await resFinal1.Content.ReadAsStringAsync();
-                        var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
+                        //var resModel1String = await resFinal1.Content.ReadAsStringAsync();
+                        //var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
 
-                        user.CustomerId = resModel1.CustomerId;
+                        //user.CustomerId = resModel1.CustomerId;
+                        
+                        //await _userManager.UpdateAsync(user);
 
-                        await _userManager.UpdateAsync(user);
+                        //await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
 
-                        await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
+                        //var lstRoles = new List<string>();
 
-                        var lstRoles = new List<string>();
+                        //lstRoles.Add("mainasset");
+                        //lstRoles.Add("blockchainuser");
+                        //lstRoles.Add("branch");
+                        //lstRoles.Add("business");
+                        //lstRoles.Add("coin");
+                        //lstRoles.Add("coupon");
+                        //lstRoles.Add("customer");
+                        //lstRoles.Add("iot");
+                        //lstRoles.Add("order");
+                        //lstRoles.Add("point");
+                        //lstRoles.Add("pos");
+                        //lstRoles.Add("policy");
+                        //lstRoles.Add("program");
+                        //lstRoles.Add("qrcode");
+                        //lstRoles.Add("return");
+                        //lstRoles.Add("voucher");
+                        //lstRoles.Add("workflow");
 
-                        lstRoles.Add("mainasset");
-                        lstRoles.Add("blockchainuser");
-                        lstRoles.Add("branch");
-                        lstRoles.Add("business");
-                        lstRoles.Add("coin");
-                        lstRoles.Add("coupon");
-                        lstRoles.Add("customer");
-                        lstRoles.Add("iot");
-                        lstRoles.Add("order");
-                        lstRoles.Add("point");
-                        lstRoles.Add("pos");
-                        lstRoles.Add("policy");
-                        lstRoles.Add("program");
-                        lstRoles.Add("qrcode");
-                        lstRoles.Add("return");
-                        lstRoles.Add("voucher");
-                        lstRoles.Add("workflow");
-
-                        await _userManager.AddToRolesAsync(user, lstRoles);
+                        //await _userManager.AddToRolesAsync(user, lstRoles);
                     }
                     
                     if (string.IsNullOrWhiteSpace(returnUrl))
@@ -379,35 +379,39 @@ Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
-                // Send an email with this link
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.Action(nameof(ConfirmEmail), "MemberAccount", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-                var message = @"<b>Herzlich willkommen bei LedgerLocal,</b>
-<p>
-Sammeln Sie ab jetzt bei all unseren Partnerunternehmen Treuepunkte, tauschen Sie diese jederzeit und wählen Sie wann und wo immer sie diese einsetzen möchten – Sie haben die Wahl. 
-Alles ganz einfach auf Ihrem Telefon, digital, sofort sichtbar und ohne Papierverschwendung. LedgerLocal macht Ihre Treuepunkte tauschbar – dank Blockchain.
-</p>
 
-<b><p>
-*** Drücken Sie <a href = '{0}'>hier</a> um Ihr Email zu bestätigen ***
-</b></p>
 
-<p>
-Bei Fragen können Sie jederzeit unseren Kundenservice auf info@ledgerlocal.ch kontaktieren.
-</p>
 
-<p>
-Mit freundlichen Grüssen,<br />
-Ihr LedgerLocal Team
-</p>
+//                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+//                // Send an email with this link
+//                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+//                var callbackUrl = Url.Action(nameof(ConfirmEmail), "MemberAccount", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-PS: Laden Sie jetzt die LedgerLocal App auf Ihr Telefon herunter (Iphone / Android), loggen Sie sich mit Ihrer Email Adresse und Ihrem neuen Passwort ein und sammeln ab jetzt bei unseren Partnerunternehmen Treuepunkte. 
-Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.ch'>www.ledgerlocal.ch</a>";
-                message = string.Format(message, callbackUrl);
+//                var message = @"<b>Herzlich willkommen bei LedgerLocal,</b>
+//<p>
+//Sammeln Sie ab jetzt bei all unseren Partnerunternehmen Treuepunkte, tauschen Sie diese jederzeit und wählen Sie wann und wo immer sie diese einsetzen möchten – Sie haben die Wahl. 
+//Alles ganz einfach auf Ihrem Telefon, digital, sofort sichtbar und ohne Papierverschwendung. LedgerLocal macht Ihre Treuepunkte tauschbar – dank Blockchain.
+//</p>
 
-                await _emailSender.SendEmailAsync(model.Email, "Confirm your account", message);
+//<b><p>
+//*** Drücken Sie <a href = '{0}'>hier</a> um Ihr Email zu bestätigen ***
+//</b></p>
+
+//<p>
+//Bei Fragen können Sie jederzeit unseren Kundenservice auf info@ledgerlocal.ch kontaktieren.
+//</p>
+
+//<p>
+//Mit freundlichen Grüssen,<br />
+//Ihr LedgerLocal Team
+//</p>
+
+//PS: Laden Sie jetzt die LedgerLocal App auf Ihr Telefon herunter (Iphone / Android), loggen Sie sich mit Ihrer Email Adresse und Ihrem neuen Passwort ein und sammeln ab jetzt bei unseren Partnerunternehmen Treuepunkte. 
+//Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.ch'>www.ledgerlocal.ch</a>";
+//                message = string.Format(message, callbackUrl);
+
+//                await _emailSender.SendEmailAsync(model.Email, "Confirm your account", message);
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation(3, "User created a new account with password.");
 
@@ -421,46 +425,46 @@ Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.
                     Phone = string.Empty
                 };
 
-                var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
+            //var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
 
-                var _httpClient = new HttpClient();
-                _httpClient.SetBearerToken(t1);
-                var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
-                    new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
-                resFinal1.EnsureSuccessStatusCode();
+            //var _httpClient = new HttpClient();
+            //_httpClient.SetBearerToken(t1);
+            //var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
+            //    new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
+            //resFinal1.EnsureSuccessStatusCode();
 
-                var resModel1String = await resFinal1.Content.ReadAsStringAsync();
-                var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
+            //var resModel1String = await resFinal1.Content.ReadAsStringAsync();
+            //var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
 
-                user.CustomerId = resModel1.CustomerId;
+            //user.CustomerId = resModel1.CustomerId;
 
-                await _userManager.UpdateAsync(user);
+            //await _userManager.UpdateAsync(user);
 
-                await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
+            //await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
 
-                var lstRoles = new List<string>();
+            //var lstRoles = new List<string>();
 
-                lstRoles.Add("mainasset");
-                lstRoles.Add("blockchainuser");
-                lstRoles.Add("branch");
-                lstRoles.Add("business");
-                lstRoles.Add("coin");
-                lstRoles.Add("coupon");
-                lstRoles.Add("customer");
-                lstRoles.Add("iot");
-                lstRoles.Add("order");
-                lstRoles.Add("point");
-                lstRoles.Add("pos");
-                lstRoles.Add("policy");
-                lstRoles.Add("program");
-                lstRoles.Add("qrcode");
-                lstRoles.Add("return");
-                lstRoles.Add("voucher");
-                lstRoles.Add("workflow");
+            //lstRoles.Add("mainasset");
+            //lstRoles.Add("blockchainuser");
+            //lstRoles.Add("branch");
+            //lstRoles.Add("business");
+            //lstRoles.Add("coin");
+            //lstRoles.Add("coupon");
+            //lstRoles.Add("customer");
+            //lstRoles.Add("iot");
+            //lstRoles.Add("order");
+            //lstRoles.Add("point");
+            //lstRoles.Add("pos");
+            //lstRoles.Add("policy");
+            //lstRoles.Add("program");
+            //lstRoles.Add("qrcode");
+            //lstRoles.Add("return");
+            //lstRoles.Add("voucher");
+            //lstRoles.Add("workflow");
 
-                await _userManager.AddToRolesAsync(user, lstRoles);
+            //await _userManager.AddToRolesAsync(user, lstRoles);
 
-                return new ObjectResult(resModel1);
+            return new ObjectResult(modelCust);
                 
             }
             
@@ -579,44 +583,44 @@ Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.
                             Phone = string.Empty
                         };
 
-                        var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
+                        //var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
 
-                        var _httpClient = new HttpClient();
-                        _httpClient.SetBearerToken(t1);
-                        var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
-                            new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
-                        resFinal1.EnsureSuccessStatusCode();
+                        //var _httpClient = new HttpClient();
+                        //_httpClient.SetBearerToken(t1);
+                        //var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
+                        //    new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
+                        //resFinal1.EnsureSuccessStatusCode();
 
-                        var resModel1String = await resFinal1.Content.ReadAsStringAsync();
-                        var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
+                        //var resModel1String = await resFinal1.Content.ReadAsStringAsync();
+                        //var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
 
-                        user.CustomerId = resModel1.CustomerId;
+                        //user.CustomerId = resModel1.CustomerId;
 
-                        await _userManager.UpdateAsync(user);
+                        //await _userManager.UpdateAsync(user);
 
-                        await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
+                        //await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
 
-                        var lstRoles = new List<string>();
+                        //var lstRoles = new List<string>();
 
-                        lstRoles.Add("mainasset");
-                        lstRoles.Add("blockchainuser");
-                        lstRoles.Add("branch");
-                        lstRoles.Add("business");
-                        lstRoles.Add("coin");
-                        lstRoles.Add("coupon");
-                        lstRoles.Add("customer");
-                        lstRoles.Add("iot");
-                        lstRoles.Add("order");
-                        lstRoles.Add("point");
-                        lstRoles.Add("pos");
-                        lstRoles.Add("policy");
-                        lstRoles.Add("program");
-                        lstRoles.Add("qrcode");
-                        lstRoles.Add("return");
-                        lstRoles.Add("voucher");
-                        lstRoles.Add("workflow");
+                        //lstRoles.Add("mainasset");
+                        //lstRoles.Add("blockchainuser");
+                        //lstRoles.Add("branch");
+                        //lstRoles.Add("business");
+                        //lstRoles.Add("coin");
+                        //lstRoles.Add("coupon");
+                        //lstRoles.Add("customer");
+                        //lstRoles.Add("iot");
+                        //lstRoles.Add("order");
+                        //lstRoles.Add("point");
+                        //lstRoles.Add("pos");
+                        //lstRoles.Add("policy");
+                        //lstRoles.Add("program");
+                        //lstRoles.Add("qrcode");
+                        //lstRoles.Add("return");
+                        //lstRoles.Add("voucher");
+                        //lstRoles.Add("workflow");
 
-                        await _userManager.AddToRolesAsync(user, lstRoles);
+                        //await _userManager.AddToRolesAsync(user, lstRoles);
 
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
