@@ -19,7 +19,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly string _externalCookieScheme;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -33,7 +32,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _externalCookieScheme = "Identity.External";
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<MemberManageController>();
@@ -307,7 +305,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         public async Task<IActionResult> LinkLogin(string provider)
         {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+            await _signInManager.SignOutAsync();
 
             // Request a redirect to the external login provider to link a login for the current user
             var redirectUrl = Url.Action(nameof(LinkLoginCallback), "Manage");
@@ -336,7 +334,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
             {
                 message = ManageMessageId.AddLoginSuccess;
                 // Clear the existing external cookie to ensure a clean login process
-                await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+                await _signInManager.SignOutAsync();
             }
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }

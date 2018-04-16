@@ -186,7 +186,7 @@ namespace IdentityServer4.Quickstart.UI
                         id.AddClaims(roles);
                     }
 
-                    await HttpContext.Authentication.SignInAsync("Identity.External", new ClaimsPrincipal(id), props);
+                    await HttpContext.SignInAsync(id.GetSubjectId(), new ClaimsPrincipal(id));
 
                     if (string.IsNullOrWhiteSpace(returnUrl))
                     {

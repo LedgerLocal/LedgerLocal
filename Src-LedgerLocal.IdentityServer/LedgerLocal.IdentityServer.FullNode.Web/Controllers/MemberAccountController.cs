@@ -35,7 +35,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly string _externalCookieScheme;
         private ITokenService _ts;
         private IUserClaimsPrincipalFactory<User> _principalFactory;
         private IdentityServerOptions _option;
@@ -52,7 +51,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _externalCookieScheme = "Identity.External";
             _emailSender = emailSender;
             _smsSender = smsSender;
             _ts = ts;
@@ -68,7 +66,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+            await _signInManager.SignOutAsync();
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();

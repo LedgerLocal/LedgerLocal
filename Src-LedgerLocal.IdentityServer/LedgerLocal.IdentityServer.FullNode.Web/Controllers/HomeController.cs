@@ -32,7 +32,6 @@ namespace IdentityServer4.Quickstart.UI
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly string _externalCookieScheme;
         private ITokenService _ts;
         private IUserClaimsPrincipalFactory<User> _principalFactory;
         private IdentityServerOptions _option;
@@ -51,7 +50,6 @@ namespace IdentityServer4.Quickstart.UI
 
             _userManager = userManager;
             _signInManager = signInManager;
-            _externalCookieScheme = "Identity.External";
             _emailSender = emailSender;
             _smsSender = smsSender;
             _ts = ts;
