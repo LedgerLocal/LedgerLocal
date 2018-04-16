@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace LedgerLocal.IdentityServer.FullNode.Web
 {
@@ -21,8 +22,9 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
            WebHost.CreateDefaultBuilder(args)
                 .UseKestrel(o1 => o1.Listen(IPAddress.Loopback, 4444, listenOptions =>
                 {
-                    Console.WriteLine(args[1]);
-                    listenOptions.UseHttps(args[1], args[2]);
+                    var a1 = new ConfigurationBuilder().AddCommandLine(args).Build();
+                    
+                    listenOptions.UseHttps(a1["pfxpath"], a1["pfxpass"]);
                 }))   
             .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
