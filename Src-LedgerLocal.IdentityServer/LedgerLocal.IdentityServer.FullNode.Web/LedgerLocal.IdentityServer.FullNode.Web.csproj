@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-LedgerLocal.IdentityServer.FullNode.Web-3396ca0e-bc94-470d-8a17-e1967ca2e064</UserSecretsId>
   </PropertyGroup>
 
 
