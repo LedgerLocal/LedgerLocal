@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AppointmentComponent } from './participate.component';
-import { AppointmentViewComponent } from './participate-view/participate-view.component';
+import { ParticipateComponent } from './participate.component';
+import { ParticipateViewComponent } from './participate-view/participate-view.component';
 
 const routes: Routes = [{
   path: '',
-  component: AppointmentComponent,
+  component: ParticipateComponent,
   children: [{
-    path: 'appointment-view',
-    component: AppointmentViewComponent,
+    path: 'participate-view',
+    component: ParticipateViewComponent,
   }, {
     path: '',
     redirectTo: 'appointment-view',
@@ -21,9 +21,9 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AppointmentRoutingModule { }
+export class ParticipateRoutingModule { }
 
 export const routedComponents = [
-  AppointmentComponent,
-  AppointmentViewComponent,
+  ParticipateComponent,
+  ParticipateViewComponent,
 ];

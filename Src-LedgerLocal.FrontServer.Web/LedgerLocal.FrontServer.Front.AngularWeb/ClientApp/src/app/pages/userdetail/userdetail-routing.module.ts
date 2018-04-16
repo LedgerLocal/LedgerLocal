@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ServiceComponent } from './userdetail.component';
-import { ServiceViewComponent } from './userdetail-view/userdetail-view.component';
+import { UserDetailComponent } from './userdetail.component';
+import { UserDetailViewComponent } from './userdetail-view/userdetail-view.component';
 
 const routes: Routes = [{
   path: '',
-  component: ServiceComponent,
+  component: UserDetailComponent,
   children: [{
     path: 'service-view',
-    component: ServiceViewComponent,
+    component: UserDetailViewComponent,
   }, {
     path: '',
     redirectTo: 'service-view',
@@ -21,9 +21,9 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ServiceRoutingModule { }
+export class UserDetailRoutingModule { }
 
 export const routedComponents = [
-  ServiceComponent,
-  ServiceViewComponent,
+  UserDetailComponent,
+  UserDetailViewComponent,
 ];

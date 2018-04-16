@@ -4,9 +4,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from '../../@theme/theme.module';
 
-import { AppointmentRoutingModule, routedComponents } from './participate-routing.module';
-import { AppointmentViewComponent } from './participate-view/participate-view.component';
-import { AppointmentComponent } from './participate.component';
+import { ParticipateRoutingModule, routedComponents } from './participate-routing.module';
+import { ParticipateViewComponent } from './participate-view/participate-view.component';
+import { ParticipateComponent } from './participate.component';
 
 import { SmartTableService } from '../../@core/data/smart-table.service';
 import { UserService } from '../../@core/data/users.service';
@@ -16,7 +16,7 @@ import { ContentService } from '../../@core/data/contentservice';
 @NgModule({
   imports: [
     ThemeModule,
-    AppointmentRoutingModule,
+    ParticipateRoutingModule,
     Ng2SmartTableModule,
   ],
   declarations: [
@@ -29,4 +29,4 @@ import { ContentService } from '../../@core/data/contentservice';
     ContentService,
   ],
 })
-export class AppointmentModule { }
+export class ParticipateModule { }

@@ -4,9 +4,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ThemeModule } from '../../@theme/theme.module';
 
-import { ServiceRoutingModule, routedComponents } from './userdetail-routing.module';
-import { ServiceViewComponent } from './userdetail-view/userdetail-view.component';
-import { ServiceComponent } from './userdetail.component';
+import { UserDetailRoutingModule, routedComponents } from './userdetail-routing.module';
+import { UserDetailViewComponent } from './userdetail-view/userdetail-view.component';
+import { UserDetailComponent } from './userdetail.component';
 
 import { SmartTableService } from '../../@core/data/smart-table.service';
 import { UserService } from '../../@core/data/users.service';
@@ -16,7 +16,7 @@ import { ContentService } from '../../@core/data/contentservice';
 @NgModule({
   imports: [
     ThemeModule,
-    ServiceRoutingModule,
+    UserDetailRoutingModule,
     Ng2SmartTableModule,
   ],
   declarations: [
@@ -29,4 +29,4 @@ import { ContentService } from '../../@core/data/contentservice';
     ContentService,
   ],
 })
-export class ServiceModule { }
+export class UserDetailModule { }

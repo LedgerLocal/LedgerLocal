@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ngx-appointment',
+  selector: 'ngx-participate',
   template: `<router-outlet></router-outlet>`,
 })
-export class AppointmentComponent implements OnInit {
+export class ParticipateComponent implements OnInit {
 
   constructor() { }
 

@@ -1,7 +1,4 @@
 @import '../../styles/themes';
-@import '~@nebular/theme/styles/global/bootstrap/hero-buttons';
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
 
 @include nb-install-component() {
   display: flex;
@@ -81,20 +78,6 @@
       background-color: nb-theme(color-success);
       transition: 0.2s;
       box-shadow: 0 0 0.25rem 0 rgba(nb-theme(color-fg), 0.4);
-
-      @include nb-for-theme(cosmic) {
-        @include btn-hero-primary-gradient();
-      }
     }
-  }
-
-  @include media-breakpoint-down(is) {
-    .light, .cosmic {
-      display: none;
-    }
-  }
-
-  @include media-breakpoint-down(xs) {
-    align-items: flex-end;
   }
 }

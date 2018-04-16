@@ -9,7 +9,7 @@ import { ContentService } from '../../../@core/data/contentservice';
   templateUrl: './userdetail-view.component.html',
   styleUrls: ['./userdetail-view.component.scss']
 })
-export class ServiceViewComponent implements OnInit, AfterViewInit {
+export class UserDetailViewComponent implements OnInit, AfterViewInit {
 
   public contentBlockList: any;
 

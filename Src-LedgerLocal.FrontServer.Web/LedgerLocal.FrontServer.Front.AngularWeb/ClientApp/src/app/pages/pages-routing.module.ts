@@ -11,10 +11,10 @@ const routes: Routes = [{
     loadChildren: './home/home.module#HomeModule',
   }, {
     path: 'userdetail',
-    loadChildren: './userdetail/userdetail.module#ServiceModule',
+    loadChildren: './userdetail/userdetail.module#UserDetailModule',
   }, {
       path: 'participate',
-      loadChildren: './participate/participate.module#AppointmentModule',
+      loadChildren: './participate/participate.module#ParticipateModule',
   }, {
     path: 'blog',
     loadChildren: './blog/blog.module#BlogModule',

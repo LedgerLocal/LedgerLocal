@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ngx-service',
+  selector: 'ngx-userdetail',
   template: `<router-outlet></router-outlet>`,
 })
-export class ServiceComponent implements OnInit {
+export class UserDetailComponent implements OnInit {
 
   constructor() { }
 

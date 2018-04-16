@@ -9,7 +9,7 @@ import { ContentService } from '../../../@core/data/contentservice';
   templateUrl: './participate-view.component.html',
   styleUrls: ['./participate-view.component.scss']
 })
-export class AppointmentViewComponent implements OnInit, AfterViewInit {
+export class ParticipateViewComponent implements OnInit, AfterViewInit {
 
   public contentBlockList: any;
 
