@@ -49,11 +49,11 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
             services.AddDbContext<PersistedGrantDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
             services.AddDbContext<ConfigurationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -86,13 +86,13 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly));
+                        builder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly));
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly));
+                        builder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly));
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
