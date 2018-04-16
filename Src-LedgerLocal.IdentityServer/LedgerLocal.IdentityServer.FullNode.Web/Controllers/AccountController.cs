@@ -324,8 +324,7 @@ namespace IdentityServer4.Quickstart.UI
                 try
                 {
                     // hack: try/catch to handle social providers that throw
-                    await HttpContext.Authentication.SignOutAsync(vm.ExternalAuthenticationScheme,
-                        new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { RedirectUri = url });
+                    await _signInManager.SignOutAsync();
                 }
                 catch (NotSupportedException) // this is for the external providers that don't have signout
                 {
@@ -336,7 +335,7 @@ namespace IdentityServer4.Quickstart.UI
             }
 
             // delete local authentication cookie
-            await HttpContext.Authentication.SignOutAsync(vm.ExternalAuthenticationScheme);
+            await _signInManager.SignOutAsync();
 
             return View("LoggedOut", vm);
         }
