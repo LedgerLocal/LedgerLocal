@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
-    <UserSecretsId>aspnet-LedgerLocal.IdentityServer.FullNode.Web-7867EC79-BFD7-456C-BB29-E40E17F576B6</UserSecretsId>
   </PropertyGroup>
 
 
