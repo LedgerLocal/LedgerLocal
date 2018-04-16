@@ -21,7 +21,7 @@ import { ContentService } from './@core/data/contentservice';
 
 export function loadConfig(oidcConfigService: OidcConfigService) {
   console.log('APP_INITIALIZER STARTING');
-  return () => oidcConfigService.load_using_stsServer('https://identity.ledgerlocal.com');
+  return () => oidcConfigService.load_using_custom_stsServer('https://identity.ledgerlocal.com/.well-known/openid-configuration');
 }
 
 @NgModule({
