@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     this.router.events.filter((event: any) => event instanceof NavigationStart)
       .subscribe((data: NavigationStart) => {
-        if (data.url == "/access_token") {
+        if (data.url == "id_token") {
           this.hash = window.location.hash;
           this.router.navigate([]);
         }
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   private getTokenHash() {
     if (typeof location !== 'undefined' && this.hash) {
-      const indexHash = this.hash.indexOf('/access_token');
+      const indexHash = this.hash.indexOf('id_token');
       return indexHash > -1 && this.hash.substr(indexHash);
     }
   }
