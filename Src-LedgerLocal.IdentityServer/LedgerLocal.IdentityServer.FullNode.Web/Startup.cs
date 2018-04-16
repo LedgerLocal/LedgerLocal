@@ -60,8 +60,14 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 .AddDefaultTokenProviders();
 
             // If you want to tweak Identity cookies, they're no longer part of IdentityOptions.
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/MemberAccount/Login");
-            services.AddAuthentication();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/MemberAccount/Login";
+            });
+            services.AddAuthentication(x1 =>
+            {
+                x1.DefaultAuthenticateScheme = "Identity.External";
+            });
             //.AddFacebook(options => {
             //    options.AppId = "id";
             //    options.AppSecret = "secret";
@@ -172,23 +178,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions
-            //{
-            //    AuthenticationScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme,
-            //    CookieName = "LLCAUTH.auth",
-            //    ExpireTimeSpan = TimeSpan.FromMinutes(20),
-            //    SlidingExpiration = true,
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true
-            //});
-
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions
-            //{
-            //    AuthenticationScheme = "idsrv.external", // Matches the name it's looking for in the exception
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true
-            //});
-
             app.UseAuthentication();
             app.UseIdentityServer();
 
@@ -197,62 +186,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
-
-            //app.UseGoogleAuthentication(new GoogleOptions
-            //{
-            //    SignInScheme = "Identity.External",
-
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
-
-            //app.UseFacebookAuthentication(new FacebookOptions
-            //{
-            //    AuthenticationScheme = "Facebook",
-            //    SignInScheme = "Identity.External",
-            //    AppId = "",
-            //    AppSecret = ""
-            //});
-
-            //app.UseTwitterAuthentication(new TwitterOptions
-            //{
-            //    AuthenticationScheme = "Twitter",
-            //    SignInScheme = "Identity.External",
-            //    ConsumerKey = "<..>",
-            //    ConsumerSecret = "<..>",
-            //});
-
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
-
-            //app.UseClaimsTransformation(ClaimsProvider.AddClaims);
-
-            ///
-            /// Setup Custom Data Format
-            /// 
-            //var schemeName = "oidc";
-            //var dataProtectionProvider = app.ApplicationServices.GetRequiredService<IDataProtectionProvider>();
-            //var distributedCache = app.ApplicationServices.GetRequiredService<IDistributedCache>();
-
-            //var dataProtector = dataProtectionProvider.CreateProtector(
-            //    typeof(OpenIdConnectMiddleware).FullName,
-            //    typeof(string).FullName, schemeName,
-            //    "v1");
-
-            //var dataFormat = new CachedPropertiesDataFormat(distributedCache, dataProtector);
-
-            //var clientId = "<Your Client ID>";
-            //var tenantId = "<Your Tenant ID>";
-
-            //app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
-            //{
-            //    AuthenticationScheme = schemeName,
-            //    DisplayName = "AzureAD",
-            //    SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme,
-            //    ClientId = clientId,
-            //    Authority = $"https://login.microsoftonline.com/{tenantId}",
-            //    ResponseType = OpenIdConnectResponseType.IdToken,
-            //    StateDataFormat = dataFormat
-            //});
 
             app.UseStaticFiles();
 
