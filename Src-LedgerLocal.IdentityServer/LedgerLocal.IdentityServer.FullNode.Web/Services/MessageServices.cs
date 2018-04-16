@@ -24,16 +24,18 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Services
 
         public Task Execute(string apiKey, string subject, string message, string email)
         {
-            var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("noreply@ledgerlocal.ch", "LedgerLocal Messenger"),
-                Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
-            };
-            msg.AddTo(new EmailAddress(email));
-            return client.SendEmailAsync(msg);
+            //var client = new SendGridClient(apiKey);
+            //var msg = new SendGridMessage()
+            //{
+            //    From = new EmailAddress("noreply@ledgerlocal.ch", "LedgerLocal Messenger"),
+            //    Subject = subject,
+            //    PlainTextContent = message,
+            //    HtmlContent = message
+            //};
+            //msg.AddTo(new EmailAddress(email));
+            //return client.SendEmailAsync(msg);
+
+            return Task.FromResult(0);
         }
 
         public Task SendSmsAsync(string number, string message)
