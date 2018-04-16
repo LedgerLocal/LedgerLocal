@@ -50,7 +50,7 @@
 	<h4 style="margin-bottom: 15px;">Or Login with</h4>
 	
 	@{
-		var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+		var loginProviders = SignInManager.GetExternalAuthenticationSchemesAsync().Result.ToList();
 		if (loginProviders.Count == 0)
 		{
 			<div>
@@ -67,7 +67,7 @@
 					<p>
 						@foreach (var provider in loginProviders)
 						{
-							<button type="submit" class="button button-rounded si-facebook si-colored" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+							<button type="submit" class="button button-rounded si-facebook si-colored" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
 						}
 					</p>
 				</div>
