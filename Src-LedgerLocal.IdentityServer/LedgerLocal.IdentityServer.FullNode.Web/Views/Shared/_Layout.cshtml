@@ -1,10 +1,14 @@
-﻿@using IdentityServer4.Extensions
+﻿@using Microsoft.AspNetCore.Identity
+@using LedgerLocal.IdentityServer.FullNode.Web.Models
+
+@inject UserManager<UserManagement.Models.User> UserManager
+
 @{
     string name = null;
     if (!true.Equals(ViewData["signed-out"]))
     {
-        var user = await Context.GetIdentityServerUserAsync();
-        name = user?.FindFirst("name")?.Value;
+        var user = UserManager.GetUserName(User);
+        name = user;
     }
 }
 <!DOCTYPE html>
