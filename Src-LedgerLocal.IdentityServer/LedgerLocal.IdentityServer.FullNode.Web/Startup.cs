@@ -84,7 +84,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
 
             services.AddDataProtection().
                 PersistKeysToFileSystem(
-                new DirectoryInfo(Configuration["PathCert"]));
+                new DirectoryInfo("/home/pesh"));
 
             id1
                 // this adds the config data from DB (clients & resources)
