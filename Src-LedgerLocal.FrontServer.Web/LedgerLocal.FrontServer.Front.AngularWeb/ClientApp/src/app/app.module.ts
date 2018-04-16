@@ -13,7 +13,6 @@ import { CoreModule } from './@core/core.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule, OidcSecurityService, OidcConfigService, OpenIDImplicitFlowConfiguration, AuthWellKnownEndpoints } from 'angular-auth-oidc-client';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
@@ -26,8 +25,7 @@ import { ContentService } from './@core/data/contentservice';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
-    NgbModule.forRoot(),
+    
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     ToastModule.forRoot(),
