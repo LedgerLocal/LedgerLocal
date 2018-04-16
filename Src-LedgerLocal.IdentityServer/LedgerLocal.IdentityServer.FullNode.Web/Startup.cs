@@ -15,6 +15,8 @@ using IdentityServer4.Quickstart.UI;
 using LedgerLocal.IdentityServer.FullNode.Web.Data;
 using LedgerLocal.IdentityServer.FullNode.Web.Services;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.DataProtection;
+using System.IO;
 
 namespace LedgerLocal.IdentityServer.FullNode.Web
 {
@@ -64,16 +66,15 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             {
                 options.LoginPath = "/MemberAccount/Login";
             });
-            services.AddAuthentication(x1 =>
-            {
-                x1.DefaultAuthenticateScheme = "Identity.External";
-            });
+            services.AddAuthentication("Identity.External");
             //.AddFacebook(options => {
             //    options.AppId = "id";
             //    options.AppSecret = "secret";
             //});
 
             var id1 = services.AddIdentityServer()
+                .AddDefaultEndpoints()
+                .AddCookieAuthentication()
                 .AddAspNetIdentity<User>();
 
             if (_environment != null && _environment.IsDevelopment())
@@ -86,6 +87,10 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 var cert = new X509Certificate2(Configuration["PathCert"], Configuration["PasswordCert"]);
                 id1 = id1.AddSigningCredential(cert);
             }
+
+            services.AddDataProtection().
+                PersistKeysToFileSystem(
+                new DirectoryInfo(Configuration["PathCert"]));
 
             id1
                 // this adds the config data from DB (clients & resources)
