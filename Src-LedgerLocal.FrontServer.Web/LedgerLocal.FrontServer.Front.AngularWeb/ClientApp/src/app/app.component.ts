@@ -11,6 +11,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 import { OidcSecurityService, AuthorizationResult } from 'angular-auth-oidc-client';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'ngx-app',
