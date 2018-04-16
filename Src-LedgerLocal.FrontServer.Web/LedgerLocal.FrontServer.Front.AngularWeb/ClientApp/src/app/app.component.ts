@@ -5,13 +5,12 @@
  */
 import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
-import 'rxjs/add/operator/filter';
+import { Router, NavigationStart } from '@angular/router';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { RouterModule, Routes, Router, NavigationStart } from '@angular/router';
+import { OidcSecurityService, AuthorizationResult } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'ngx-app',
@@ -19,16 +18,14 @@ import { RouterModule, Routes, Router, NavigationStart } from '@angular/router';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
-  hash: string;
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
+  hash: string;
 
   constructor(
-    private router: Router,
-    public toastr: ToastsManager,
-    vRef: ViewContainerRef,
-    public oidcSecurityService: OidcSecurityService,
-    private analytics: AnalyticsService) {
+    public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
+    private analytics: AnalyticsService,
+    private router: Router) {
 
     this.toastr.setRootViewContainerRef(vRef);
 
@@ -42,12 +39,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     this.router.events.filter((event: any) => event instanceof NavigationStart)
       .subscribe((data: NavigationStart) => {
-        if (data.url == "/id_token") {
+        if (data.url == "/access_token") {
           this.hash = window.location.hash;
           this.router.navigate([]);
         }
       });
 
+    this.oidcSecurityService.onAuthorizationResult.subscribe(
+      (authorizationResult: AuthorizationResult) => {
+        this.onAuthorizationResultComplete(authorizationResult);
+      });
   }
 
   ngOnInit(): void {
@@ -58,7 +59,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.isAuthorized = isAuthorized;
       });
   }
-  
+
   public handleError(error: Response) {
     this.toastr.error("Error occured !");
     return Observable.throw(error.json() || 'Server error');
@@ -83,17 +84,42 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   private getTokenHash() {
     if (typeof location !== 'undefined' && this.hash) {
-      const indexHash = this.hash.indexOf('id_token');
+      const indexHash = this.hash.indexOf('/access_token');
       return indexHash > -1 && this.hash.substr(indexHash);
     }
   }
 
   private doCallbackLogicIfRequired() {
 
+    console.info("doCallbackLogicIfRequired");
     const hash = this.getTokenHash();
     if (hash) {
       this.oidcSecurityService.authorizedCallback(hash);
     }
 
   }
+
+  private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
+    console.log('AppComponent:onAuthorizationResultComplete');
+    const path = this.read('redirect');
+    if (authorizationResult === AuthorizationResult.authorized) {
+      this.router.navigate([path]);
+    } else {
+      this.router.navigate(['/unauthorized']);
+    }
+  }
+
+  private read(key: string): any {
+    const data = localStorage.getItem(key);
+    if (data != null) {
+      return JSON.parse(data);
+    }
+
+    return;
+  }
+
+  private write(key: string, value: any): void {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
 }
