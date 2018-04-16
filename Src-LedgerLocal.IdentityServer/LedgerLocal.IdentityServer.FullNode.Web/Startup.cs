@@ -81,11 +81,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 var cert = new X509Certificate2(Configuration["PathCert"], Configuration["PasswordCert"]);
                 id1 = id1.AddSigningCredential(cert);
             }
-
-            services.AddDataProtection().
-                PersistKeysToFileSystem(
-                new DirectoryInfo("/home/pesh"));
-
+            
             id1
                 // this adds the config data from DB (clients & resources)
                 .AddConfigurationStore(options =>
@@ -187,8 +183,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
 
             
             app.UseIdentityServer();
-            //app.UseAuthentication();
-            app.UseIdentity();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
