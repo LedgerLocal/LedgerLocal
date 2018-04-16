@@ -156,7 +156,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             _environment = env;
 
             // this will do the initial DB population
-            //InitializeDatabase(app);
+            InitializeDatabase(app);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
