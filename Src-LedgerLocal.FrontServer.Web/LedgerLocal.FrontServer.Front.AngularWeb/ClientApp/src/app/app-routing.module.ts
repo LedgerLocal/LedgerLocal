@@ -47,6 +47,7 @@ const routes: Routes = [
 
 const config: ExtraOptions = {
   useHash: true,
+  initialNavigation: false
 };
 
 @NgModule({

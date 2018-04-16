@@ -5,12 +5,13 @@
  */
 import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
-
+import 'rxjs/add/operator/filter';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { RouterModule, Routes, Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'ngx-app',
@@ -18,11 +19,15 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
+  hash: string;
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
 
   constructor(
-    public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
+    private router: Router,
+    public toastr: ToastsManager,
+    vRef: ViewContainerRef,
+    public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService) {
 
     this.toastr.setRootViewContainerRef(vRef);
@@ -34,6 +39,14 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.doCallbackLogicIfRequired();
       });
     }
+
+    this.router.events.filter((event: any) => event instanceof NavigationStart)
+      .subscribe((data: NavigationStart) => {
+        if (data.url == "/id_token") {
+          this.hash = window.location.hash;
+          this.router.navigate([]);
+        }
+      });
 
   }
 
@@ -69,9 +82,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   private getTokenHash() {
-    if (typeof location !== 'undefined' && window.location.hash) {
-      const indexHash = window.location.hash.indexOf('id_token');
-      return indexHash > -1 && window.location.hash.substr(indexHash);
+    if (typeof location !== 'undefined' && this.hash) {
+      const indexHash = this.hash.indexOf('id_token');
+      return indexHash > -1 && this.hash.substr(indexHash);
     }
   }
 
