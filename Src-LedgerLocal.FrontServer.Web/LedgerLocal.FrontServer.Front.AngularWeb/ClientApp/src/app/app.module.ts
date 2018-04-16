@@ -52,23 +52,24 @@ export class AppModule {
     openIDImplicitFlowConfiguration.redirect_url = 'http://www.ledgerlocal.com/#/pages/userdetail';
     // The Client MUST validate that the aud (audience) Claim contains its client_id value registered at the Issuer identified by the iss (issuer) Claim as an audience.
     // The ID Token MUST be rejected if the ID Token does not list the Client as a valid audience, or if it contains additional audiences not trusted by the Client.
-    openIDImplicitFlowConfiguration.client_id = 'singleapp';
+    openIDImplicitFlowConfiguration.client_id = 'ledgerlocal.web';
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
-    openIDImplicitFlowConfiguration.scope = 'dataEventRecords openid';
+    openIDImplicitFlowConfiguration.scope = 'openid profile offline_access api.main';
     openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'http://www.ledgerlocal.com';
     openIDImplicitFlowConfiguration.start_checksession = false;
-    openIDImplicitFlowConfiguration.silent_renew = false;
-    openIDImplicitFlowConfiguration.silent_renew_url = 'https://identity.ledgerlocal.com/silent-renew.html';
+    openIDImplicitFlowConfiguration.silent_renew = true;
+    openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 60;
     openIDImplicitFlowConfiguration.post_login_route = '/userdetail';
     // HTTP 403
-    openIDImplicitFlowConfiguration.forbidden_route = '/Forbidden';
+    openIDImplicitFlowConfiguration.forbidden_route = '/forbidden';
     // HTTP 401
-    openIDImplicitFlowConfiguration.unauthorized_route = '/Unauthorized';
+    openIDImplicitFlowConfiguration.unauthorized_route = '/unauthorized';
+    openIDImplicitFlowConfiguration.auto_userinfo = true;
     openIDImplicitFlowConfiguration.log_console_warning_active = true;
     openIDImplicitFlowConfiguration.log_console_debug_active = true;
     // id_token C8: The iat Claim can be used to reject tokens that were issued too far away from the current time,
     // limiting the amount of time that nonces need to be stored to prevent attacks.The acceptable range is Client specific.
-    openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = 10;
+    openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = 600;
 
     const authWellKnownEndpoints = new AuthWellKnownEndpoints();
     authWellKnownEndpoints.issuer = 'https://identity.ledgerlocal.com';
