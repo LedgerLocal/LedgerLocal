@@ -68,10 +68,18 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.oidcSecurityService.logoff();
   }
 
+  private getTokenHash() {
+    if (typeof location !== 'undefined' && window.location.hash) {
+      const indexHash = window.location.hash.indexOf('id_token');
+      return indexHash > -1 && window.location.hash.substr(indexHash);
+    }
+  }
+
   private doCallbackLogicIfRequired() {
 
-    if (window.location.hash) {
-      this.oidcSecurityService.authorizedCallback();
+    const hash = this.getTokenHash();
+    if (hash) {
+      this.oidcSecurityService.authorizedCallback(hash);
     }
 
   }
