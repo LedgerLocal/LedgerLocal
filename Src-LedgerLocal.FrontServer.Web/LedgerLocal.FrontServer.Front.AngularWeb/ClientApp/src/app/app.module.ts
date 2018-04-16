@@ -55,7 +55,7 @@ export class AppModule {
     openIDImplicitFlowConfiguration.client_id = 'ledgerlocal.web';
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
     openIDImplicitFlowConfiguration.scope = 'openid profile offline_access api.main';
-    openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'https://www.ledgerlocal.com';
+
     openIDImplicitFlowConfiguration.start_checksession = false;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 60;
