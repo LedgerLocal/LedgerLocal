@@ -50,11 +50,6 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            var id1 = services.AddIdentityServer()
-                .AddDefaultEndpoints()
-                .AddCookieAuthentication()
-                .AddAspNetIdentity<User>();
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), opt1 => opt1.MigrationsAssembly(migrationsAssembly)));
             services.AddDbContext<PersistedGrantDbContext>(options =>
@@ -71,6 +66,10 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             //    options.AppId = "id";
             //    options.AppSecret = "secret";
             //});
+
+            var id1 = services.AddIdentityServer()
+                .AddDefaultEndpoints()
+                .AddAspNetIdentity<User>();
 
             if (_environment != null && _environment.IsDevelopment())
             {
