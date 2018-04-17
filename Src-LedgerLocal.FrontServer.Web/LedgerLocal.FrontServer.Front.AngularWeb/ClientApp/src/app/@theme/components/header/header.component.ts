@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.userData = null;
     this.userName = "Not logged";
-    this.loginUrl = "/home";
+    this.loginUrl = "/pages/home";
   }
 
   ngOnInit() {
@@ -52,9 +52,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isAuthorizedSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
 
-      if (auth1) {
-        this.userData = auth1;
-        this.userName = auth1.name;
+      if (auth1 && auth1.length > 0) {
+        this.userData = auth1[0];
+        this.userName = auth1[0].name;
       }
 
     });
@@ -77,12 +77,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
   }
 
-  goToHome() {
-    this.menuService.navigateHome();
+  login() {
+
+    return false;
+    //this.menuService.navigateHome();
   }
 
   startSearch() {
-    this.analyticsService.trackEvent('startSearch');
+    //this.analyticsService.trackEvent('startSearch');
   }
 
 }

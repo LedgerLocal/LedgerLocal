@@ -36,7 +36,7 @@
             <a href="#"><div>White Paper</div></a>
           </li>
           <li>
-            <a [href]="loginUrl" [textContent]="userName"></a>
+            <a [href]="loginUrl" (click)="login()"><div>{{ userName }}</div></a>
           </li>
         </ul>
       </nav><!-- #primary-menu end -->

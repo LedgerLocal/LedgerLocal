@@ -23,9 +23,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private router: Router) {
-
-    this.isFirstLogged = false;
-
+    
     this.toastr.setRootViewContainerRef(vRef);
 
     if (this.oidcSecurityService.moduleSetup) {
@@ -35,22 +33,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.doCallbackLogicIfRequired();
       });
     }
-    
-    //this.router.events.filter((event: any) => event instanceof NavigationStart)
-    //  .subscribe((data: NavigationStart) => {
-    //    if (data && data.url && data.url.indexOf('id_token') != -1) {
 
-    //      const indexHash = data.url.indexOf('id_token');
-    //      this.hash = data.url.substr(indexHash);
-          
-    //    }
-
-    //  });
-
-    //this.oidcSecurityService.onAuthorizationResult.subscribe(
-    //  (authorizationResult: AuthorizationResult) => {
-    //    //this.onAuthorizationResultComplete(authorizationResult);
-    //  });
   }
 
   ngOnInit(): void {
@@ -97,35 +80,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     console.info("doCallbackLogicIfRequired");
     const hash = this.getTokenHash();
-    if (hash && !this.isFirstLogged) {
+    if (hash) {
       console.info("processing " + hash);
-      this.isFirstLogged = true;
       this.oidcSecurityService.authorizedCallback(hash);
     }
 
   }
-
-  //private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
-  //  console.log('AppComponent:onAuthorizationResultComplete');
-  //  const path = this.read('redirect');
-  //  if (authorizationResult === AuthorizationResult.authorized) {
-  //    this.router.navigate([path]);
-  //  } else {
-  //    this.router.navigate(['/unauthorized']);
-  //  }
-  //}
-
-  //private read(key: string): any {
-  //  const data = localStorage.getItem(key);
-  //  if (data != null) {
-  //    return JSON.parse(data);
-  //  }
-
-  //  return;
-  //}
-
-  //private write(key: string, value: any): void {
-  //  localStorage.setItem(key, JSON.stringify(value));
-  //}
 
 }
