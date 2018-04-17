@@ -64,6 +64,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.isAuthorized = isAuthorized;
 
         if (this.isAuthorized) {
+
           this.userDataSubscription = this.oidcSecurityService.getUserData().subscribe(
             (userData: any) => {
 

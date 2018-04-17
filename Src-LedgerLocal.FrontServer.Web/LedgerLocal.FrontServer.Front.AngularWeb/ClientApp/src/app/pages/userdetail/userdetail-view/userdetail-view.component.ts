@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl, SafeStyle } from '@angular/plat
 import { ContentService } from '../../../@core/data/contentservice';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-userdetail-view',
@@ -22,16 +23,17 @@ export class UserDetailViewComponent implements OnInit, AfterViewInit {
   constructor(private stService: SmartTableService,
     private loService: LayoutInitService,
     private userService: ContentService,
-    private sanitization: DomSanitizer) {
+    private sanitization: DomSanitizer,
+    private router: Router) {
   }
 
   ngOnInit() {
 
     this.initAuthSubscription = this.userService.getAuth().subscribe((auth1: any) => {
 
-      if (auth1 && auth1.length > 0) {
-        this.userData = auth1[0];
-        this.userName = auth1[0].name;
+      if (auth1) {
+        this.userData = auth1;
+        this.userName = auth1.name;
       }
 
     });
@@ -41,6 +43,10 @@ export class UserDetailViewComponent implements OnInit, AfterViewInit {
     //  .subscribe((cb: any) => {
     //    this.contentBlockList = cb;
     //  });
+  }
+
+  participateIco(): void {
+    this.router.navigate(['/pages/participate/participate-view']);
   }
 
   ngAfterViewInit() {

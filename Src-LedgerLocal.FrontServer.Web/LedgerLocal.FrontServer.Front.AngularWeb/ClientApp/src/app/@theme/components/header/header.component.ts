@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     //console.log('IsAuthorized:' + this.isAuthorized);
-
+    this.userName = "Not logged";
     this.initAuthSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
 
       if (auth1) {

@@ -1,33 +1,57 @@
-<!-- Start Breadcumbs Area -->
-<div class="breadcumbs-area breadcumbs-bg-1 bc-area-padding">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-left">
-            <h2>User Detail</h2>
-            <span>summary</span>
-          </div>
+
+<section id="content">
+  <div class="content-wrap">
+
+    <div class="section notopmargin">
+      <div class="container clearfix">
+        <div class="center">
+          <h2>Welcome, <span>{{ userName }}</span></h2>
         </div>
       </div>
     </div>
+
   </div>
-</div>
-<!-- End Breadcumbs Area -->
-<!-- Start Services Area -->
-<div class="content-block-area">
-  <div class="container">
-    <div class="row">
+</section>
 
-      <div class="col-md-23">
-        <p class="description">
-          You are logged:
+<section id="content">
+  <div class="content-wrap">
 
-          <span>{{ userData | json }}</span>
-        </p>
+    <div class="section notopmargin">
+      <div class="container clearfix">
+        <div class="center">
+          <h2>Your Details: </h2>
+        </div>
+
+        <pre>{{ userData | json }}</pre>
       </div>
-
     </div>
+
   </div>
-</div>
-<!-- End Services Area -->
+</section>
+
+<section id="content">
+  <div class="content-wrap">
+
+    <div class="section notopmargin">
+      <div class="container clearfix">
+        <div class="center">
+          <h2>Participate to our <span>ICO</span></h2>
+        </div>
+        <div class="subscribe-widget">
+          <div class="widget-subscribe-form-result"></div>
+          <form id="widget-subscribe-form2" action="" role="form" method="post" class="nobottommargin">
+            <div class="input-group input-group-lg divcenter" style="max-width:600px;">
+              <span class="input-group-addon"><i class="icon-line2-envelope-open"></i></span>
+              <input type="text" class="form-control required" placeholder="Amount to invest">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" (click)="participateIco()">Participate to ICO</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+

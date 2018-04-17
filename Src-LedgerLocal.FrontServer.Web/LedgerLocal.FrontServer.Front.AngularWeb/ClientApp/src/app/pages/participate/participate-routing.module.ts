@@ -12,7 +12,7 @@ const routes: Routes = [{
     component: ParticipateViewComponent,
   }, {
     path: '',
-    redirectTo: 'appointment-view',
+    redirectTo: 'participate-view',
     pathMatch: 'full',
   }],
 }];
