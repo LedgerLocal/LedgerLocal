@@ -17,12 +17,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
   hash: string;
+  isFirstLogged: boolean;
 
   constructor(
     public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private router: Router) {
-    
+
+    this.isFirstLogged = false;
+
     this.toastr.setRootViewContainerRef(vRef);
 
     if (this.oidcSecurityService.moduleSetup) {
@@ -94,8 +97,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     console.info("doCallbackLogicIfRequired");
     const hash = this.getTokenHash();
-    if (hash) {
+    if (hash && !this.isFirstLogged) {
       console.info("processing " + hash);
+      this.isFirstLogged = true;
       this.oidcSecurityService.authorizedCallback(hash);
     }
 
