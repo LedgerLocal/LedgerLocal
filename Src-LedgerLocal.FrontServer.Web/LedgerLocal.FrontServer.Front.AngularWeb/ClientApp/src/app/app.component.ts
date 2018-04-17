@@ -17,12 +17,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
   hash: string;
+  alreadyStarted: boolean;
 
   constructor(
     public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private router: Router) {
-    
+
+    this.alreadyStarted = false;
+
     this.toastr.setRootViewContainerRef(vRef);
 
     if (this.oidcSecurityService.moduleSetup) {
@@ -32,9 +35,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.doCallbackLogicIfRequired();
       });
     }
-
-    this.router.initialNavigation();
-
+    
     //this.router.events.filter((event: any) => event instanceof NavigationStart)
     //  .subscribe((data: NavigationStart) => {
     //    if (data && data.url && data.url.indexOf('id_token') != -1) {
@@ -100,6 +101,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     if (hash) {
       console.info("processing " + hash);
       this.oidcSecurityService.authorizedCallback(hash);
+    } else {
+
+      if (!this.alreadyStarted) {
+        this.router.initialNavigation();
+        this.alreadyStarted = true;
+      }
+      
     }
 
   }

@@ -42,15 +42,19 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               public toastr: ToastsManager) {
 
     this.userData = null;
-    this.userName = null;
+    this.userName = "Not logged";
   }
 
   ngOnInit() {
     //console.log('IsAuthorized:' + this.isAuthorized);
 
     this.isAuthorizedSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
-      this.userData = auth1;
-      this.userName = auth1.name;
+
+      if (auth1) {
+        this.userData = auth1;
+        this.userName = auth1.name;
+      }
+
     });
   }
 
