@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   public userData: any;
   public userName: string;
   token: string;
+  public loginUrl: string;
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.userData = null;
     this.userName = "Not logged";
+    this.loginUrl = "/home";
   }
 
   ngOnInit() {

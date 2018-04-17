@@ -9,7 +9,7 @@ export class ContentService {
 
     private contentList: any;
     private subject = new BehaviorSubject<any>([]);
-    private auth = new BehaviorSubject<any>([]);
+    private auth = new BehaviorSubject<any>(0);
 
     constructor(private http: HttpClient) {
     }

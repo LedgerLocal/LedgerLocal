@@ -17,15 +17,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
   hash: string;
-  alreadyStarted: boolean;
 
   constructor(
     public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private router: Router) {
-
-    this.alreadyStarted = false;
-
+    
     this.toastr.setRootViewContainerRef(vRef);
 
     if (this.oidcSecurityService.moduleSetup) {
@@ -55,8 +52,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   ngOnInit(): void {
     //this.analytics.trackPageViews();
-
-    
+    this.router.initialNavigation();
 
     this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
       (isAuthorized: boolean) => {
@@ -101,13 +97,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     if (hash) {
       console.info("processing " + hash);
       this.oidcSecurityService.authorizedCallback(hash);
-    } else {
-
-      if (!this.alreadyStarted) {
-        this.router.initialNavigation();
-        this.alreadyStarted = true;
-      }
-      
     }
 
   }
