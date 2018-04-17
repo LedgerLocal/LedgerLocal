@@ -9,6 +9,7 @@ import { OidcSecurityService, AuthorizationResult } from 'angular-auth-oidc-clie
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, NavigationStart } from '@angular/router';
 import * as _ from 'lodash';
 
 @Component({
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               private analyticsService: AnalyticsService,
               private contentS: ContentService,
               private layoutInit: LayoutInitService,
+              private router: Router,
               public oidcSecurityService: OidcSecurityService,
               public toastr: ToastsManager) {
 
@@ -79,6 +81,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   toggleSettings(): boolean {
     this.sidebarService.toggle(false, 'settings-sidebar');
     return false;
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/pages/home/home-view']);
   }
 
   ngAfterViewInit() {
