@@ -9,6 +9,7 @@ export class ContentService {
 
     private contentList: any;
     private subject = new BehaviorSubject<any>([]);
+    private auth = new BehaviorSubject<any>([]);
 
     constructor(private http: HttpClient) {
     }
@@ -23,6 +24,14 @@ export class ContentService {
 
     public getContentList(): Observable<any> {
       return this.subject.asObservable();
+    }
+
+    public getAuth(): Observable<any> {
+      return this.auth.asObservable();
+    }
+
+    public addAuth(a1: any): void {
+      this.auth.next(a1);
     }
 
 }

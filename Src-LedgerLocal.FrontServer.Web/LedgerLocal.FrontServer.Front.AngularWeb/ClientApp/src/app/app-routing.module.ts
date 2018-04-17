@@ -8,7 +8,8 @@ const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: true
+  useHash: true,
+  initialNavigation: false
 };
 
 @NgModule({

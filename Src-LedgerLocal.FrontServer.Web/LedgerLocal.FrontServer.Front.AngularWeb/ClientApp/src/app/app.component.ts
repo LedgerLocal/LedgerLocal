@@ -1,8 +1,3 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
 import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { Router, NavigationStart } from '@angular/router';
@@ -27,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private router: Router) {
-
+    
     this.toastr.setRootViewContainerRef(vRef);
 
     if (this.oidcSecurityService.moduleSetup) {
@@ -38,30 +33,33 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
       });
     }
 
-    this.router.events.filter((event: any) => event instanceof NavigationStart)
-      .subscribe((data: NavigationStart) => {
-        if (data && data.url && data.url.indexOf('id_token') != -1) {
+    //this.router.events.filter((event: any) => event instanceof NavigationStart)
+    //  .subscribe((data: NavigationStart) => {
+    //    if (data && data.url && data.url.indexOf('id_token') != -1) {
 
-          const indexHash = data.url.indexOf('id_token');
-          this.hash = data.url.substr(indexHash);
-          this.router.navigate([]);
-        }
+    //      const indexHash = data.url.indexOf('id_token');
+    //      this.hash = data.url.substr(indexHash);
+          
+    //    }
 
-      });
+    //  });
 
-    this.oidcSecurityService.onAuthorizationResult.subscribe(
-      (authorizationResult: AuthorizationResult) => {
-        this.onAuthorizationResultComplete(authorizationResult);
-      });
+    //this.oidcSecurityService.onAuthorizationResult.subscribe(
+    //  (authorizationResult: AuthorizationResult) => {
+    //    //this.onAuthorizationResultComplete(authorizationResult);
+    //  });
   }
 
   ngOnInit(): void {
-    this.analytics.trackPageViews();
+    //this.analytics.trackPageViews();
+
+    this.router.initialNavigation();
 
     this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
       (isAuthorized: boolean) => {
         this.isAuthorized = isAuthorized;
       });
+
   }
 
   public handleError(error: Response) {
@@ -86,13 +84,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.oidcSecurityService.logoff();
   }
 
-  private getTokenHash() {
-    if (this.hash) {
-
-      console.log("HASH => " + this.hash);
-
-      const indexHash = this.hash.indexOf('id_token');
-      return indexHash > -1 && this.hash.substr(indexHash);
+  getTokenHash() {
+    if (typeof location !== 'undefined' && window.location.hash) {
+      const indexHash = window.location.hash.indexOf('id_token');
+      return indexHash > -1 && window.location.hash.substr(indexHash);
     }
   }
 
@@ -101,33 +96,33 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     console.info("doCallbackLogicIfRequired");
     const hash = this.getTokenHash();
     if (hash) {
-      console.info(hash);
+      console.info("processing " + hash);
       this.oidcSecurityService.authorizedCallback(hash);
     }
 
   }
 
-  private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
-    console.log('AppComponent:onAuthorizationResultComplete');
-    const path = this.read('redirect');
-    if (authorizationResult === AuthorizationResult.authorized) {
-      this.router.navigate([path]);
-    } else {
-      this.router.navigate(['/unauthorized']);
-    }
-  }
+  //private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
+  //  console.log('AppComponent:onAuthorizationResultComplete');
+  //  const path = this.read('redirect');
+  //  if (authorizationResult === AuthorizationResult.authorized) {
+  //    this.router.navigate([path]);
+  //  } else {
+  //    this.router.navigate(['/unauthorized']);
+  //  }
+  //}
 
-  private read(key: string): any {
-    const data = localStorage.getItem(key);
-    if (data != null) {
-      return JSON.parse(data);
-    }
+  //private read(key: string): any {
+  //  const data = localStorage.getItem(key);
+  //  if (data != null) {
+  //    return JSON.parse(data);
+  //  }
 
-    return;
-  }
+  //  return;
+  //}
 
-  private write(key: string, value: any): void {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
+  //private write(key: string, value: any): void {
+  //  localStorage.setItem(key, JSON.stringify(value));
+  //}
 
 }

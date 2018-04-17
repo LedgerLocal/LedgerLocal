@@ -8,7 +8,6 @@ import { LayoutInitService } from '../../../@core/data/layoutinit';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 import * as _ from 'lodash';
 
 @Component({
@@ -40,41 +39,22 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               private analyticsService: AnalyticsService,
               private contentS: ContentService,
               private layoutInit: LayoutInitService,
-              public toastr: ToastsManager, public oidcSecurityService: OidcSecurityService) {
+              public toastr: ToastsManager) {
 
     this.userData = null;
 
+    this.isAuthorizedSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
+      this.userData = auth1;
+      this.userName = auth1.name;
+    });
   }
 
   ngOnInit() {
-    this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
-      (isAuthorized: boolean) => {
-        this.isAuthorized = isAuthorized;
-        if (this.isAuthorized) {
-
-          this.token = this.oidcSecurityService.getToken();
-          this.toastr.success("Authorized !");
-
-          this.userDataSubscription = this.oidcSecurityService.getUserData().subscribe(
-            (userData: any) => {
-
-              this.userData = userData;
-              this.userName = this.userData.name;
-
-            });
-        }
-      });
-
-
     //console.log('IsAuthorized:' + this.isAuthorized);
   }
 
   ngOnDestroy(): void {
-    this.isAuthorizedSubscription.unsubscribe();
 
-    if (this.userDataSubscription) {
-      this.userDataSubscription.unsubscribe();
-    }
   }
 
   toggleSidebar(): boolean {
@@ -98,11 +78,4 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.analyticsService.trackEvent('startSearch');
   }
 
-  public login() {
-    this.oidcSecurityService.authorize();
-  }
-
-  public logout() {
-    this.oidcSecurityService.logoff();
-  }
 }
