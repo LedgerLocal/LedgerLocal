@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
   userDataSubscription: Subscription;
+  initAuthSubscription: Subscription;
   public userData: any;
   public userName: string;
   token: string;
@@ -50,7 +51,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     //console.log('IsAuthorized:' + this.isAuthorized);
 
-    this.isAuthorizedSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
+    this.initAuthSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
 
       if (auth1 && auth1.length > 0) {
         this.userData = auth1[0];
