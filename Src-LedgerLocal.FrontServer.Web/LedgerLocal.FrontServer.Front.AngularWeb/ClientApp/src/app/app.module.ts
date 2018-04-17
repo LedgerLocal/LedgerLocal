@@ -58,7 +58,7 @@ export class AppModule {
     openIDImplicitFlowConfiguration.start_checksession = false;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 60;
-    openIDImplicitFlowConfiguration.post_login_route = '/userdetail#';
+    //openIDImplicitFlowConfiguration.post_login_route = '/userdetail#';
     // HTTP 403
     openIDImplicitFlowConfiguration.forbidden_route = '/forbidden';
     // HTTP 401
