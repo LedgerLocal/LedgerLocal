@@ -40,7 +40,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
     this.router.events.filter((event: any) => event instanceof NavigationStart)
       .subscribe((data: NavigationStart) => {
-        if (data.url == "id_token") {
+        if (data && data.url && data.url.indexOf('id_token') != -1) {
+          console.info(data.url);
           this.hash = window.location.hash;
           this.router.navigate([]);
         }
@@ -95,6 +96,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     console.info("doCallbackLogicIfRequired");
     const hash = this.getTokenHash();
     if (hash) {
+      console.info(hash);
       this.oidcSecurityService.authorizedCallback(hash);
     }
 
