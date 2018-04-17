@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { Router, NavigationStart } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 import { OidcSecurityService, AuthorizationResult } from 'angular-auth-oidc-client';
+import { isPlatformBrowser } from '@angular/common';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   isFirstLogged: boolean;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private router: Router) {
@@ -78,13 +80,17 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   private doCallbackLogicIfRequired() {
 
-    console.info("doCallbackLogicIfRequired");
-    const hash = this.getTokenHash();
-    if (hash) {
-      console.info("processing " + hash);
-      this.oidcSecurityService.authorizedCallback(hash);
-    }
+    if (isPlatformBrowser(this.platformId)) {
 
+      console.info("doCallbackLogicIfRequired");
+      const hash = this.getTokenHash();
+      if (hash) {
+        console.info("processing " + hash);
+        this.oidcSecurityService.authorizedCallback(hash);
+      }
+
+    }
+    
   }
 
 }
