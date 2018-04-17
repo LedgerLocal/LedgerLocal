@@ -85,7 +85,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   private getTokenHash() {
-    if (typeof location !== 'undefined' && this.hash) {
+    if (location && this.hash) {
+
+      console.log("HASH => " + this.hash);
+
       const indexHash = this.hash.indexOf('id_token');
       return indexHash > -1 && this.hash.substr(indexHash);
     }
