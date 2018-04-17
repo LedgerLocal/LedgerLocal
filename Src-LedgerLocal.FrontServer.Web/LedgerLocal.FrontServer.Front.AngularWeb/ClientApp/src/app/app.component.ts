@@ -33,6 +33,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
       });
     }
 
+    this.router.initialNavigation();
+
     //this.router.events.filter((event: any) => event instanceof NavigationStart)
     //  .subscribe((data: NavigationStart) => {
     //    if (data && data.url && data.url.indexOf('id_token') != -1) {
@@ -53,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   ngOnInit(): void {
     //this.analytics.trackPageViews();
 
-    this.router.initialNavigation();
+    
 
     this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
       (isAuthorized: boolean) => {

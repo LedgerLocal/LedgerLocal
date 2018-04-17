@@ -35,11 +35,11 @@
           <li>
             <a href="#"><div>White Paper</div></a>
           </li>
-          <li *ngIf="userData == null">
-            <a href="" (click)="login()"><div>Login</div></a>
+          <li *ngIf="!userData">
+            <a href="#" (click)="login()"><div>Login</div></a>
           </li>
-          <li *ngIf="userData != null">
-            <a href=""><div>{{ userData.name }}</div></a>
+          <li *ngIf="userData">
+            <a href="#"><div>{{ userData.name }}</div></a>
           </li>
         </ul>
       </nav><!-- #primary-menu end -->
