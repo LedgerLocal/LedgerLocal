@@ -5,6 +5,7 @@ import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { ContentService } from '../../../@core/data/contentservice';
 import { LayoutInitService } from '../../../@core/data/layoutinit';
+import { OidcSecurityService, AuthorizationResult } from 'angular-auth-oidc-client';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   public userName: string;
   token: string;
   public loginUrl: string;
+  private boolVal: boolean;
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -41,21 +43,25 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
               private analyticsService: AnalyticsService,
               private contentS: ContentService,
               private layoutInit: LayoutInitService,
+              public oidcSecurityService: OidcSecurityService,
               public toastr: ToastsManager) {
 
     this.userData = null;
     this.userName = "Not logged";
     this.loginUrl = "/pages/home";
+    this.boolVal = false;
   }
 
   ngOnInit() {
     //console.log('IsAuthorized:' + this.isAuthorized);
-    this.userName = "Not logged";
+
     this.initAuthSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
 
       if (auth1) {
+
         this.userData = auth1;
         this.userName = auth1.name;
+        this.boolVal = true;
       }
 
     });
@@ -78,7 +84,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
   }
 
-  login() {
+  loginOrLogoff() {
+
+    if (this.boolVal) {
+      this.oidcSecurityService.logoff();
+    } else {
+      
+    }
 
     return false;
     //this.menuService.navigateHome();
