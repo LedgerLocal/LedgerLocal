@@ -53,9 +53,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.initAuthSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
 
-      if (auth1 && auth1.length > 0) {
-        this.userData = auth1[0];
-        this.userName = auth1[0].name;
+      if (auth1) {
+        this.userData = auth1;
+        this.userName = auth1.name;
       }
 
     });

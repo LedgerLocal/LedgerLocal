@@ -22,7 +22,7 @@ export class HomeViewComponent implements OnInit, AfterViewInit {
 
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
-  userDataSubscription: Subscription;
+  initAuthSubscription: Subscription;
   public userData: any;
   public userName: string;
   public labelLoggin = 'Login';
@@ -50,35 +50,14 @@ export class HomeViewComponent implements OnInit, AfterViewInit {
         this.contentBlockList = cb;
       });
 
-    this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
-      (isAuthorized: boolean) => {
-        this.isAuthorized = isAuthorized;
+    this.initAuthSubscription = this.contentService.getAuth().subscribe((auth1: any) => {
 
-        if (this.isAuthorized) {
-          this.userDataSubscription = this.oidcSecurityService.getUserData().subscribe(
-            (userData: any) => {
+      if (auth1) {
+        this.userData = auth1;
+        this.userName = auth1.name;
+      }
 
-              this.userData = userData;
-
-              if (this.userData) {
-
-                this.contentService.addAuth(this.userData);
-
-                this.userName = this.userData.name;
-
-                if (this.userName) {
-
-                  this.labelLoggin = this.userName.split('@')[0];
-
-                }
-
-              }
-
-            });
-        }
-      });
-
-    
+    });
   }
 
   ngAfterViewInit() {

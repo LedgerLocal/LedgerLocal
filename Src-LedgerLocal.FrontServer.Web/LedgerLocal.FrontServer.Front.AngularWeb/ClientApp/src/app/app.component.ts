@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
+import { ContentService } from './@core/data/contentservice';
 import { Router, NavigationStart } from '@angular/router';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -17,13 +18,24 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   isAuthorizedSubscription: Subscription;
   isAuthorized: boolean;
+
+  userDataSubscription: Subscription;
+  public userData: any;
+  public userName: string;
+  public labelLoggin = 'Login';
+
+  token: string;
+
   hash: string;
   isFirstLogged: boolean;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    public toastr: ToastsManager, vRef: ViewContainerRef, public oidcSecurityService: OidcSecurityService,
+    public toastr: ToastsManager,
+    public vRef: ViewContainerRef,
+    public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
+    private cntService: ContentService,
     private router: Router) {
     
     this.toastr.setRootViewContainerRef(vRef);
@@ -36,6 +48,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
       });
     }
 
+    this.oidcSecurityService.onAuthorizationResult.subscribe(
+      (authorizationResult: AuthorizationResult) => {
+        this.onAuthorizationResultComplete(authorizationResult);
+      });
+
   }
 
   ngOnInit(): void {
@@ -45,6 +62,29 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
       (isAuthorized: boolean) => {
         this.isAuthorized = isAuthorized;
+
+        if (this.isAuthorized) {
+          this.userDataSubscription = this.oidcSecurityService.getUserData().subscribe(
+            (userData: any) => {
+
+              this.userData = userData;
+
+              if (this.userData) {
+
+                this.cntService.addAuth(this.userData);
+
+                this.userName = this.userData.name;
+
+                if (this.userName) {
+
+                  this.labelLoggin = this.userName.split('@')[0];
+
+                }
+
+              }
+
+            });
+        }
       });
 
   }
@@ -59,8 +99,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   ngOnDestroy(): void {
-    this.isAuthorizedSubscription.unsubscribe();
+    //this.isAuthorizedSubscription.unsubscribe();
     this.oidcSecurityService.onModuleSetup.unsubscribe();
+  }
+
+  private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
+    console.log('AppComponent:onAuthorizationResultComplete' + authorizationResult.toString());
+
+    //const path = this.read('redirect');
+    //if (authorizationResult === AuthorizationResult.authorized) {
+    //  this.router.navigate([path]);
+    //} else {
+    //  this.router.navigate(['/unauthorized']);
+    //}
   }
 
   public login() {
