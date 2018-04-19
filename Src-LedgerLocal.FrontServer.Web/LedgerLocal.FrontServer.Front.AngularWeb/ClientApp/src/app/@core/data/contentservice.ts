@@ -6,13 +6,24 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class ContentService {
-  
-    private auth = new BehaviorSubject<any>(0);
+
+    private contentList: any;
+    private subject = new BehaviorSubject<any>([]);
+    private auth = new BehaviorSubject<any>(null);
 
     constructor(private http: HttpClient) {
     }
 
     public initContentList() {
+
+      if (this.contentList && this.contentList.length > 0) {
+            return;
+      }
+
+    }
+
+    public getContentList(): Observable<any> {
+      return this.subject.asObservable();
     }
 
     public getAuthValue(): any {
