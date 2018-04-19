@@ -57,13 +57,15 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     //console.log('IsAuthorized:' + this.isAuthorized);
 
+    var refthis = this;
+
     this.initAuthSubscription = this.contentS.getAuth().subscribe((auth1: any) => {
 
       if (auth1) {
 
-        this.userData = auth1;
-        this.userName = auth1.name;
-        this.boolVal = true;
+        refthis.userData = auth1;
+        refthis.userName = auth1.name;
+        refthis.boolVal = true;
       }
 
     });

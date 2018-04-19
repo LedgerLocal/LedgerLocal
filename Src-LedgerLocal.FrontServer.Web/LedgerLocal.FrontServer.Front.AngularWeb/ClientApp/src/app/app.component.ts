@@ -65,20 +65,22 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
         if (this.isAuthorized) {
 
+          var refthis = this;
+
           this.userDataSubscription = this.oidcSecurityService.getUserData().subscribe(
             (userData: any) => {
 
-              this.userData = userData;
+              refthis.userData = userData;
 
-              if (this.userData) {
+              if (refthis.userData) {
 
-                this.cntService.addAuth(this.userData);
+                refthis.cntService.addAuth(refthis.userData);
 
-                this.userName = this.userData.name;
+                refthis.userName = refthis.userData.name;
 
-                if (this.userName) {
+                if (refthis.userName) {
 
-                  this.labelLoggin = this.userName.split('@')[0];
+                  refthis.labelLoggin = refthis.userName.split('@')[0];
 
                 }
 
