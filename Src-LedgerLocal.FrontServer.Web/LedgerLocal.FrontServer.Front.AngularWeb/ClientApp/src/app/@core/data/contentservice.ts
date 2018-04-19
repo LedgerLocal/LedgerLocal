@@ -9,7 +9,7 @@ export class ContentService {
 
     private contentList: any;
     private subject = new BehaviorSubject<any>([]);
-    private auth = new BehaviorSubject<any>([]);
+    private auth = new BehaviorSubject<any>(null);
 
     constructor(private http: HttpClient) {
     }
@@ -24,7 +24,7 @@ export class ContentService {
 
     public getAuthValue(): any {
       var val1 = this.auth.getValue();
-      if (val1 && val1 != []) {
+      if (val1) {
         return val1;
       }
 
@@ -40,7 +40,11 @@ export class ContentService {
     }
 
     public addAuth(a1: any): void {
-      this.auth.next(a1);
+
+      if (a1) {
+        this.auth = new BehaviorSubject<any>(a1);
+      }
+      
     }
 
 }
