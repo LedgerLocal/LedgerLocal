@@ -11,7 +11,6 @@ import { ParticipateComponent } from './participate.component';
 import { SmartTableService } from '../../@core/data/smart-table.service';
 import { UserService } from '../../@core/data/users.service';
 import { LayoutInitService } from '../../@core/data/layoutinit';
-import { ContentService } from '../../@core/data/contentservice';
 
 @NgModule({
   imports: [
@@ -25,8 +24,7 @@ import { ContentService } from '../../@core/data/contentservice';
   providers: [
     SmartTableService,
     LayoutInitService,
-    UserService,
-    ContentService,
+    UserService
   ],
 })
 export class ParticipateModule { }

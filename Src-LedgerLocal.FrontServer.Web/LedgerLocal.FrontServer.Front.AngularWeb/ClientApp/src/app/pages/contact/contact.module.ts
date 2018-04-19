@@ -9,7 +9,6 @@ import { ContactViewComponent } from './contact-view/contact-view.component';
 import { ContactComponent } from './contact.component';
 
 import { SmartTableService } from '../../@core/data/smart-table.service';
-import { ContentService } from '../../@core/data/contentservice';
 import { LayoutInitService } from '../../@core/data/layoutinit';
 
 @NgModule({
@@ -23,8 +22,7 @@ import { LayoutInitService } from '../../@core/data/layoutinit';
   ],
   providers: [
     SmartTableService,
-    LayoutInitService,
-    ContentService,
+    LayoutInitService
   ],
 })
 export class ContactModule { }

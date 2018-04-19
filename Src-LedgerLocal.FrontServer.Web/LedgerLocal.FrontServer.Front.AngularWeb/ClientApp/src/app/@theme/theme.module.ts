@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-import { ContentService } from '../@core/data/contentservice';
 
 import {
   NbActionsModule,
@@ -94,8 +93,7 @@ const NB_THEME_PROVIDERS = [
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
-  LayoutInitService,
-  ContentService
+  LayoutInitService
 ];
 
 @NgModule({
