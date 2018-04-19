@@ -16,9 +16,11 @@ export class UserDetailViewComponent implements OnInit, AfterViewInit {
 
   public contentBlockList: any;
 
-  initAuthSubscription: Subscription;
+  
   public userData: any;
   public userName: string;
+
+  private initAuthSubscription: Subscription;
 
   constructor(private stService: SmartTableService,
     private loService: LayoutInitService,
