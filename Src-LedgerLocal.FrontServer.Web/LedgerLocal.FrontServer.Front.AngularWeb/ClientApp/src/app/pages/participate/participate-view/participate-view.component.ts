@@ -27,25 +27,36 @@ export class ParticipateViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    var refthis = this;
-
-    this.initAuthSubscription = this.userService.getAuth().subscribe((auth1: any) => {
-
-      if (auth1) {
-        console.log("[UserDetail] Setting user from observable");
-        console.log(auth1);
-
-        refthis.userData = auth1;
-        refthis.userName = auth1.name;
-      }
-
-    });
-
   }
 
   ngAfterViewInit() {
     this.loService.makeInit();
     this.loService.scrollToTop();
+
+    var refthis = this;
+
+    var val1 = this.userService.getAuthValue();
+
+    if (val1) {
+
+      this.userData = val1;
+      this.userName = val1.name;
+
+    } else {
+
+      this.initAuthSubscription = this.userService.getAuth().subscribe((auth1: any) => {
+
+        if (auth1) {
+          console.log("[UserDetail] Setting user from observable");
+          console.log(auth1);
+
+          refthis.userData = auth1;
+          refthis.userName = auth1.name;
+        }
+
+      });
+
+    }
   }
 
 }
