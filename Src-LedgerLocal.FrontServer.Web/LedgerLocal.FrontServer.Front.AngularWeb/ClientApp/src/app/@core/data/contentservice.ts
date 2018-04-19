@@ -22,6 +22,15 @@ export class ContentService {
 
     }
 
+    public getAuthValue(): any {
+      var val1 = this.auth.getValue();
+      if (val1 && val1 != []) {
+        return val1;
+      }
+
+      return null;
+    }
+
     public getContentList(): Observable<any> {
       return this.subject.asObservable();
     }
