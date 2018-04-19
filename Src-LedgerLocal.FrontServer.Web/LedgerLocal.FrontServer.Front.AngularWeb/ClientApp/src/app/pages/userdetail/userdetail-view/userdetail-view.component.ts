@@ -28,26 +28,19 @@ export class UserDetailViewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    var refthis = this;
 
-    var l1 = this.userService.getAuthValue();
+    this.initAuthSubscription = this.userService.getAuth().subscribe((auth1: any) => {
 
-    if (l1) {
-      console.log("[USerDetail] Setting user from saved val");
+      if (auth1) {
+        console.log("[UserDetail] Setting user from observable");
+        console.log(auth1);
 
-      this.userData = l1;
-      this.userName = l1.name;
-    } else {
-      this.initAuthSubscription = this.userService.getAuth().subscribe((auth1: any) => {
+        refthis.userData = auth1;
+        refthis.userName = auth1.name;
+      }
 
-        if (auth1) {
-          console.log("[USerDetail] Setting user from observable");
-
-          this.userData = auth1;
-          this.userName = auth1.name;
-        }
-
-      });
-    }
+    });
 
     //this.userService.initContentList();
     //this.userService.getContentList()
