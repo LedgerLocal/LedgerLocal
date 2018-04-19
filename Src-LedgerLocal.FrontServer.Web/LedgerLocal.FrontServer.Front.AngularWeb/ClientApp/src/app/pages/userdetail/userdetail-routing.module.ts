@@ -8,11 +8,11 @@ const routes: Routes = [{
   path: '',
   component: UserDetailComponent,
   children: [{
-    path: 'service-view',
+    path: 'userdetail-view',
     component: UserDetailViewComponent,
   }, {
     path: '',
-    redirectTo: 'service-view',
+    redirectTo: 'userdetail-view',
     pathMatch: 'full',
   }],
 }];

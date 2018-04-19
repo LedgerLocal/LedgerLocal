@@ -61,8 +61,8 @@ export class UserDetailViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    //this.loService.makeInit();
-    //this.loService.scrollToTop();
+    this.loService.makeInit();
+    this.loService.scrollToTop();
   }
 
 }

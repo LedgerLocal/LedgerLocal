@@ -48,7 +48,7 @@ export class AppModule {
     const openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
 
     openIDImplicitFlowConfiguration.stsServer = 'https://identity.ledgerlocal.com';
-    openIDImplicitFlowConfiguration.redirect_url = 'https://www.ledgerlocal.com/#/pages/userdetail/service-view#';
+    openIDImplicitFlowConfiguration.redirect_url = 'https://www.ledgerlocal.com/#/pages/home/home-view#';
     // The Client MUST validate that the aud (audience) Claim contains its client_id value registered at the Issuer identified by the iss (issuer) Claim as an audience.
     // The ID Token MUST be rejected if the ID Token does not list the Client as a valid audience, or if it contains additional audiences not trusted by the Client.
     openIDImplicitFlowConfiguration.client_id = 'ledgerlocal.web';
@@ -58,7 +58,7 @@ export class AppModule {
     openIDImplicitFlowConfiguration.start_checksession = false;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 60;
-    openIDImplicitFlowConfiguration.post_login_route = '/#/pages/userdetail/service-view#';
+    openIDImplicitFlowConfiguration.post_login_route = '/#/pages/home/home-view#';
     // HTTP 403
     openIDImplicitFlowConfiguration.forbidden_route = '/#/pages/forbidden';
     // HTTP 401

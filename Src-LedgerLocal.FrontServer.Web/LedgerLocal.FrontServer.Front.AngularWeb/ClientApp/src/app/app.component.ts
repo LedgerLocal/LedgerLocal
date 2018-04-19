@@ -106,6 +106,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   private onAuthorizationResultComplete(authorizationResult: AuthorizationResult) {
     console.log('AppComponent:onAuthorizationResultComplete' + authorizationResult.toString());
+    this.router.navigate(['/pages/userdetail/userdetail-view']);
 
     //const path = this.read('redirect');
     //if (authorizationResult === AuthorizationResult.authorized) {
