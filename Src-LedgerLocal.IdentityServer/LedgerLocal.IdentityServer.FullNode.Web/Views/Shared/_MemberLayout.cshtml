@@ -1,20 +1,27 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 <!DOCTYPE html>
-<html>
+<html dir="ltr" lang="en-US">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LedgerLocal.Vault</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/style.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/dark.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/animate.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/responsive.css" type="text/css" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="SemiColonWeb" />
 
-    @Html.Raw(JavaScriptSnippet.FullScript)
+	<!-- Stylesheets
+	============================================= -->
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/swiper.css" type="text/css" />
+	<link rel="stylesheet" href="css/dark.css" type="text/css" />
+	<link rel="stylesheet" href="css/font-icons.css" type="text/css" />
+	<link rel="stylesheet" href="css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Document Title
+	============================================= -->
+	<title>LedgerLocal | Local exchange between fiat money and cryptocurrency</title>
+
 </head>
 
 <body class="stretched">
@@ -22,45 +29,184 @@
 	<!-- Document Wrapper
 	============================================= -->
 	<div id="wrapper" class="clearfix">
-
+		
+		<!-- Header + Menu
+		============================================= -->
+		<header id="header" class="transparent-header full-header" data-sticky-class="not-dark">
+			<div id="header-wrap">
+				<div class="container clearfix">
+					<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+					<!-- Logo
+					============================================= -->
+					<div id="logo">
+						<a href="index.html" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="images/logo.png" alt="LedgerLocal Logo"></a>
+						<a href="index.html" class="retina-logo" data-dark-logo="images/logo-dark@2x.png"><img src="images/logo@2x.png" alt="LedgerLocal Logo"></a>
+					</div><!-- #logo end -->
+					<!-- Primary Navigation
+					============================================= -->
+					<nav id="primary-menu" class="dark">
+						<ul>
+							<li><a href="#"><div>Back at Home</div></a>
+							</li>
+							</li>
+							<li><a href="#"><div>White Paper</div></a>
+							</li>
+						</ul>
+					</nav><!-- #primary-menu end -->
+				</div>
+			</div>
+		</header><!-- #header end -->
+		
 		<!-- Content
 		============================================= -->
 		<section id="content">
+			<div class="content-wrap">
+				<div class="section nopadding nomargin" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url('images/page/registre.jpg') center center no-repeat; background-size: cover;"></div>
 
-			<div class="content-wrap nopadding">
-
-				<div class="section nopadding nomargin" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url('/images/loy/hero.jpg') center center no-repeat; background-size: cover;"></div>
-
-				<div class="section nobg full-screen nopadding nomargin">
-					<div class="container vertical-middle divcenter clearfix">
-
-						<div class="row center">
-							<a href="index.html"><img src="~/images/loy/logolog.png" alt="Canvas Logo"></a>
+				<!-- login registre
+				============================================= -->
+				<div class="container clearfix">
+					<div class="col_one_third nobottommargin">
+						<div class="well well-lg dark" style="background-image: url('images/page/bg1.jpg');">
+							<form id="login-form" name="login-form" class="nobottommargin" action="#" method="post">
+								<h3>Login to your Account</h3>
+								<div class="col_full">
+									<label for="login-form-username">Email:</label>
+									<input type="text" id="register-form-email" name="register-form-email" value="" class="form-control" placeholder="Your email"/>
+								</div>
+								<div class="col_full">
+									<label for="login-form-password">Password:</label>
+									<input type="password" id="login-form-password" name="login-form-password" value="" class="form-control" placeholder="Your password"/>
+								</div>
+								<div class="col_full nobottommargin">
+									<button class="button button-3d nomargin" id="login-form-submit" name="login-form-submit" value="login">Login</button>
+								</div>
+							</form>
 						</div>
+						<div class="well well-lg nobottommargin dark" style="background-image: url('images/page/bg1.jpg');">
+							<form id="login-form" name="login-form" class="nobottommargin" action="#" method="post">
+								<h3>Forgot Password ?</h3>
+								<div class="col_full">
+									<label for="login-form-username">Email:</label>
+									<input type="text" id="register-form-email" name="register-form-email" value="" class="form-control" placeholder="Your email"/>
+								</div>
+								<div class="col_full nobottommargin">
+									<button class="button button-3d nomargin" id="login-form-submit" name="login-form-submit" value="login">Send</button>
+								</div>
+							</form>
+						</div>
+					</div>
 
-						<div class="panel panel-default divcenter noradius noborder" style="max-width: 400px; background-color: rgba(255,255,255,0.93);">
-							<div class="panel-body" style="padding: 40px;">
-								@RenderBody()
+					<!-- registre
+					============================================= -->
+					<div class="col_two_third col_last nobottommargin">
+						<h3>Don't have an Account? Register Now.</h3>
+						<p>Decentralized local exchange between fiat money and cryptocurrency, merchant accept any cryptocurrency, hedge their positions.</p>
+						<form id="register-form" name="register-form" class="nobottommargin" action="#" method="post">
+							<div class="col_half">
+								<label for="register-form-firstname">First name:</label>
+								<input type="text" id="register-form-firstname" name="register-form-firstname" value="" class="form-control" />
 							</div>
-						</div>
-
-						<div class="row center dark"><small>Copyrights &copy; 2017 - LedgerLocal.Vault.</small></div>
-
+							<div class="col_half col_last">
+								<label for="register-form-lastname">Last name:</label>
+								<input type="text" id="register-form-lastname" name="register-form-lastname" value="" class="form-control" />
+							</div>
+							<div class="clear"></div>
+							<div class="form-group">
+								<label for="register-form-address">Address</label>
+								<input type="text" class="form-control" id="register-form-address" name="register-form-address" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="register-form-address2">Address 2</label>
+								<input type="text" class="form-control" id="register-form-address2" name="register-form-address2" placeholder="">
+							</div>
+							<div class="clear"></div>
+							<div class="col_half">
+								<label for="register-form-zip">Zip:</label>
+								<input type="text" id="register-form-zip" name="register-form-zip" value="" class="form-control" />
+							</div>
+							<div class="col_half col_last">
+								<label for="register-form-city">City:</label>
+								<input type="text" id="register-form-city" name="register-form-city" value="" class="form-control" />
+							</div>
+							<div class="clear"></div>
+							<div class="col_half">
+								<label for="register-form-country">Country:</label>
+								<select id="register-form-country" name="register-form-country" class="form-control">
+									<option selected="">Choose...</option>
+									<option>Suisse</option>
+									<option>France</option>
+									<option>Russie</option>
+								</select>
+							</div>
+							<div class="col_half col_last">
+								<label for="register-form-email">Email Address:</label>
+								<input type="text" id="register-form-email" name="register-form-email" value="" class="form-control" />
+							</div>
+							<div class="clear"></div>
+							<div class="col_half">
+								<label for="register-form-password">Choose Password:</label>
+								<input type="password" id="register-form-password" name="register-form-password" value="" class="form-control" />
+							</div>
+							<div class="col_half col_last">
+								<label for="register-form-repassword">Re-enter Password:</label>
+								<input type="password" id="register-form-repassword" name="register-form-repassword" value="" class="form-control" />
+							</div>
+							<div class="clear"></div>
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="register-form-check">
+									<label class="form-check-label" for="gridCheck">
+										Decentralized local exchange between fiat money and cryptocurrency.
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="register-form-check1">
+									<label class="form-check-label" for="gridCheck">
+										Merchant accept any cryptocurrency, hedge their positions.
+									</label>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="col_full nobottommargin">
+								<button class="button button-3d button-black nomargin" id="register-form-submit" name="register-form-submit" value="register">Register Now</button>
+							</div>
+						</form>
 					</div>
 				</div>
-
 			</div>
-
 		</section><!-- #content end -->
 
+		<!-- Footer
+		============================================= -->
+		<footer id="footer" class="dark">
+			<!-- Copyrights
+			============================================= -->
+			<div id="copyrights">
+				<div class="container clearfix">
+					<div class="col_half">
+						Copyrights &copy; 2017 All Rights Reserved by LedgerLocal.<br>
+						<div class="copyright-links"><a href="#">White Paper</a> / <a href="#">Home</a></div>
+					</div>
+				</div>
+			</div><!-- #copyrights end -->
+		</footer><!-- #footer end -->
 	</div><!-- #wrapper end -->
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js/plugins.js"></script>
-    <script type="text/javascript" src="~/js/functions.js"></script>
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="icon-angle-up"></div>
 
-    @RenderSection("Scripts", required: false)
+	<!-- External JavaScripts
+	============================================= -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/plugins.js"></script>
+
+	<!-- Footer Scripts
+	============================================= -->
+	<script type="text/javascript" src="js/functions.js"></script>
+
 </body>
 </html>
