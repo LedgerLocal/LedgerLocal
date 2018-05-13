@@ -17,6 +17,14 @@ using LedgerLocal.AdminServer.Service.BusinessImplService;
 using LedgerLocal.AdminServer.Service;
 using LedgerLocal.Scheduler.Core;
 using LedgerLocal.AdminServer.Jobs;
+using LedgerLocal.Blockchain.Service.LycServiceContract;
+using LedgerLocal.Blockchain.Service.LycServiceContract.Architecture;
+using LedgerLocal.Blockchain.Service.KafkaMessager.Contract;
+using LedgerLocal.Blockchain.Service.KafkaMessager;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using System.Globalization;
+using LoyaltyCoin.AdminServer.Service.LycServiceImpl;
+using LoyaltyCoin.AdminServer.Service.LycServiceContract;
 //using Quartz.Web.LiveLog;
 
 namespace Quartz.Web
@@ -47,7 +55,7 @@ namespace Quartz.Web
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
-                .WriteTo.Seq("http://sphebot.appswiss.ch:5132")
+                .WriteTo.Seq(Configuration["SeqServer"])
                 .CreateLogger();
         }
 
@@ -59,11 +67,11 @@ namespace Quartz.Web
 
             var gConf = new GlobalConfig()
             {
-                SeqServer = "",
+                SeqServer = Configuration["SeqServer"],
                 EsUrl = ""
             };
             
-            var tBot = new TelegramBotClient("");
+            var tBot = new TelegramBotClient(Configuration["TelegramKey"]);
 
             var telegramClient = new TelegramClientFactory();
             telegramClient.AdminClient = tBot;
@@ -73,15 +81,28 @@ namespace Quartz.Web
 
             services.AddSingleton(typeof(IGlobalConfig), gConf);
 
+            //Services
+            var kafkaUrl = Configuration["Kafka"];
+            services.AddSingleton(typeof(IKafkaConfigFactory), _ => new KafkaConfigFactory(kafkaUrl));
+
+            services.AddSingleton(typeof(IKafkaProducerConsumerFactory), typeof(KafkaProducerConsumerFactory));
+            services.AddSingleton(typeof(IKafkaFacade), typeof(KafkaFacade));
+
+            services.AddTransient(typeof(ICommonMessageService), typeof(CommonMessageService));
+
             services.AddSingleton(typeof(MapperConfiguration), MappingRegistrar.CreateMapperConfig());
 
-            //services.AddSingleton(typeof(IElasticClient), new ElasticClient(new Uri("http://.appswiss.ch:9200")));
+            //services.AddSingleton(typeof(IElasticClient), new ElasticClient(new Uri("http://octopus.appswiss.ch:9200")));
 
             services.AddTransient(typeof(IRdfStoreBusiness), typeof(RdfStoreBusiness));
 
             services.AddTransient(typeof(IRunningStatBusiness), typeof(RunningStatBusiness));
 
             services.AddTransient(typeof(IElasticBusiness), typeof(ElasticBusiness));
+
+            services.AddTransient(typeof(IKafkaEventService), typeof(KafkaEventService));
+
+            services.AddTransient(typeof(IBlockTradeService), typeof(BlockTradeService));
 
             services.AddSingleton(typeof(ITelegramBotClient), tBot);
 
@@ -94,7 +115,9 @@ namespace Quartz.Web
             services.AddTransient(typeof(StatPoolingJob), typeof(StatPoolingJob));
 
             services.AddTransient(typeof(TelegramAdminJob), typeof(TelegramAdminJob));
-            
+
+            services.AddTransient(typeof(KafkaListenerJob), typeof(KafkaListenerJob));
+
             // Add framework services.
             services.AddMvc()
                 .AddJsonOptions(
@@ -102,7 +125,22 @@ namespace Quartz.Web
 
             //call this in case you need aspnet-user-authtype/aspnet-user-identity
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
+
+            // ********************
+            // Setup CORS
+            // ********************
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin(); // For anyone access.
+            //corsBuilder.WithOrigins("http://localhost:56573"); // for a specific url. Don't add a forward slash on the end!
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
+
             services.AddSwaggerGen();
 
             services.ConfigureSwaggerGen(options =>
@@ -123,6 +161,9 @@ namespace Quartz.Web
 
             var sp = ConfigureQuartz(services);
 
+            ServiceLocatorSingleton.Instance.ServiceProvider = sp;
+            ServiceLocatorSingleton.Instance.UtcStartDate = DateTime.UtcNow;
+
             return sp;
 
         }
@@ -130,6 +171,11 @@ namespace Quartz.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime, IServiceProvider serviceProvider)
         {
+
+            var cultureInfo = new CultureInfo("en-US");
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             loggerFactory.AddSerilog();
             appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
@@ -140,7 +186,9 @@ namespace Quartz.Web
             app.UseSwagger();
             app.UseSwaggerUi();
 
-            
+            app.UseMvc();
+            app.UseCors("SiteCorsPolicy");
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
 

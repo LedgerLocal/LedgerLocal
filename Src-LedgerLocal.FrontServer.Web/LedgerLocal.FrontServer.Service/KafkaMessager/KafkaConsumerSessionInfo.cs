@@ -1,35 +1,33 @@
 ﻿using Confluent.Kafka;
+using LedgerLocal.AdminServer.Service.KafkaMessager.KafkaReactive;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LedgerLocal.FrontServer.Service.KafkaMessager
+namespace LedgerLocal.Blockchain.Service.KafkaMessager
 {
-    public class KafkaConsumerSessionInfo<T>
+    public class KafkaConsumerSessionInfo
     {
-        public Consumer<string, T> Consumer { get; set; }
+        public Consumer<string, string> Consumer { get; set; }
 
-        public event EventHandler<KafkaEventArgs<T>> SubscribeConsumePublic;
+        public IObservable<Try<Record<string, string>>> ObserverPublic { get; set; }
 
-        public IDisposable Sub1 {get;set;}
+        public BlockingCollection<Try<Record<string, string>>> BlockingCollentionPublic { get; set; }
 
-        public void RaiseEvent(KafkaEventArgs<T> kEa)
+        public Try<Record<string, string>> LastMessage { get; set; }
+
+        public event EventHandler<KafkaEventArgs> SubscribeConsumePublic;
+
+        public Task PollingSub { get; set; }
+
+        public void RaiseEvent(KafkaEventArgs kEa)
         {
             if (SubscribeConsumePublic != null)
             {
                 SubscribeConsumePublic.Invoke(this, kEa);
             }
-        }
-
-        internal void DisposeSubscriber()
-        {
-            //if(Sub1 != null)
-            //{
-            //    Sub1.Dispose();
-            //    SubscribeConsumePublic = null;
-            //}
         }
     }
 }

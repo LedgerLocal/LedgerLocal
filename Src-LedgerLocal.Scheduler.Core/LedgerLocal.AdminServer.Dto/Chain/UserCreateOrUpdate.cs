@@ -26,27 +26,27 @@ namespace LedgerLocal.Dto.Chain
         [DataMember(Name="salutation")]
         public string Salutation { get; set; }
         /// <summary>
-        /// First name of the LoyaltyCoin user.
+        /// First name of the LedgerLocal user.
         /// </summary>
-        /// <value>First name of the LoyaltyCoin user.</value>
+        /// <value>First name of the LedgerLocal user.</value>
         [DataMember(Name="firstName")]
         public string FirstName { get; set; }
         /// <summary>
-        /// Last name of the LoyaltyCoin user.
+        /// Last name of the LedgerLocal user.
         /// </summary>
-        /// <value>Last name of the LoyaltyCoin user.</value>
+        /// <value>Last name of the LedgerLocal user.</value>
         [DataMember(Name="lastName")]
         public string LastName { get; set; }
         /// <summary>
-        /// Email address of the LoyaltyCoin user
+        /// Email address of the LedgerLocal user
         /// </summary>
-        /// <value>Email address of the LoyaltyCoin user</value>
+        /// <value>Email address of the LedgerLocal user</value>
         [DataMember(Name="email")]
         public string Email { get; set; }
         /// <summary>
-        /// Image URL of the LoyaltyCoin user.
+        /// Image URL of the LedgerLocal user.
         /// </summary>
-        /// <value>Image URL of the LoyaltyCoin user.</value>
+        /// <value>Image URL of the LedgerLocal user.</value>
         [DataMember(Name="picture")]
         public string Picture { get; set; }
 

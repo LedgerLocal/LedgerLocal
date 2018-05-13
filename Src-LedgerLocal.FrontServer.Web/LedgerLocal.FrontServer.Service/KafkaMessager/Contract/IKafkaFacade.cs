@@ -1,12 +1,12 @@
-﻿using LedgerLocal.FrontServer.Service.LedgerLocalServiceContract.Architecture;
+﻿using LedgerLocal.Blockchain.Service.LycServiceContract.Architecture;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LedgerLocal.FrontServer.Service.KafkaMessager.Contract
+namespace LedgerLocal.Blockchain.Service.KafkaMessager.Contract
 {
-    public interface IKafkaFacade<T>
+    public interface IKafkaFacade
     {
-        IKafkaProducerConsumerFactory<T> ProducerConsumerStore { get; }
+        IKafkaProducerConsumerFactory ProducerConsumerStore { get; }
     }
 }

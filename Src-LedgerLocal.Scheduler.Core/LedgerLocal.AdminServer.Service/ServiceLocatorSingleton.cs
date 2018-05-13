@@ -28,5 +28,6 @@ namespace LedgerLocal.AdminServer.Service
         }
 
         public IServiceProvider ServiceProvider { get; set; }
+        public DateTime UtcStartDate { get; set; }
     }
 }

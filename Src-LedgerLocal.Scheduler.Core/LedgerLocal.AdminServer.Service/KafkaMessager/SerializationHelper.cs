@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LedgerLocal.AdminServer.Service.KafkaMessager
+namespace LedgerLocal.FrontServer.Service.KafkaMessager
 {
     public class SerializationHelper
     {

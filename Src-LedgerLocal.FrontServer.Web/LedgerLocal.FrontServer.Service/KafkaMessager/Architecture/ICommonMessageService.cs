@@ -1,23 +1,15 @@
-﻿using LedgerLocal.FrontServer.Dto.Models;
-using LedgerLocal.FrontServer.Service.KafkaMessager;
-using LedgerLocal.FrontServer.Service.LedgerLocalServiceContract.Architecture;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 
-namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
+namespace LedgerLocal.Blockchain.Service.LycServiceContract
 {
     public interface ICommonMessageService
     {
-        Task PoolMessageAsString(string sessionid, string topicName, TimeSpan timeSpan, Action<string, string, long, string> cb);
+        Task SendMessage<T>(string topicName, string key, T val) where T : class;
 
-        Task SendMessageAsByte(string topicName, string key, byte[] val);
+        Task PoolMessage<T>(string topicName, TimeSpan timeSpan, Action<string, string, T> cb) where T : class;
 
-        Task SendMessageAsString(string topicName, string key, string val);
-
-        void SendMessageAsStringSync(string topicName, string key, string val);
-
-        void SendMessageAsByteSync(string topicName, string key, byte[] val);
+        Task<CommonMessageEncapsulator<T>> ConsumeMessage<T>(string topicName, string key, TimeSpan timeSpan) where T : class;
+        
     }
 }

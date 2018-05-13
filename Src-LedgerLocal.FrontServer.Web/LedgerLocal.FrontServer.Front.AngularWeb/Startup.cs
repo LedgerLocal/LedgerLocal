@@ -15,29 +15,52 @@ using LedgerLocal.FrontServer.Service.BusinessImplService;
 using LedgerLocal.FrontServer.Service.BusinessImplService.Contract;
 using LedgerLocal.FrontServer.Service.Contract;
 using LedgerLocal.FrontServer.Service.PersistenceService;
+using LedgerLocal.Blockchain.Service.LycServiceContract;
+using LedgerLocal.Blockchain.Service.LycServiceContract.Architecture;
+using LedgerLocal.Blockchain.Service.KafkaMessager;
+using LedgerLocal.Blockchain.Service.KafkaMessager.Contract;
+using Serilog;
+using System.Globalization;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace LedgerLocal.FrontServer.Front.AngularWeb
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IHostingEnvironment _hostingEnv;
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
+
+        public bool IsDebugEnv { get; set; } = false;
+
+        public Startup(IHostingEnvironment env)
+        {
+            _hostingEnv = env;
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddEnvironmentVariables()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            Configuration = builder.Build();
+
+            Serilog.Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .Enrich.FromLogContext()
+                .WriteTo.Seq(Configuration["SeqServer"])
+                .CreateLogger();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
             //dependency injection
 
             var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
-
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                connectionString = "";
-            }
 
             //EF
             services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
@@ -47,6 +70,15 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
             services.AddScoped(typeof(ILedgerLocalDbFullDomainUnitOfWork), typeof(LedgerLocalDbFullDomainUnitOfWorkBase));
 
             services.AddSingleton(typeof(MapperConfiguration), MappingRegistrar.CreateMapperConfig());
+
+            //Services
+            var kafkaUrl = Configuration["Kafka"];
+            services.AddSingleton(typeof(IKafkaConfigFactory), _ => new KafkaConfigFactory(kafkaUrl));
+
+            services.AddSingleton(typeof(IKafkaProducerConsumerFactory), typeof(KafkaProducerConsumerFactory));
+            services.AddSingleton(typeof(IKafkaFacade), typeof(KafkaFacade));
+
+            services.AddTransient(typeof(ICommonMessageService), typeof(CommonMessageService));
 
             services.AddTransient(typeof(ILedgerLocalBulkOperator), typeof(LedgerLocalBulkOperator));
 
@@ -98,8 +130,19 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime, IServiceProvider serviceProvider)
         {
+            var cultureInfo = new CultureInfo("en-US");
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+            loggerFactory.AddSerilog();
+            appLifetime.ApplicationStopped.Register(Serilog.Log.CloseAndFlush);
+
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

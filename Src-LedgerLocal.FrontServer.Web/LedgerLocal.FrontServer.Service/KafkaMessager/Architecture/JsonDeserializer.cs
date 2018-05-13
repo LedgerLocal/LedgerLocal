@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
+namespace LedgerLocal.Blockchain.Service.LycServiceContract
 {
     public class JsonDeserializer : IDeserializer<object>
     {
@@ -32,7 +32,7 @@ namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
 
         public object Deserialize(string topic, byte[] data)
         {
-            return data;
+            throw new NotImplementedException();
         }
 
         public void Dispose()

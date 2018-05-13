@@ -3,14 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LedgerLocal.AdminServer.Service.KafkaMessager
+namespace LedgerLocal.FrontServer.Service.KafkaMessager
 {
     public class ByteDeserializer : IDeserializer<byte[]>
     {
-        public ByteDeserializer()
-        {
-        }
-
         public IEnumerable<KeyValuePair<string, object>> Configure(IEnumerable<KeyValuePair<string, object>> config, bool isKey)
         {
             return config;
@@ -23,7 +19,7 @@ namespace LedgerLocal.AdminServer.Service.KafkaMessager
 
         public byte[] Deserialize(string topic, byte[] data)
         {
-            return data;
+            throw new NotImplementedException();
         }
     }
 }

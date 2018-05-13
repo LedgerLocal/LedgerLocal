@@ -1,7 +1,7 @@
 /*
- * LoyaltyCoin Server API
+ * LedgerLocal Server API
  *
- * LoyaltyCoin Server API swagger-2.0 specification
+ * LedgerLocal Server API swagger-2.0 specification
  *
  * OpenAPI spec version: 1.0.0.0
  * 

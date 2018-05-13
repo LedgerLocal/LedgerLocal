@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace LedgerLocal.AdminServer.Service.LedgerLocalServiceContract
+namespace LedgerLocal.Blockchain.Service.LycServiceContract
 {
     public class JsonDeserializer : IDeserializer<object>
     {
         private Encoding encoding;
+
+        public JsonDeserializer()
+        {
+        }
 
         public JsonDeserializer(Encoding encoding)
         {
@@ -28,7 +32,7 @@ namespace LedgerLocal.AdminServer.Service.LedgerLocalServiceContract
 
         public object Deserialize(string topic, byte[] data)
         {
-            return data;
+            throw new NotImplementedException();
         }
     }
 }

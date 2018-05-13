@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LedgerLocal.AdminServer.Service.KafkaMessager
+namespace LedgerLocal.FrontServer.Service.KafkaMessager
 {
     public class ByteSerializer : ISerializer<byte[]>
     {
@@ -19,7 +19,7 @@ namespace LedgerLocal.AdminServer.Service.KafkaMessager
 
         public byte[] Serialize(string topic, byte[] data)
         {
-            return data;
+            throw new NotImplementedException();
         }
     }
 }

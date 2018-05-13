@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using LedgerLocal.AdminServer.Service.Contract;
 using LedgerLocal.AdminServer.Service.BusinessImplService.Contract;
+using LedgerLocal.Blockchain.Service.LycServiceContract;
+using LoyaltyCoin.AdminServer.Api.Web.Models;
 
 namespace LedgerLocal.AdminServer.ApiController.Controllers
 {
@@ -24,13 +26,34 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
     { 
         private readonly ILedgerLocalBusinessService _businessService;
         private readonly IDbContextService _dbContext;
+        private readonly IBlockTradeService _blockTradeService;
+        private readonly ICommonMessageService _commonMessageService;
 
-        public ParticipateBusinessApiController(ILedgerLocalBusinessService businessService, IDbContextService dbContext)
+        public ParticipateBusinessApiController(ILedgerLocalBusinessService businessService, IDbContextService dbContext, IBlockTradeService blockTradeService, ICommonMessageService commonMessageService)
         {
             _businessService = businessService;
             _dbContext = dbContext;
+            _blockTradeService = blockTradeService;
+            _commonMessageService = commonMessageService;
         }
 
-        
+        [HttpGet]
+        [Route("/v1/participate/cryptoPaymentAvailable")]
+        [SwaggerOperation("CryptoPaymentAvailableGet")]
+        [ProducesResponseType(typeof(List<string>), 200)]
+        public virtual async Task<IActionResult> CryptoPaymentAvailableGet()
+        {
+            var guidString = Guid.NewGuid().ToString();
+
+            var lstWallets = await _blockTradeService.GetActiveWalletType();
+
+            await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString, new ActionEventDefinition()
+            {
+                ActionName = "ListPaymentCryptoAvailable",
+                Message = string.Concat("Returning crypto: ", lstWallets.Count)
+            });
+
+            return new ObjectResult(lstWallets);
+        }
     }
 }

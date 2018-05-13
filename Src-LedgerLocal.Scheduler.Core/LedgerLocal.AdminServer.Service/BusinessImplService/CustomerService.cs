@@ -6,7 +6,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using LedgerLocal.AdminServer.Api.Web.Models;
 using System.Threading.Tasks;
-using LedgerLocal.AdminServer.Service.LedgerLocalServiceContract;
 using LedgerLocal.AdminServer.Model.FullDomain;
 using LedgerLocal.Common.Core;
 using Newtonsoft.Json;

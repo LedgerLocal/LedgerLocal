@@ -1,21 +1,20 @@
 ﻿using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
-using LedgerLocal.FrontServer.Service.KafkaMessager;
+using LedgerLocal.Blockchain.Service.KafkaMessager;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract.Architecture
+namespace LedgerLocal.Blockchain.Service.LycServiceContract.Architecture
 {
-    public interface IKafkaProducerConsumerFactory<T> : IDisposable
+    public interface IKafkaProducerConsumerFactory : IDisposable
     {
-        KafkaConsumerSessionInfo<T> AddConsumer(string sessionid, string topic, TimeSpan delayFps, Consumer<string, T> val);
+        KafkaConsumerSessionInfo AddConsumer(string topic, Consumer<string, string> val);
 
-        KafkaProducerSessionInfo<T> AddProducer(string key, Producer<string, T> val);
+        KafkaProducerSessionInfo AddProducer(string key, Producer<string, string> val);
 
-        KafkaConsumerSessionInfo<T> GetConsumer(string sessionid, string topic, TimeSpan delayFps, IDeserializer<T> deserializer);
+        KafkaConsumerSessionInfo GetConsumer(string topic);
 
-        KafkaProducerSessionInfo<T> GetProducer(string topic, ISerializer<T> serializer);
+        KafkaProducerSessionInfo GetProducer(string topic);
     }
 }

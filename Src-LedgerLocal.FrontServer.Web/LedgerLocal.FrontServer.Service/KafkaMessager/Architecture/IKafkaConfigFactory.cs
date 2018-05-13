@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
+namespace LedgerLocal.Blockchain.Service.LycServiceContract
 {
     public interface IKafkaConfigFactory
     {

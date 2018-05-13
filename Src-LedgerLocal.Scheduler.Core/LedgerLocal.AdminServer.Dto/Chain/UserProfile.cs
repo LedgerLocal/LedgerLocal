@@ -40,9 +40,9 @@ namespace LedgerLocal.Dto.Chain
         public string Phone { get; set; }
 
         /// <summary>
-        /// Email address of the LoyaltyCoin user
+        /// Email address of the LedgerLocal user
         /// </summary>
-        /// <value>Email address of the LoyaltyCoin user</value>
+        /// <value>Email address of the LedgerLocal user</value>
         [DataMember(Name="email")]
         public string Email { get; set; }
 

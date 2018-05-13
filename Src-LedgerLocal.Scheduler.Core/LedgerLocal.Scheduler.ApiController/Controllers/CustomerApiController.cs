@@ -94,7 +94,7 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         /// <summary>
         /// Customer Profile
         /// </summary>
-        /// <remarks>The User Profile endpoint returns information about the LoyaltyCoin user that has authorized with the application.</remarks>
+        /// <remarks>The User Profile endpoint returns information about the LedgerLocal user that has authorized with the application.</remarks>
         /// <response code="200">Profile information for a user</response>
         /// <response code="0">Unexpected error</response>
         [HttpGet]

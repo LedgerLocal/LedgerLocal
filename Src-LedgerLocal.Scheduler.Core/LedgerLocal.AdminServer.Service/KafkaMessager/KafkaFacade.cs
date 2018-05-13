@@ -1,18 +1,18 @@
-﻿using LedgerLocal.AdminServer.Service.KafkaMessager.Contract;
-using LedgerLocal.AdminServer.Service.LedgerLocalServiceContract.Architecture;
+﻿using LedgerLocal.Blockchain.Service.KafkaMessager.Contract;
+using LedgerLocal.Blockchain.Service.LycServiceContract.Architecture;
 
-namespace LedgerLocal.AdminServer.Service.KafkaMessager
+namespace LedgerLocal.Blockchain.Service.KafkaMessager
 {
-    public class KafkaFacade<T> : IKafkaFacade<T>
+    public class KafkaFacade : IKafkaFacade
     {
-        private IKafkaProducerConsumerFactory<T> _kafkaProducerConsumerFactory;
+        private IKafkaProducerConsumerFactory _kafkaProducerConsumerFactory;
 
-        public KafkaFacade(IKafkaProducerConsumerFactory<T> kafkaProducerConsumerFactory)
+        public KafkaFacade(IKafkaProducerConsumerFactory kafkaProducerConsumerFactory)
         {
             _kafkaProducerConsumerFactory = kafkaProducerConsumerFactory;
         }
 
-        public IKafkaProducerConsumerFactory<T> ProducerConsumerStore
+        public IKafkaProducerConsumerFactory ProducerConsumerStore
         {
             get { return _kafkaProducerConsumerFactory; }    
         }

@@ -7,10 +7,6 @@ namespace LedgerLocal.FrontServer.Service.KafkaMessager
 {
     public class ByteSerializer : ISerializer<byte[]>
     {
-        public ByteSerializer()
-        {
-        }
-
         public IEnumerable<KeyValuePair<string, object>> Configure(IEnumerable<KeyValuePair<string, object>> config, bool isKey)
         {
             return config;
@@ -18,11 +14,7 @@ namespace LedgerLocal.FrontServer.Service.KafkaMessager
 
         public void Dispose()
         {
-        }
-
-        public byte[] Serialize(byte[] data)
-        {
-            return data;
+            throw new NotImplementedException();
         }
 
         public byte[] Serialize(string topic, byte[] data)
