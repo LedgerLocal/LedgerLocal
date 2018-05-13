@@ -44,11 +44,13 @@ namespace Quartz.Web
         {
             _hostingEnv = env;
 
+            var envCurrent = env != null && !string.IsNullOrWhiteSpace(env.EnvironmentName) ? env.EnvironmentName : "TEST";
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddEnvironmentVariables()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile($"appsettings.{envCurrent}.json", optional: true);
 
             Configuration = builder.Build();
 
