@@ -25,5 +25,9 @@ namespace LedgerLocal.FrontServer.Service.KafkaMessager
         {
             return data;
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

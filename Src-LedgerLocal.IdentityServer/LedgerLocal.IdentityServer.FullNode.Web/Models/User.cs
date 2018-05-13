@@ -10,5 +10,7 @@ namespace UserManagement.Models
     public class User: IdentityUser
     {
         public string CustomerId { get; set; }
+
+        public string GodFatherId { get; set; }
     }
 }

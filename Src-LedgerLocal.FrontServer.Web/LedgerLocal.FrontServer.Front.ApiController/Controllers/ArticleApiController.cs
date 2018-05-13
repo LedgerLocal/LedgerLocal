@@ -8,7 +8,7 @@ using LedgerLocal.FrontServer.Dto;
 using LedgerLocal.FrontServer.Data.FullDomain;
 using LedgerLocal.FrontServer.Service.BusinessImplService.Contract;
 
-namespace LedgerLocal.FrontServer.Api.Web.Controllers
+namespace LedgerLocal.FrontServer.ApiController.Controllers
 { 
 
     public class ArticleApiController : Controller

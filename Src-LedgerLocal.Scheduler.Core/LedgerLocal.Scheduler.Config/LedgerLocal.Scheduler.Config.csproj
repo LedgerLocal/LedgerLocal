@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Quartz" Version="3.0.3" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Data.FullDomain\LedgerLocal.AdminServer.Data.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Data.Repository.FullDomain\LedgerLocal.AdminServer.Data.Repository.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Dto\LedgerLocal.AdminServer.Dto.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Enum\LedgerLocal.AdminServer.Enum.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Jobs\LedgerLocal.AdminServer.Jobs.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Model.FullDomain\LedgerLocal.AdminServer.Model.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Service\LedgerLocal.AdminServer.Service.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+  </ItemGroup>
+
+</Project>

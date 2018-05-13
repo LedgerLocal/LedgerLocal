@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="App\jspm_packages\**" />
+    <Content Remove="App\jspm_packages\**" />
+    <EmbeddedResource Remove="App\jspm_packages\**" />
+    <None Remove="App\jspm_packages\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="appsettings.json" />
+    <Content Remove="appsettings.PROD.json" />
+    <Content Remove="appsettings.TEST.json" />
+    <Content Remove="quartz.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="appsettings.PROD.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="appsettings.TEST.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="quartz.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="quartz_jobs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="BinanceDotNet" Version="4.5.0" />
+    <PackageReference Include="dotNetRDF" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="Quartz" Version="3.0.4" />
+    <PackageReference Include="Quartz.Plugins" Version="3.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.2" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="6.5.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
+    <PackageReference Include="Swashbuckle.SwaggerGen" Version="6.0.0-beta902" />
+    <PackageReference Include="Swashbuckle.SwaggerUi" Version="6.0.0-beta902" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="bootbox.TypeScript.DefinitelyTyped" Version="1.2.8" />
+    <PackageReference Include="bootstrap.TypeScript.DefinitelyTyped" Version="0.9.8" />
+    <PackageReference Include="jQuery" Version="3.3.1" />
+    <PackageReference Include="jquery.TypeScript.DefinitelyTyped" Version="3.1.2" />
+    <PackageReference Include="moment.TypeScript.DefinitelyTyped" Version="1.8.3" />
+    <PackageReference Include="RequireJS" Version="2.3.5" />
+    <PackageReference Include="signalr.TypeScript.DefinitelyTyped" Version="0.4.1" />
+    <PackageReference Include="Telegram.Bot" Version="14.3.0" />
+    <PackageReference Include="toastr.TypeScript.DefinitelyTyped" Version="0.3.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Data.FullDomain\LedgerLocal.AdminServer.Data.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Data.Repository.FullDomain\LedgerLocal.AdminServer.Data.Repository.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Dto\LedgerLocal.AdminServer.Dto.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Enum\LedgerLocal.AdminServer.Enum.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Jobs\LedgerLocal.AdminServer.Jobs.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Model.FullDomain\LedgerLocal.AdminServer.Model.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Service\LedgerLocal.AdminServer.Service.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Scheduler.Config\LedgerLocal.Scheduler.Config.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Scheduler.Core\LedgerLocal.Scheduler.Core.csproj" />
+  </ItemGroup>
+</Project>

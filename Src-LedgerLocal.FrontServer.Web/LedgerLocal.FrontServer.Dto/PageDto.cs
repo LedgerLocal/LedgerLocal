@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace LedgerLocal.FrontServer.Dto
 {
     public class PageDto : GenericDto

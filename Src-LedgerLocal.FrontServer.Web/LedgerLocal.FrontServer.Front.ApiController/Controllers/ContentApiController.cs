@@ -9,7 +9,7 @@ using LedgerLocal.FrontServer.Data.FullDomain;
 using LedgerLocal.FrontServer.Service.BusinessImplService.Contract;
 using Microsoft.EntityFrameworkCore;
 
-namespace LedgerLocal.FrontServer.Api.Web.Controllers
+namespace LedgerLocal.FrontServer.ApiController.Controllers
 {
 
     public class ContentApiController : Controller

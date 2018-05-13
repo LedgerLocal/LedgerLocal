@@ -9,71 +9,111 @@
     ViewData["Title"] = "Register";
 }
 
+<h3>Don't have an Account? Register Now.</h3>
+<p>Decentralized local exchange between fiat money and cryptocurrency, merchant accept any cryptocurrency, hedge their positions.</p>
+
 <form asp-controller="MemberAccount" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="nobottommargin">
-	<h3>Create a new account</h3>
+    <h3>Create a new account</h3>
 
-	<div class="col_full">
-		<label asp-for="Email">Email:</label>
-		<input asp-for="Email" class="form-control not-dark" />
-		<span asp-validation-for="Email" class="text-danger"></span>
-	</div>
-
-	<div class="col_full">
-		<label asp-for="Password">Password:</label>
-		<input asp-for="Password" class="form-control not-dark" />
-		<span asp-validation-for="Password" class="text-danger"></span>
-	</div>
-	
-	<div class="col_full">
-		<label asp-for="ConfirmPassword">Confirm  Password:</label>
-		<input asp-for="ConfirmPassword" class="form-control" />
-		<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-	</div>
-	
-	<div class="col_full">
-		<input asp-for="IsAgree" class="cbbig">
-		 Yes, I hereby agree to the LedgerLocal Terms Conditions (incl. processing of my personal data for marketing purposes and customer behavior analysis). Click <a target="_blank" href="http://www.ledgerlocal.ch/ledgerlocal/terms-en.html">here</a>  for more information.
-	</div>
-
-
-	<div class="col_full nobottommargin">
-		<div class="text-right">
-			<button type="submit" class="button button-3d button-amber nomargin fleft" id="login-form-submit" name="login-form-submit" value="login">Register</button>
-			<a asp-action="Login">Login -></a>
-		</div>
-	</div>
+    <div class="col_half">
+        <label asp-for="Firstname">First name:</label>
+        <input asp-for="Firstname" class="form-control not-dark" />
+        <span asp-validation-for="Firstname" class="text-danger"></span>
+    </div>
+    <div class="col_half col_last">
+        <label asp-for="Lastname">Last name:</label>
+        <input asp-for="Lastname" class="form-control not-dark" />
+        <span asp-validation-for="Lastname" class="text-danger"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="form-group">
+        <label asp-for="Address1">Address 1:</label>
+        <input asp-for="Address1" class="form-control not-dark" />
+        <span asp-validation-for="Address1" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address2">Address 2:</label>
+        <input asp-for="Address2" class="form-control not-dark" />
+        <span asp-validation-for="Address2" class="text-danger"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="col_half">
+        <label for="register-form-country">Country:</label>
+        <select id="register-form-country" name="register-form-country" class="form-control">
+            <option selected="">Choose...</option>
+            <option>Suisse</option>
+            <option>France</option>
+            <option>Russie</option>
+        </select>
+    </div>
+    <div class="col_half col_last">
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" class="form-control not-dark" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="col_half">
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" class="form-control not-dark" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="col_half col_last">
+        <label asp-for="ConfirmPassword">Confirm  Password:</label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="register-form-check">
+            <label class="form-check-label" for="gridCheck">
+                Decentralized local exchange between fiat money and cryptocurrency.
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <input asp-for="IsAgree" class="cbbig">
+            Merchant accept any cryptocurrency, hedge their positions.
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="col_full nobottommargin">
+        <button type="submit" class="button button-3d button-black nomargin" id="register-form-submit" name="register-form-submit" value="register">Register</button>
+        <a asp-action="Login">Login -></a>
+    </div>
 </form>
 
 <div class="line line-sm topmargin-sm"></div>
 
 <div class="center">
-	<h4 style="margin-bottom: 15px;">Or Login with</h4>
-	
-	@{
-		var loginProviders = SignInManager.GetExternalAuthenticationSchemesAsync().Result.ToList();
-		if (loginProviders.Count == 0)
-		{
-			<div>
-				<p>
-					There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-					for details on setting up this ASP.NET application to support logging in via external services.
-				</p>
-			</div>
-		}
-		else
-		{
-			<form asp-controller="MemberAccount" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-				<div>
-					<p>
-						@foreach (var provider in loginProviders)
-						{
-							<button type="submit" class="button button-rounded si-facebook si-colored" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-						}
-					</p>
-				</div>
-			</form>
-		}
-	}
+    <h4 style="margin-bottom: 15px;">Or Login with</h4>
+
+    @{
+        var loginProviders = SignInManager.GetExternalAuthenticationSchemesAsync().Result.ToList();
+        if (loginProviders.Count == 0)
+        {
+            <div>
+                <p>
+                    There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                    for details on setting up this ASP.NET application to support logging in via external services.
+                </p>
+            </div>
+        }
+        else
+        {
+            <form asp-controller="MemberAccount" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <div>
+                    <p>
+                        @foreach (var provider in loginProviders)
+                        {
+                            <button type="submit" class="button button-rounded si-facebook si-colored" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                        }
+                    </p>
+                </div>
+            </form>
+        }
+    }
 </div>
 
 @section Scripts {

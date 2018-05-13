@@ -25,6 +25,10 @@ namespace LedgerLocal.AdminServer.Api.Web.Models
         /// </summary>
         [DataMember(Name="customerId")]
         public string CustomerId { get; set; }
+
+        [DataMember(Name = "godFatherId")]
+        public string GodFatherId { get; set; }
+
         /// <summary>
         /// Gets or Sets Salutation
         /// </summary>

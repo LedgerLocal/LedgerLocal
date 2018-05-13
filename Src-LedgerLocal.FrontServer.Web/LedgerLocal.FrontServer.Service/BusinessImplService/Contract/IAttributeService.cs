@@ -8,6 +8,9 @@ namespace LedgerLocal.FrontServer.Service
 {
     public interface IAttributeService
     {
+        Task<List<Genericattribute>> ListAttribute(
+            int size = 10, int start = 0);
+
         Task<Genericattribute> CreateOrGetAttribute(
                     string type,
                     string value,

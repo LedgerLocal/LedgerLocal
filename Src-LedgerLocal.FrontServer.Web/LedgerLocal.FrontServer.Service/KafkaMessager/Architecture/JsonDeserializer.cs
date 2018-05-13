@@ -10,6 +10,10 @@ namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
     {
         private Encoding encoding;
 
+        public JsonDeserializer()
+        {
+        }
+
         public JsonDeserializer(Encoding encoding)
         {
             this.encoding = encoding;
@@ -29,6 +33,10 @@ namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
         public object Deserialize(string topic, byte[] data)
         {
             return data;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

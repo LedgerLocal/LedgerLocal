@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
-using LedgerLocal.FrontServer.Service.Json;
 using System.Threading.Tasks;
 using LedgerLocal.FrontServer.Data.FullDomain.Bulk;
 using Microsoft.Extensions.Logging;
 using LedgerLocal.FrontServer.Data.FullDomain;
+using Microsoft.EntityFrameworkCore;
+using LedgerLocal.FrontServer.Service.Json;
 
 namespace LedgerLocal.FrontServer.Service.PersistenceService
 {
@@ -588,6 +589,20 @@ namespace LedgerLocal.FrontServer.Service.PersistenceService
             }
 
             return res;
+        }
+
+        public async Task<List<Genericattribute>> ListAttribute(int size = 10, int start = 0)
+        {
+            var utcNow = DateTime.UtcNow;
+
+            var att1 = await _attributeRepository.DbSet
+                .Include("Genericattributetype")
+                .Include("Genericattributevalue")
+                .Take(size)
+                .Skip(start)
+                .ToListAsync();
+
+            return att1;
         }
     }
 }

@@ -9,7 +9,6 @@ namespace LedgerLocal.FrontServer.Dto
     {
         public ContentblockDto()
         {
-            Images = new List<ImageDto>();
         }
 
 
@@ -22,8 +21,6 @@ namespace LedgerLocal.FrontServer.Dto
         public int? Sort { get; set; }
         public string Content { get; set; }
         public int Cultureid { get; set; }
-
-        public List<ImageDto> Images { get; set; }
 
     }
 }

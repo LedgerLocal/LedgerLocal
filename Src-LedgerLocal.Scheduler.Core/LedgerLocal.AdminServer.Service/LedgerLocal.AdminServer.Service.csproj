@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>LedgerLocal.AdminServer.Service</AssemblyName>
+    <PackageId>LedgerLocal.AdminServer.Service</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="BinanceDotNet" Version="4.4.0" />
+    <PackageReference Include="CoinMarketCapClient" Version="1.1.1" />
+    <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
+    <PackageReference Include="dotNetRDF" Version="2.0.1" />
+    <PackageReference Include="Gdax.Feed" Version="1.0.5" />
+    <PackageReference Include="GdaxApi" Version="1.0.53" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.4.0" />
+    <PackageReference Include="Jint" Version="3.0.0-beta-001" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="NEST" Version="6.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+    <PackageReference Include="System.Reactive.Core" Version="3.1.1" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="3.1.1" />
+    <PackageReference Include="System.Reactive.Linq" Version="3.1.1" />
+    <PackageReference Include="Telegram.Bot" Version="14.2.0-rc-452" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Data.FullDomain\LedgerLocal.AdminServer.Data.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Data.Repository.FullDomain\LedgerLocal.AdminServer.Data.Repository.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Dto\LedgerLocal.AdminServer.Dto.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Enum\LedgerLocal.AdminServer.Enum.csproj" />
+    <ProjectReference Include="..\LedgerLocal.AdminServer.Model.FullDomain\LedgerLocal.AdminServer.Model.FullDomain.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SparqlConnector\" />
+  </ItemGroup>
+
+</Project>

@@ -7,9 +7,17 @@ namespace LedgerLocal.FrontServer.Service.KafkaMessager
 {
     public class ByteSerializer : ISerializer<byte[]>
     {
+        public ByteSerializer()
+        {
+        }
+
         public IEnumerable<KeyValuePair<string, object>> Configure(IEnumerable<KeyValuePair<string, object>> config, bool isKey)
         {
             return config;
+        }
+
+        public void Dispose()
+        {
         }
 
         public byte[] Serialize(byte[] data)

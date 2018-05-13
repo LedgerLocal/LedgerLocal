@@ -10,14 +10,11 @@ using Swashbuckle.Swagger.Model;
 using LedgerLocal.FrontServer.Data.FullDomain;
 using LedgerLocal.FrontServer.Data.FullDomain.Bulk;
 using LedgerLocal.FrontServer.Data.FullDomain.Infrastructure;
-using LedgerLocal.FrontServer.Dto;
 using LedgerLocal.FrontServer.Service;
 using LedgerLocal.FrontServer.Service.BusinessImplService;
 using LedgerLocal.FrontServer.Service.BusinessImplService.Contract;
 using LedgerLocal.FrontServer.Service.Contract;
 using LedgerLocal.FrontServer.Service.PersistenceService;
-using LedgerLocal.FrontServer.Service.WorkflowContract;
-using LedgerLocal.FrontServer.Service.WorkflowImpl;
 
 namespace LedgerLocal.FrontServer.Front.AngularWeb
 {
@@ -39,7 +36,7 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                connectionString = "Host=91.121.107.37;Database=ledgerlocaldb;Username=llcadmin;Password=llc132@;Port=5432";
+                connectionString = "";
             }
 
             //EF
@@ -57,11 +54,7 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
 
             services.AddTransient(typeof(IAttributeService), typeof(AttributeService));
 
-            services.AddTransient(typeof(IWorkflowService), typeof(WorkflowService));
-
             services.AddTransient(typeof(IGenericCrudService<,>), typeof(GenericCrudService<,>));
-            
-            services.AddTransient(typeof(IWorkflowRunnerService), typeof(WorkflowRunnerService));
 
             services.AddMvc();
 

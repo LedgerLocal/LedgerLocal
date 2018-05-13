@@ -20,6 +20,10 @@ namespace LedgerLocal.FrontServer.Service.LedgerLocalServiceContract
             return config;
         }
 
+        public void Dispose()
+        {
+        }
+
         public byte[] Serialize(object data)
         {
             var str = JsonConvert.SerializeObject(data);

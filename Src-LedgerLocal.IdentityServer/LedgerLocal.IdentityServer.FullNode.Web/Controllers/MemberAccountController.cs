@@ -256,7 +256,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
                     return View(model);
                 }
 
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, GodFatherId = model.GodFatherId };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -265,27 +265,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action(nameof(ConfirmEmail), "MemberAccount", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-                    var message = @"<b>Herzlich willkommen bei LedgerLocal,</b>
-<p>
-Sammeln Sie ab jetzt bei all unseren Partnerunternehmen Treuepunkte, tauschen Sie diese jederzeit und wählen Sie wann und wo immer sie diese einsetzen möchten – Sie haben die Wahl. 
-Alles ganz einfach auf Ihrem Telefon, digital, sofort sichtbar und ohne Papierverschwendung. LedgerLocal macht Ihre Treuepunkte tauschbar – dank Blockchain.
-</p>
-
-<b><p>
-*** Drücken Sie <a href = '{0}'>hier</a> um Ihr Email zu bestätigen ***
-</b></p>
-
-<p>
-Bei Fragen können Sie jederzeit unseren Kundenservice auf info@ledgerlocal.ch kontaktieren.
-</p>
-
-<p>
-Mit freundlichen Grüssen,<br />
-Ihr LedgerLocal Team
-</p>
-
-PS: Laden Sie jetzt die LedgerLocal App auf Ihr Telefon herunter (Iphone / Android), loggen Sie sich mit Ihrer Email Adresse und Ihrem neuen Passwort ein und sammeln ab jetzt bei unseren Partnerunternehmen Treuepunkte. 
-Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.ch'>www.ledgerlocal.ch</a>";
+                    var message = @"LedgerLocal Register => {0}";
                     message = string.Format(message, callbackUrl);
 
                     await _emailSender.SendEmailAsync(model.Email, "Confirm your account", message);
@@ -301,25 +281,28 @@ Mehr zu LedgerLocal erfahren Sie auf unserer website <a href = 'www.ledgerlocal.
                             FirstName = fNameCalculated != null && fNameCalculated.Length > 0 ? fNameCalculated.First() : string.Empty,
                             LastName = string.Empty,
                             Email = model.Email,
-                            Phone = string.Empty
+                            Phone = string.Empty,
+                            GodFatherId = !string.IsNullOrWhiteSpace(model.GodFatherId) ? model.GodFatherId : string.Empty
                         };
 
-                        //var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
+                        var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
 
-                        //var _httpClient = new HttpClient();
-                        //_httpClient.SetBearerToken(t1);
-                        //var resFinal1 = await _httpClient.PostAsync($"{""}/customer/create",
-                        //    new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
-                        //resFinal1.EnsureSuccessStatusCode();
+                        var _httpClient = new HttpClient();
+                        _httpClient.SetBearerToken(t1);
+                        var resFinal1 = await _httpClient.PostAsync($"https://www.ledgerlocal.com/api/customer/create",
+                            new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
+                        resFinal1.EnsureSuccessStatusCode();
 
-                        //var resModel1String = await resFinal1.Content.ReadAsStringAsync();
-                        //var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
+                        var resModel1String = await resFinal1.Content.ReadAsStringAsync();
+                        var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
 
-                        //user.CustomerId = resModel1.CustomerId;
-                        
-                        //await _userManager.UpdateAsync(user);
+                        user.CustomerId = resModel1.CustomerId;
+                        user.GodFatherId = resModel1.GodFatherId;
 
-                        //await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
+                        await _userManager.UpdateAsync(user);
+
+                        await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
+                        await _userManager.AddClaimAsync(user, new Claim("godfatherid", resModel1.GodFatherId));
 
                         //var lstRoles = new List<string>();
 
