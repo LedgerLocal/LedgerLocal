@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Quartz.Web
 {
@@ -21,6 +22,9 @@ namespace Quartz.Web
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(configuration)
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
         }
