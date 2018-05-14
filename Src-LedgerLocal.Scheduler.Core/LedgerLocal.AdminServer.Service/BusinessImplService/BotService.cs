@@ -94,20 +94,10 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         public async Task SendMessage(string msg)
         {
-            try
-            {
-                if (_currentChatId != 0)
-                {
-                    await _telegramBotClient.SendTextMessageAsync(
-                        _currentChatId,
-                        msg,
-                        replyMarkup: new ReplyKeyboardRemove());
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error: {ex.Message}");
-            }
+            await _telegramBotClient.SendTextMessageAsync(
+                _currentChatId,
+                msg,
+                replyMarkup: new ReplyKeyboardRemove());
         }
 
         private void SendToLog(string message)
@@ -117,12 +107,6 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         public async void ProcessMessage(string msg1, long channelId, bool isPublic = false)
         {
-            if (channelId > 0)
-            {
-                _currentChatId = channelId;
-                _currentPublicChatId = channelId;
-            }
-
             try
             {
                 var arInput = msg1.Split(' ');
@@ -197,12 +181,10 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             {
                 var now = DateTime.UtcNow;
 
-                if (messageEventArgs != null && messageEventArgs.Message != null && (_startDate - messageEventArgs.Message.Date).TotalSeconds > 10)
-                {
-                    return;
-                }
-
                 var message = messageEventArgs.Message;
+
+                _currentChatId = messageEventArgs.Message.Chat.Id;
+                _currentPublicChatId = messageEventArgs.Message.Chat.Id;
 
                 if (message == null || message.Type != MessageType.Text) return;
 
