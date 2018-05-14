@@ -24,15 +24,11 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
     [EnableCors("SiteCorsPolicy")]
     public class ParticipateBusinessApiController : Controller
     { 
-        private readonly ILedgerLocalBusinessService _businessService;
-        private readonly IDbContextService _dbContext;
         private readonly IBlockTradeService _blockTradeService;
         private readonly ICommonMessageService _commonMessageService;
 
-        public ParticipateBusinessApiController(ILedgerLocalBusinessService businessService, IDbContextService dbContext, IBlockTradeService blockTradeService, ICommonMessageService commonMessageService)
+        public ParticipateBusinessApiController(IBlockTradeService blockTradeService, ICommonMessageService commonMessageService)
         {
-            _businessService = businessService;
-            _dbContext = dbContext;
             _blockTradeService = blockTradeService;
             _commonMessageService = commonMessageService;
         }
