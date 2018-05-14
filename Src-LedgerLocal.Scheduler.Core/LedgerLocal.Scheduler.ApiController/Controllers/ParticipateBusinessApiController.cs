@@ -46,7 +46,10 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
             await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString, new ActionEventDefinition()
             {
                 ActionName = "ListPaymentCryptoAvailable",
-                Message = string.Concat("Returning crypto: ", lstWallets.Count)
+                Message = string.Concat("Returning crypto: ", lstWallets.Count),
+                Timestamp = DateTime.UtcNow,
+                Success = true,
+                Reason = "Call"
             });
 
             return new ObjectResult(lstWallets);
