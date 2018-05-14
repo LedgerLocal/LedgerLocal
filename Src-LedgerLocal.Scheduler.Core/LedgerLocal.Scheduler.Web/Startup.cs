@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.Globalization;
 using LoyaltyCoin.AdminServer.Service.LycServiceImpl;
 using LoyaltyCoin.AdminServer.Service.LycServiceContract;
+using System.IO;
 //using Quartz.Web.LiveLog;
 
 namespace Quartz.Web
@@ -47,18 +48,12 @@ namespace Quartz.Web
             var envCurrent = env != null && !string.IsNullOrWhiteSpace(env.EnvironmentName) ? env.EnvironmentName : "TEST";
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
+                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddEnvironmentVariables()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{envCurrent}.json", optional: true);
 
-            Configuration = builder.Build();
-
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .Enrich.FromLogContext()
-                .WriteTo.Seq(Configuration["SeqServer"])
-                .CreateLogger();
+            Configuration = Program.MainConfig;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -66,6 +61,12 @@ namespace Quartz.Web
         {
 
             var now = DateTime.UtcNow;
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .Enrich.FromLogContext()
+                .WriteTo.Seq(Configuration["SeqServer"])
+                .CreateLogger();
 
             var gConf = new GlobalConfig()
             {
