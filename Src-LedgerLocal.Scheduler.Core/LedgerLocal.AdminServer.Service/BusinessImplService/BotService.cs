@@ -12,6 +12,7 @@ using System.Reactive.Linq;
 using CoinMarketCap;
 using System.Diagnostics;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace LedgerLocal.AdminServer.Service.BusinessImplService
 {
@@ -91,7 +92,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             _logger.LogInformation("Telegram Bot stopped");
         }
 
-        public async void SendMessage(string msg)
+        public async Task SendMessage(string msg)
         {
             try
             {
@@ -99,7 +100,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                 {
                     await _telegramBotClient.SendTextMessageAsync(
                         _currentChatId,
-                        msg.ToString(),
+                        msg,
                         replyMarkup: new ReplyKeyboardRemove());
                 }
             }

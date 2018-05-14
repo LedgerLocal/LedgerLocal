@@ -20,7 +20,7 @@ namespace LoyaltyCoin.AdminServer.Service.LycServiceImpl
     {
         private readonly ICommonMessageService _commonMessageService;
         private readonly IGlobalConfig _globalConfig;
-        private readonly IBotService _botService;
+        private IBotService _botService;
         private HttpClient _httpClient;
 
         private readonly ILogger<KafkaEventService> _logger;
@@ -45,15 +45,15 @@ namespace LoyaltyCoin.AdminServer.Service.LycServiceImpl
 
             try
             {
-                await _commonMessageService.PoolMessage<ActionEventDefinition>("llc-event-broadcast", ts, (a, b, c) =>
+                await _commonMessageService.PoolMessage<ActionEventDefinition>("llc-event-broadcast", ts, async (a, b, c) =>
                 {
                     var resPe = c;
 
                     if (resPe != null && resPe.Timestamp.HasValue && resPe.Timestamp.Value > ServiceLocatorSingleton.Instance.UtcStartDate)
                     {
 
-                        _botService.SendMessage(string.Format($"{resPe.ActionName} => {resPe.Message}"));
-                        _logger.LogInformation($"Received llc-event-broadcast for ${a} ${b} !");
+                        await _botService.SendMessage(string.Concat(resPe.ActionName, " => ", resPe.Message));
+                        _logger.LogInformation($"Received llc-event-broadcast for {a} {b} !");
 
                     }
 
