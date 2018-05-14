@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace LoyaltyCoin.AdminServer.Api.Web.Models
+namespace LedgerLocal.AdminServer.Api.Web.Models
 {
 
     [DataContract]

@@ -23,9 +23,12 @@ using LedgerLocal.Blockchain.Service.KafkaMessager.Contract;
 using LedgerLocal.Blockchain.Service.KafkaMessager;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.Globalization;
-using LoyaltyCoin.AdminServer.Service.LycServiceImpl;
-using LoyaltyCoin.AdminServer.Service.LycServiceContract;
+using LedgerLocal.AdminServer.Service.LycServiceImpl;
+using LedgerLocal.AdminServer.Service.LycServiceContract;
 using System.IO;
+using LedgerLocal.AdminServer.Service.Contract;
+using LedgerLocal.Service.GrapheneLogic;
+using LedgerLocal.Service.ChainService;
 //using Quartz.Web.LiveLog;
 
 namespace Quartz.Web
@@ -84,6 +87,12 @@ namespace Quartz.Web
 
             services.AddSingleton(typeof(IGlobalConfig), gConf);
 
+            var gws1 = Configuration["GrapheneBlockWs"];
+            var gws2 = Configuration["GrapheneWalletWs"];
+
+            var gc1 = new GrapheneConfig(gws1, gws2);
+            services.AddSingleton(typeof(IGrapheneConfig), _ => gc1);
+
             //Services
             var kafkaUrl = Configuration["Kafka"];
             services.AddSingleton(typeof(IKafkaConfigFactory), _ => new KafkaConfigFactory(kafkaUrl));
@@ -120,6 +129,14 @@ namespace Quartz.Web
             services.AddTransient(typeof(TelegramAdminJob), typeof(TelegramAdminJob));
 
             services.AddTransient(typeof(KafkaListenerJob), typeof(KafkaListenerJob));
+
+            services.AddSingleton(typeof(IWebSocketClientFactory), typeof(WebSocketClientFactory));
+
+            services.AddTransient(typeof(IAssetService), typeof(AssetService));
+
+            services.AddTransient(typeof(IAccountService), typeof(AccountService));
+
+            services.AddTransient(typeof(ILimitOrderService), typeof(LimitOrderService));
 
             // Add framework services.
             services.AddMvc()

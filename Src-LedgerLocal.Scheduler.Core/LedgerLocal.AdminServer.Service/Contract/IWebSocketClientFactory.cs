@@ -7,6 +7,8 @@ namespace LedgerLocal.AdminServer.Service.Contract
     {
         Task<WebSocketSession> GetContiniousSession(string assetSource, string assetDestination, string url);
 
+        Task<WebSocketSession> GetContiniousSessionForAction(string action, string url);
+
         Task<WebSocketSession> GetSession(string url, string idString);
 
         Task<WebSocketSession> AddSession(string url, string idString);

@@ -32,7 +32,7 @@ namespace LedgerLocal.Service.GrapheneLogic
         {
             var m_id = 1;
 
-            var ws = await _wsClientFact.GetContiniousSession(assetSource, assetDestination, _grapheneConfig.GrapheneWs);
+            var ws = await _wsClientFact.GetContiniousSession(assetSource, assetDestination, _grapheneConfig.GrapheneBlockchainWs);
 
             if (ws.SubscriptionObject != null)
             {
@@ -95,6 +95,109 @@ namespace LedgerLocal.Service.GrapheneLogic
             //{
             //    ws.RaiseEvent(x);
             //});
+
+            var source = Observable.Interval(TimeSpan.FromSeconds(1));
+            Subject<long> subject = new Subject<long>();
+            var subSource = source.Subscribe(subject);
+            ws.SubscriptionObject = subject.Subscribe(
+                                     l =>
+                                     {
+                                         var resSub = ReceiveTriggerContinious(ws.ClientWebSocket);
+                                         resSub.Wait();
+
+
+                                         if (!string.IsNullOrWhiteSpace(resSub.Result))
+                                         {
+                                             ws.OnTickCollection.Add(new Tuple<DateTime, string>(DateTime.Now, resSub.Result));
+                                         }
+
+                                         Thread.Sleep(1000);
+                                     },
+                                     () => Console.WriteLine("Sequence Completed."));
+
+            ws.IsBusy = true;
+            return ws;
+        }
+
+        public async Task<WebSocketSession> InitNotifierForObjects(string[] objects)
+        {
+            var m_id = 1;
+
+            var ws = await _wsClientFact.GetContiniousSessionForAction("balance", _grapheneConfig.GrapheneBlockchainWs);
+
+            if (ws.SubscriptionObject != null)
+            {
+                ws.IsBusy = true;
+                return ws;
+            }
+
+            //Login
+            GrapheneSocketRequest r1 = new GrapheneSocketRequest("login", m_id++, 1, new object[] { "", "" });
+            string requestLogin = JsonConvert.SerializeObject(r1);
+
+            var tokenLogin = new CancellationTokenSource();
+            await ws.ClientWebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(requestLogin)), WebSocketMessageType.Text, true, tokenLogin.Token);
+
+            var resultLogin = await ReceiveTrigger(ws.ClientWebSocket);
+            var resultLoginEntity = JsonConvert.DeserializeObject<WitnessWsResponse>(resultLogin);
+
+            //Database
+            GrapheneSocketRequest r2 = new GrapheneSocketRequest("database", m_id++, 1, Enumerable.Empty<object>().ToArray());
+            string requestDatabase = JsonConvert.SerializeObject(r2);
+
+            var tokenDatabase = new CancellationTokenSource();
+            await ws.ClientWebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(requestDatabase)), WebSocketMessageType.Text, true, tokenDatabase.Token);
+
+            var resultDatabase = await ReceiveTrigger(ws.ClientWebSocket);
+            var resultDatabaseEntity = JsonConvert.DeserializeObject<WitnessWsResponse>(resultDatabase);
+
+            var dbId = Convert.ToInt32(resultDatabaseEntity.Result);
+
+            //History
+            GrapheneSocketRequest r3 = new GrapheneSocketRequest("history", m_id++, 1, new object[] { "", "" });
+            string requestHistory = JsonConvert.SerializeObject(r3);
+
+            var tokenHistory = new CancellationTokenSource();
+            await ws.ClientWebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(requestHistory)), WebSocketMessageType.Text, true, tokenHistory.Token);
+
+            var resultHistory = await ReceiveTrigger(ws.ClientWebSocket);
+            var resultHistoryEntity = JsonConvert.DeserializeObject<WitnessWsResponse>(resultHistory);
+
+            //set_subscribe_callback
+            GrapheneSocketRequest r4 = new GrapheneSocketRequest("set_subscribe_callback", m_id++, 2, new object[] { 5, false });
+            string requestSubscribe = JsonConvert.SerializeObject(r4);
+
+            var tokenSubscribe = new CancellationTokenSource();
+            await ws.ClientWebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(requestSubscribe)), WebSocketMessageType.Text, true, tokenSubscribe.Token);
+
+            var resultSubscribe = await ReceiveTrigger(ws.ClientWebSocket);
+            var resultSubscribeEntity = JsonConvert.DeserializeObject<WitnessWsResponse>(resultSubscribe);
+
+            //get_objects
+            GrapheneSocketRequest r5 = new GrapheneSocketRequest("get_objects", m_id++, 2, new object[] { objects });
+            string requestGetObject = JsonConvert.SerializeObject(r5);
+
+            var tokenGetObject = new CancellationTokenSource();
+            await ws.ClientWebSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(requestGetObject)), WebSocketMessageType.Text, true, tokenGetObject.Token);
+
+            var resultGetObject = await ReceiveTrigger(ws.ClientWebSocket);
+            var resultGetObjectEntity = JsonConvert.DeserializeObject<WitnessWsResponse>(resultGetObject);
+
+            ws.ObservableConsumer = ws.OnTickCollection.GetConsumingEnumerable();
+
+            ws.ObservableTuple = ws.ObservableConsumer.ToObservable(Scheduler.Default);
+
+            ws.SubscriptionConsume = ws.ObservableTuple
+                .Buffer(TimeSpan.FromSeconds(1), 5)
+                .Subscribe(x =>
+                {
+
+                    foreach (var e1 in x)
+                    {
+                        ws.RaiseEvent(e1);
+                    }
+
+                });
 
             var source = Observable.Interval(TimeSpan.FromSeconds(1));
             Subject<long> subject = new Subject<long>();

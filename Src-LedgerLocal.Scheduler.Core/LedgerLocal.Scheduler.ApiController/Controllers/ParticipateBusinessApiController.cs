@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Cors;
 using LedgerLocal.AdminServer.Service.Contract;
 using LedgerLocal.AdminServer.Service.BusinessImplService.Contract;
 using LedgerLocal.Blockchain.Service.LycServiceContract;
-using LoyaltyCoin.AdminServer.Api.Web.Models;
+using LedgerLocal.AdminServer.Api.Web.Models;
 
 namespace LedgerLocal.AdminServer.ApiController.Controllers
 {

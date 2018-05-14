@@ -44,13 +44,13 @@ namespace LedgerLocal.Service.ChainService
             {
                 new CliCredential()
                 {
-                    Url = _grapheneConfig.GrapheneWallet1Ws,
+                    Url = _grapheneConfig.GrapheneWalletWs,
                     Username = "lycmainwallet",
                     Password = "p"
                 },
                 new CliCredential()
                 {
-                    Url = _grapheneConfig.GrapheneWallet2Ws,
+                    Url = _grapheneConfig.GrapheneBlockchainWs,
                     Username = "lycblockchain",
                     Password = "p"
                 }
@@ -218,141 +218,5 @@ namespace LedgerLocal.Service.ChainService
         }
 
 
-            //    createLimitOrder(account, sellAmount, sellAsset, buyAmount, buyAsset, expiration, isFillOrKill, fee_asset_id)
-            //    {
-
-            //        var tr = wallet_api.new_transaction();
-
-            //        let feeAsset = ChainStore.getAsset(fee_asset_id);
-            //        if (feeAsset.getIn(["options", "core_exchange_rate", "base", "asset_id"]) === "1.3.0" && feeAsset.getIn(["options", "core_exchange_rate", "quote", "asset_id"]) === "1.3.0" ) {
-            //            fee_asset_id = "1.3.0";
-            //        }
-
-            //        tr.add_type_operation("limit_order_create", {
-            //            fee:
-            //            {
-            //                amount: 0,
-            //            asset_id: fee_asset_id
-            //            },
-            //        "seller": account,
-            //        "amount_to_sell": {
-            //                "amount": sellAmount,
-            //            "asset_id": sellAsset.get("id")
-            //        },
-            //        "min_to_receive": {
-            //                "amount": buyAmount,
-            //            "asset_id": buyAsset.get("id")
-            //        },
-            //        "expiration": expiration,
-            //        "fill_or_kill": isFillOrKill
-            //        });
-
-            //        return (dispatch) => {
-            //            return WalletDb.process_transaction(tr, null, true).then(result => {
-            //                dispatch(true);
-            //                return true;
-            //            })
-            //            .catch (error => {
-            //                console.log("order error:", error);
-            //                dispatch({ error});
-            //                return { error};
-            //            });
-            //            };
-            //        }
-
-            //createLimitOrder2(order) {
-            //            var tr = wallet_api.new_transaction();
-
-            //            // let feeAsset = ChainStore.getAsset(fee_asset_id);
-            //            // if( feeAsset.getIn(["options", "core_exchange_rate", "base", "asset_id"]) === "1.3.0" && feeAsset.getIn(["options", "core_exchange_rate", "quote", "asset_id"]) === "1.3.0" ) {
-            //            //     fee_asset_id = "1.3.0";
-            //            // }
-
-            //            order.setExpiration();
-            //            order = order.toObject();
-
-            //            tr.add_type_operation("limit_order_create", order);
-
-            //            return WalletDb.process_transaction(tr, null, true).then(result => {
-            //                return true;
-            //            })
-            //            .catch (error => {
-            //                console.log("order error:", error);
-            //                return { error};
-            //            });
-            //            }
-
-            //            createPredictionShort(order, collateral, account, sellAmount, sellAsset, buyAmount, collateralAmount, buyAsset, expiration, isFillOrKill, fee_asset_id = "1.3.0") {
-
-            //                var tr = wallet_api.new_transaction();
-
-            //                // Set the fee asset to use
-            //                fee_asset_id = accountUtils.getFinalFeeAsset(order.seller, "call_order_update", order.fee.asset_id);
-
-            //                order.setExpiration();
-
-            //                tr.add_type_operation("call_order_update", {
-            //                    "fee": {
-            //                        amount: 0,
-            //            asset_id: fee_asset_id
-            //                    },
-            //        "funding_account": order.seller,
-            //        "delta_collateral": collateral.toObject(),
-            //        "delta_debt": order.amount_for_sale.toObject(),
-            //        "expiration": order.getExpiration()
-            //                });
-
-            //                tr.add_type_operation("limit_order_create", order.toObject());
-
-            //                return WalletDb.process_transaction(tr, null, true).then(result => {
-            //                    return true;
-            //                })
-            //                    .catch (error => {
-            //                    console.log("order error:", error);
-            //                    return { error};
-            //                });
-            //                }
-
-            //                cancelLimitOrder(accountID, orderID) {
-            //                    // Set the fee asset to use
-            //                    let fee_asset_id = accountUtils.getFinalFeeAsset(accountID, "limit_order_cancel");
-
-            //                    var tr = wallet_api.new_transaction();
-            //                    tr.add_type_operation("limit_order_cancel", {
-            //                        fee:
-            //                        {
-            //                            amount: 0,
-            //            asset_id: fee_asset_id
-            //                        },
-            //        "fee_paying_account": accountID,
-            //        "order": orderID
-            //                    });
-            //                    return WalletDb.process_transaction(tr, null, true)
-            //                    .catch (error => {
-            //                        console.log("cancel error:", error);
-            //                    });
-            //                    }
-
-            //                    cancelLimitOrderSuccess(orderID) {
-            //                        return (dispatch) => {
-            //                            /* In the case of many cancel orders being issued at the same time,
-            //                            * we batch them here and dispatch them all at once at a frequency
-            //                            * defined by "dispatchCancelTimeout"
-            //                            */
-            //                            if (!dispatchCancelTimeout)
-            //                            {
-            //                                cancelBatchIDs = cancelBatchIDs.push(orderID);
-            //                                dispatchCancelTimeout = setTimeout(() => {
-            //                                    dispatch(cancelBatchIDs.toJS());
-            //                                    dispatchCancelTimeout = null;
-            //                                    cancelBatchIDs = cancelBatchIDs.clear();
-            //                                }, cancelBatchTime);
-            //                            }
-            //                            else
-            //                            {
-            //                                cancelBatchIDs = cancelBatchIDs.push(orderID);
-            //                            }
-            //                        };
-            //                    }
-        }
+    }
 }

@@ -7,12 +7,9 @@ namespace LedgerLocal.AdminServer.Service
     public interface IGrapheneConfig
     {
 
-        string GrapheneWs { get; set; }
+        string GrapheneWalletWs { get; set; }
 
-        string GrapheneWallet1Ws { get; set; }
-
-        string GrapheneWallet2Ws { get; set; }
-        
+        string GrapheneBlockchainWs { get; set; }
 
     }
 }

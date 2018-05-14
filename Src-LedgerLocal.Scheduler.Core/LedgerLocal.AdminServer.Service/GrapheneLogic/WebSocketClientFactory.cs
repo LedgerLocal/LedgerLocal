@@ -19,6 +19,25 @@ namespace LedgerLocal.Service.GrapheneLogic
             _wsDico = new ConcurrentDictionary<string, WebSocketSession>();
         }
 
+        public async Task<WebSocketSession> GetContiniousSessionForAction(string action, string url)
+        {
+            var count = 0;
+            var idString = string.Concat("continious-", action, "_", count);
+
+            while (_wsDico.ContainsKey(idString) && _wsDico[idString].IsBusy)
+            {
+                count = count + 1;
+                idString = string.Concat("continious-", action, "_", count);
+            }
+
+            if (!_wsDico.ContainsKey(idString))
+            {
+                return await AddSession(url, idString);
+            }
+
+            return _wsDico[idString];
+        }
+
         public async Task<WebSocketSession> GetContiniousSession(string assetSource, string assetDestination, string url)
         {
             var count = 0;

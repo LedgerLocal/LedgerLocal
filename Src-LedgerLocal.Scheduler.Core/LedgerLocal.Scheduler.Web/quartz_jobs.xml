@@ -54,5 +54,27 @@
       </simple>
     </trigger>
 
+    <job>
+      <name>accountListenerJob</name>
+      <group>adminServerGroup</group>
+      <description>kafkaListenerJob</description>
+      <job-type>LedgerLocal.AdminServer.Jobs.AccountListenerJob, LedgerLocal.AdminServer.Jobs</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>triggerAccountListenerJob</name>
+        <group>triggerAccountListenerGroup</group>
+        <description>triggerAccountListenerJob</description>
+        <job-name>accountListenerJob</job-name>
+        <job-group>adminServerGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>500</repeat-interval>
+      </simple>
+    </trigger>
+
   </schedule>
 </job-scheduling-data>

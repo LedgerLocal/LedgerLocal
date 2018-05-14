@@ -1,4 +1,4 @@
-﻿using LoyaltyCoin.AdminServer.Service.LycServiceContract;
+﻿using LedgerLocal.AdminServer.Service.LycServiceContract;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,10 +11,10 @@ using Microsoft.Extensions.Logging;
 using LedgerLocal.Blockchain.Service.LycServiceContract;
 using LedgerLocal.AdminServer.Service;
 using LedgerLocal.AdminServer.Dto.Models;
-using LoyaltyCoin.AdminServer.Api.Web.Models;
+using LedgerLocal.AdminServer.Api.Web.Models;
 using LedgerLocal.AdminServer.Service.BusinessImplService.Contract;
 
-namespace LoyaltyCoin.AdminServer.Service.LycServiceImpl
+namespace LedgerLocal.AdminServer.Service.LycServiceImpl
 {
     public class KafkaEventService : IKafkaEventService
     {

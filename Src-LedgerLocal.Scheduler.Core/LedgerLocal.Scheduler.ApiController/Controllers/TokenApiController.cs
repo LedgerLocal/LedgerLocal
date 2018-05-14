@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 
 namespace LedgerLocal.AdminServer.ApiController.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [EnableCors("SiteCorsPolicy")]
     public class TokenApiController : Controller
     {
@@ -34,7 +38,7 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         //public virtual async Task<IActionResult> Issue([FromQuery]string user, [FromQuery]string pass)
         //{
         //    var disco = await DiscoveryClient.GetAsync("http://localhost:15777");
-
+            
         //    var tokenClient = new TokenClient(disco.TokenEndpoint, user, pass);
         //    var tokenResponse = await tokenClient.RequestClientCredentialsAsync("api.blockchain");
 

@@ -8,10 +8,14 @@ using LedgerLocal.AdminServer.Dto;
 using LedgerLocal.AdminServer.Data.FullDomain;
 using LedgerLocal.AdminServer.Service.BusinessImplService.Contract;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors;
 
 namespace LedgerLocal.AdminServer.ApiController.Controllers
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
+    [EnableCors("SiteCorsPolicy")]
     public class ContentApiController : Controller
     {
 

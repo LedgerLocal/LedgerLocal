@@ -4,7 +4,7 @@ using Quartz;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using LedgerLocal.AdminServer.Service.Contract;
-using LoyaltyCoin.AdminServer.Service.LycServiceContract;
+using LedgerLocal.AdminServer.Service.LycServiceContract;
 
 namespace LedgerLocal.AdminServer.Jobs
 {
