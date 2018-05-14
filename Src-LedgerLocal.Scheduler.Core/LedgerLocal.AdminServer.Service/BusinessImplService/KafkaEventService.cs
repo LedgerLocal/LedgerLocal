@@ -43,20 +43,26 @@ namespace LoyaltyCoin.AdminServer.Service.LycServiceImpl
             _logger.LogInformation($"Starting PoolMessageForExchangePointBroadcast...");
             var utcNow = DateTime.UtcNow;
 
-            await _commonMessageService.PoolMessage<StandardArgModel>("llc-event-broadcast", ts, (a, b, c) =>
+            try
             {
-                var resPe = JsonConvert.DeserializeObject<ActionEventDefinition>(c.Args.First());
-                var resCust = c.Args.Skip(1).First();
-
-                if (resPe != null && resPe.Timestamp.HasValue && resPe.Timestamp.Value > ServiceLocatorSingleton.Instance.UtcStartDate)
+                await _commonMessageService.PoolMessage<ActionEventDefinition>("llc-event-broadcast", ts, (a, b, c) =>
                 {
+                    var resPe = c;
 
-                    _botService.SendMessage(string.Format($"{resPe.ActionName} => {resPe.Message}"));
-                    _logger.LogInformation($"Received llc-event-broadcast for ${resCust} !");
+                    if (resPe != null && resPe.Timestamp.HasValue && resPe.Timestamp.Value > ServiceLocatorSingleton.Instance.UtcStartDate)
+                    {
 
-                }
+                        _botService.SendMessage(string.Format($"{resPe.ActionName} => {resPe.Message}"));
+                        _logger.LogInformation($"Received llc-event-broadcast for ${a} ${b} !");
 
-            });
+                    }
+
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error pooling");
+            }
 
             await Task.Delay(ts);
         }
