@@ -116,6 +116,12 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         public async void ProcessMessage(string msg1, long channelId, bool isPublic = false)
         {
+            if (channelId > 0)
+            {
+                _currentChatId = channelId;
+                _currentPublicChatId = channelId;
+            }
+
             try
             {
                 var arInput = msg1.Split(' ');
