@@ -74,6 +74,7 @@
     <ProjectReference Include="..\LedgerLocal.AdminServer.Service\LedgerLocal.AdminServer.Service.csproj" />
     <ProjectReference Include="..\LedgerLocal.Common.Core\LedgerLocal.Common.Core.csproj" />
     <ProjectReference Include="..\LedgerLocal.Common.Data\LedgerLocal.Common.Data.csproj" />
+    <ProjectReference Include="..\LedgerLocal.Scheduler.ApiController\LedgerLocal.Scheduler.ApiController.csproj" />
     <ProjectReference Include="..\LedgerLocal.Scheduler.Config\LedgerLocal.Scheduler.Config.csproj" />
     <ProjectReference Include="..\LedgerLocal.Scheduler.Core\LedgerLocal.Scheduler.Core.csproj" />
   </ItemGroup>
