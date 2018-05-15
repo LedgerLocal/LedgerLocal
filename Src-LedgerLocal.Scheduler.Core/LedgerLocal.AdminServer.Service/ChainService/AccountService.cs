@@ -129,8 +129,6 @@ namespace LedgerLocal.Service.ChainService
 
             ws.SubscribeConsumePublic += eventH1;
 
-
-            ws.IsBusy = false;
             return ws;
         }
     }

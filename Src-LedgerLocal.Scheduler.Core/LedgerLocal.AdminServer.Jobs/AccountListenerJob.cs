@@ -8,6 +8,8 @@ using LedgerLocal.AdminServer.Service.LycServiceContract;
 using LedgerLocal.Service.ChainService;
 using LedgerLocal.Blockchain.Service.LycServiceContract;
 using LedgerLocal.AdminServer.Api.Web.Models;
+using System.Linq;
+using LedgerLocal.Service.GrapheneLogic;
 
 namespace LedgerLocal.AdminServer.Jobs
 {
@@ -34,7 +36,7 @@ namespace LedgerLocal.AdminServer.Jobs
         {
             _logger.LogInformation($"Starting AccountListenerJob ...");
 
-            IList<Task> tasks = new List<Task>();
+            IList<Task<WebSocketSession>> tasks = new List<Task<WebSocketSession>>();
 
             tasks.Add(_accountService.SubscribeToAccountBalance("1.2.800691", new string[] { "2.5.1362979", "2.5.2060980" }, async (a1) =>
             {
@@ -51,6 +53,13 @@ namespace LedgerLocal.AdminServer.Jobs
             }));
 
             await Task.WhenAll(tasks);
+
+            var ws1 = tasks.First().Result;
+
+            while (ws1.IsBusy)
+            {
+                await Task.Delay(1000);
+            }
 
             _logger.LogInformation($"Stopping AccountListenerJob ...");
         }
