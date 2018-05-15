@@ -805,6 +805,18 @@ if __name__ == '__main__':
         }
     }
 
+    public class GrapheneOpContainerMain
+    {
+        [JsonProperty("memo")]
+        public string Memo { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("op")]
+        public GrapheneOpContainer Op { get; set; }
+    }
+
     public class GrapheneOpContainer
     {
         [JsonProperty("id")]
@@ -814,7 +826,7 @@ if __name__ == '__main__':
         public Dictionary<int, GrapheneOperation> Op { get; set; }
 
         [JsonProperty("result")]
-        public Dictionary<int, string> Result { get; set; }
+        public Dictionary<int, object> Result { get; set; }
 
         [JsonProperty("block_num")]
         public ulong BlockNum { get; set; }

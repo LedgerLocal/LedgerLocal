@@ -321,9 +321,9 @@ namespace LedgerLocal.Service.GrapheneLogic
         /// <param name="limit">  	The limit. </param>
         ///
         /// <returns>	An array of graphene operation history item. </returns>
-        public GrapheneOpContainer[] GetAccountHistory(string account, uint limit)
+        public GrapheneOpContainerMain[] GetAccountHistory(string account, uint limit)
         {
-            return ApiCall<GrapheneOpContainer[]>(GrapheneMethodEnum.get_account_history, GrapheneApi.@public, account, limit);
+            return ApiCall<GrapheneOpContainerMain[]>(GrapheneMethodEnum.get_account_history, GrapheneApi.@public, account, limit);
         }
 
         /// <summary>	Gets private key. </summary>

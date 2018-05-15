@@ -84,7 +84,7 @@ namespace LedgerLocal.Service.ChainService
             return _mapper.Map<List<GrapheneAmount>, List<AmountDescriptionSimple>>(lstBalances);
         }
 
-        public async Task<List<GrapheneOpContainer>> ListHistory(string accountId, uint limit)
+        public async Task<List<GrapheneOpContainerMain>> ListHistory(string accountId, uint limit)
         {
             _logger.LogInformation($"[BlockchainApi] ListHistory: accountId {accountId}");
             var cli = new GrapheneWallet(_webSocketClientFactory);

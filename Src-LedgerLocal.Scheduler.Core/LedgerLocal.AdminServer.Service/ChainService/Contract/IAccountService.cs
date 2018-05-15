@@ -14,7 +14,7 @@ namespace LedgerLocal.Service.ChainService
 
         Task<Dictionary<string, TransactionRecordDescription>> Transfer(string from, string to, decimal amount, string symbol, string memo, bool broadcast);
 
-        Task<List<GrapheneOpContainer>> ListHistory(string accountId, uint limit);
+        Task<List<GrapheneOpContainerMain>> ListHistory(string accountId, uint limit);
 
         Task<WebSocketSession> SubscribeToAccountBalance(string account, string[] objectIds, Action<string> cb);
     }
