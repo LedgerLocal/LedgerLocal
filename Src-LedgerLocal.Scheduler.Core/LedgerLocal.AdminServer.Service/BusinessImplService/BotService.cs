@@ -14,6 +14,7 @@ using System.Diagnostics;
 using AutoMapper;
 using System.Threading.Tasks;
 using LedgerLocal.Service.ChainService;
+using System.Text;
 
 namespace LedgerLocal.AdminServer.Service.BusinessImplService
 {
@@ -152,9 +153,16 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                         var resHisto = await _accountService.ListHistory("tst-ll-admin", 10);
 
+                        var strBuilder = new StringBuilder();
+
+                        foreach (var s1 in resHisto)
+                        {
+                            strBuilder.AppendLine(s1.Description);
+                        }
+
                         await _telegramBotClient.SendTextMessageAsync(
                             channelId,
-                            JsonConvert.SerializeObject(resHisto, Formatting.Indented),
+                            strBuilder.ToString(),
                             replyMarkup: new ReplyKeyboardRemove());
                         break;
 
