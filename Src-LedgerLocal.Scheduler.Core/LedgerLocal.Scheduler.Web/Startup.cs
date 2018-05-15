@@ -122,6 +122,15 @@ namespace Quartz.Web
 
             services.AddSingleton(typeof(IBotService), typeof(BotService));
 
+            services.AddSingleton(typeof(IWebSocketClientFactory), typeof(WebSocketClientFactory));
+
+            services.AddTransient(typeof(IAssetService), typeof(AssetService));
+
+            services.AddTransient(typeof(IAccountService), typeof(AccountService));
+
+            services.AddTransient(typeof(ILimitOrderService), typeof(LimitOrderService));
+
+            //Job
             services.AddTransient(typeof(DummyJob), typeof(DummyJob));
 
             services.AddTransient(typeof(StatPoolingJob), typeof(StatPoolingJob));
@@ -130,13 +139,8 @@ namespace Quartz.Web
 
             services.AddTransient(typeof(KafkaListenerJob), typeof(KafkaListenerJob));
 
-            services.AddSingleton(typeof(IWebSocketClientFactory), typeof(WebSocketClientFactory));
+            services.AddTransient(typeof(AccountListenerJob), typeof(AccountListenerJob));
 
-            services.AddTransient(typeof(IAssetService), typeof(AssetService));
-
-            services.AddTransient(typeof(IAccountService), typeof(AccountService));
-
-            services.AddTransient(typeof(ILimitOrderService), typeof(LimitOrderService));
 
             // Add framework services.
             services.AddMvc()
