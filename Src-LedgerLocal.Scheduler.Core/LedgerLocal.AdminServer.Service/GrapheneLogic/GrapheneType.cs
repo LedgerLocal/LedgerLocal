@@ -822,7 +822,7 @@ if __name__ == '__main__':
         public GrapheneOpContainer()
         {
             Op = new Dictionary<string, T>();
-            Result = new Dictionary<string, object>();
+            //Result = new Dictionary<string, object>();
         }
 
         [JsonProperty("id")]
@@ -831,8 +831,8 @@ if __name__ == '__main__':
         [JsonProperty("op")]
         public Dictionary<string, T> Op { get; set; }
 
-        [JsonProperty("result")]
-        public Dictionary<string, object> Result { get; set; }
+        //[JsonProperty("result")]
+        //public Dictionary<string, object> Result { get; set; }
 
         [JsonProperty("block_num")]
         public ulong BlockNum { get; set; }
