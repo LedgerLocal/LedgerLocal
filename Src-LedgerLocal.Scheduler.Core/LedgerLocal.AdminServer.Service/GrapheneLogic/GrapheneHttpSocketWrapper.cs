@@ -33,32 +33,9 @@ namespace LedgerLocal.Service.GrapheneLogic
             m_apiMap = new Dictionary<GrapheneApi, int>
             {
                 {GrapheneApi.@public, 0},
-                {GrapheneApi.login, 1}
+                {GrapheneApi.login, 1},
+                {GrapheneApi.history, 2}
             };
-
-            //if (login)
-            //{
-            //    bool done = false;
-
-            //    done = true;
-
-            //    //while (!done)
-            //    //{
-            //    //    try
-            //    //    {
-            //    //        bool success = ApiCallSync<bool>(GrapheneMethodEnum.login, GrapheneApi.login, username, password);
-
-            //    //        int history = ApiCallSync<int>(GrapheneMethodEnum.history, GrapheneApi.login);
-            //    //        int broadcast = ApiCallSync<int>(GrapheneMethodEnum.network_broadcast, GrapheneApi.login);
-
-            //    //        m_apiMap[GrapheneApi.history] = history;
-            //    //        m_apiMap[GrapheneApi.network_broadcast] = broadcast;
-
-            //    //        done = true;
-            //    //    }
-            //    //    catch { }
-            //    //}
-            //}
         }
 
         public async Task Connect(string url)
