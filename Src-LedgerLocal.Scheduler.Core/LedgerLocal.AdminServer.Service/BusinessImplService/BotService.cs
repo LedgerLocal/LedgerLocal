@@ -166,6 +166,8 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                             var resHisto = await _accountService.ListHistory("tst-ll-admin", Convert.ToUInt32(arInput[1]));
 
+                            _logger.LogInformation(JsonConvert.SerializeObject(resHisto, Formatting.Indented));
+
                             var strBuilder = new StringBuilder();
 
                             foreach (var s1 in resHisto)
