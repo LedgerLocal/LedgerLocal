@@ -90,7 +90,7 @@ namespace LedgerLocal.Service.ChainService
             var cli = new GrapheneWallet(_webSocketClientFactory);
             await cli.StartAndConnect(_creds);
 
-            var lstHisto1 = cli.GetAccountHistory(accountId, start, stop, limit).ToList();
+            var lstHisto1 = cli.GetAccountHistory(accountId, limit).ToList();
 
             return lstHisto1;
         }

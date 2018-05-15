@@ -317,23 +317,13 @@ namespace LedgerLocal.Service.GrapheneLogic
             return orderbook;
         }
 
-        /// <summary>	Gets account history. </summary>
-        ///
-        /// <remarks>	Paul, 21/10/2015. </remarks>
-        ///
         /// <param name="account">	The account. </param>
-        /// <param name="stop">   	The stop. </param>
         /// <param name="limit">  	The limit. </param>
-        /// <param name="start">  	The start. </param>
         ///
         /// <returns>	An array of graphene operation history item. </returns>
-        public GrapheneOpContainer[] GetAccountHistory(string account, uint stop, uint start, uint limit)
+        public GrapheneOpContainer[] GetAccountHistory(string account, uint limit)
         {
-            GrapheneObject s = new GrapheneObject(1, 11, start);
-            GrapheneObject e = new GrapheneObject(1, 11, stop);
-
-            // fuck know why the parameter order is so messed up here
-            return ApiCallBlockchain<GrapheneOpContainer[]>(GrapheneMethodEnum.get_account_history, GrapheneApi.history, account, e, limit, s);
+            return ApiCallBlockchain<GrapheneOpContainer[]>(GrapheneMethodEnum.get_account_history, GrapheneApi.@public, account, limit);
         }
 
         /// <summary>	Gets private key. </summary>
