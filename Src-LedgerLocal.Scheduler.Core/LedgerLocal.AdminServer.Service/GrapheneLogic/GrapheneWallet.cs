@@ -323,7 +323,7 @@ namespace LedgerLocal.Service.GrapheneLogic
         /// <returns>	An array of graphene operation history item. </returns>
         public GrapheneOpContainer[] GetAccountHistory(string account, uint limit)
         {
-            return ApiCallBlockchain<GrapheneOpContainer[]>(GrapheneMethodEnum.get_account_history, GrapheneApi.login, account, limit);
+            return ApiCall<GrapheneOpContainer[]>(GrapheneMethodEnum.get_account_history, GrapheneApi.@public, account, limit);
         }
 
         /// <summary>	Gets private key. </summary>
