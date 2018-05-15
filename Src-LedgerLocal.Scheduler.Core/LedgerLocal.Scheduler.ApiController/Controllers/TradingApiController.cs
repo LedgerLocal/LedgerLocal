@@ -57,7 +57,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/trading/getLimitOrders")]
         [SwaggerOperation("GetLimitOrders")]
         [ProducesResponseType(typeof(GrapheneOrder[]), 200)]
-        [Authorize(Roles = "trading,trading:getlimitorders")]
         public virtual async Task<IActionResult> GetLimitOrder([FromQuery]string baseSymbol, [FromQuery]string quoteSymbol, [FromQuery]int limit)
         {
             var go = await _limitOrderService.GetLimitOrderHistory(baseSymbol, quoteSymbol, limit);

@@ -38,7 +38,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/account/list")]
         [SwaggerOperation("AccountListGet")]
         [ProducesResponseType(typeof(List<AccountProfile>), 200)]
-        [Authorize(Roles = "account,account:list")]
         public virtual async Task<IActionResult> AccountListGet([FromQuery]string lowerBound, [FromQuery]int? limit)
         {
             var lstCust = await _accountService.ListAccount(lowerBound, limit.HasValue ? limit.Value : 100);
@@ -56,7 +55,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/account/balanceList")]
         [SwaggerOperation("AccountBalanceListGet")]
         [ProducesResponseType(typeof(List<AmountDescriptionSimple>), 200)]
-        [Authorize(Roles = "account,account:balancelist")]
         public virtual async Task<IActionResult> AccountBalanceListGet([FromQuery]string accountId)
         {
             var lstBalances = await _accountService.ListBalance(accountId);
@@ -75,10 +73,9 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/account/historyList")]
         [SwaggerOperation("AccountHistoryListGet")]
         [ProducesResponseType(typeof(List<GrapheneOpContainer>), 200)]
-        [Authorize(Roles = "account,account:historylist")]
         public virtual async Task<IActionResult> AccountHistoryListGet([FromQuery]string accountId, [FromQuery]uint start, [FromQuery]uint stop, [FromQuery]uint limit)
         {
-            var lstBalances = await _accountService.ListHistory(accountId, start, stop, limit);
+            var lstBalances = await _accountService.ListHistory(accountId, limit);
             return new ObjectResult(lstBalances);
         }
 
@@ -93,7 +90,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/account/transfer")]
         [SwaggerOperation("PostTransfer")]
         [ProducesResponseType(typeof(Dictionary<string, TransactionRecordDescription>), 200)]
-        [Authorize(Roles = "account,account:transfer")]
         public virtual async Task<IActionResult> PostTransfer([FromBody]TransferCreateOrUpdate body)
         {
             var res = await _accountService.Transfer(body.From, body.To, body.Amount, body.AssetSymbol, body.Memo, body.Broadcast);

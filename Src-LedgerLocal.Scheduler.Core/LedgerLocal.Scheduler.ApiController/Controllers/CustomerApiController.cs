@@ -40,7 +40,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/customer/byId")]
         [SwaggerOperation("CustomerByIdGet")]
         [ProducesResponseType(typeof(CustomerProfile), 200)]
-        [Authorize(Roles = "customer,customer:byid")]
         public virtual async Task<IActionResult> CustomerByIdGet([FromQuery]string id)
         {
             User.CheckIfValidCustomerId(id, true);
@@ -61,7 +60,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/customer/create")]
         [SwaggerOperation("CustomerCreatePost")]
         [ProducesResponseType(typeof(List<CustomerProfile>), 200)]
-        [Authorize(Roles = "customer:create")]
         public virtual async Task<IActionResult> CustomerCreatePost([FromBody]CustomerCreateOrUpdate body)
         {
             _dbContext.RefreshFullDomain();
@@ -80,7 +78,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/customer/update")]
         [SwaggerOperation("CustomerUpdatePut")]
         [ProducesResponseType(typeof(List<CustomerProfile>), 200)]
-        [Authorize(Roles = "customer,customer:update")]
         public virtual async Task<IActionResult> CustomerUpdatePut([FromBody]CustomerCreateOrUpdate body)
         {
             User.CheckIfValidCustomerId(body.CustomerId, true);
@@ -101,7 +98,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/customer/me")]
         [SwaggerOperation("CustomerMeGet")]
         [ProducesResponseType(typeof(CustomerProfile), 200)]
-        [Authorize(Roles = "customer,customer:me")]
         public virtual IActionResult CustomerMeGet()
         {
             _dbContext.RefreshFullDomain();

@@ -34,7 +34,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/attribute/list")]
         [SwaggerOperation("GenericAttributeDtoListGet")]
         [ProducesResponseType(typeof(List<GenericAttributeDto>), 200)]
-        [Authorize(Roles = "attribute,attribute:list")]
         public virtual async Task<IActionResult> GenericAttributeDtoListGet([FromQuery]int start, [FromQuery]int size)
         {
             _dbContext.RefreshFullDomain();
@@ -48,7 +47,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/attribute/get")]
         [SwaggerOperation("GenericAttributeDtoGet")]
         [ProducesResponseType(typeof(GenericAttributeDto), 200)]
-        [Authorize(Roles = "attribute,attribute:get")]
         public virtual async Task<IActionResult> GenericAttributeDtoGet([FromBody]string type)
         {
             _dbContext.RefreshFullDomain();
@@ -60,7 +58,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/attribute/getOrCreate")]
         [SwaggerOperation("GenericAttributeDtoCreateGet")]
         [ProducesResponseType(typeof(GenericAttributeDto), 200)]
-        [Authorize(Roles = "attribute,attribute:create")]
         public virtual async Task<IActionResult> GenericAttributeDtoCreateGet([FromBody]string type, [FromBody]string value)
         {
             _dbContext.RefreshFullDomain();

@@ -38,15 +38,15 @@ namespace LedgerLocal.Service.ChainService
             {
                 new CliCredential()
                 {
-                    Url = "ws://217.182.230.164:8092",
-                    Username = "lycmainwallet",
-                    Password = "p"
+                    Url = _grapheneConfig.GrapheneWalletWs,
+                    Username = "",
+                    Password = ""
                 },
                 new CliCredential()
                 {
-                    Url = "ws://217.182.230.164:8094",
-                    Username = "lycblockchain",
-                    Password = "p"
+                    Url = _grapheneConfig.GrapheneBlockchainWs,
+                    Username = "",
+                    Password = ""
                 }
             };
         }
@@ -84,7 +84,7 @@ namespace LedgerLocal.Service.ChainService
             return _mapper.Map<List<GrapheneAmount>, List<AmountDescriptionSimple>>(lstBalances);
         }
 
-        public async Task<List<GrapheneOpContainer>> ListHistory(string accountId, uint start, uint stop, uint limit)
+        public async Task<List<GrapheneOpContainer>> ListHistory(string accountId, uint limit)
         {
             _logger.LogInformation($"[BlockchainApi] ListHistory: accountId {accountId}");
             var cli = new GrapheneWallet(_webSocketClientFactory);

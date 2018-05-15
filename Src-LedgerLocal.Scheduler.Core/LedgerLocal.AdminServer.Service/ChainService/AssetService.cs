@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using LedgerLocal.AdminServer.Service;
 
 namespace LedgerLocal.Service.ChainService
 {
@@ -21,28 +22,31 @@ namespace LedgerLocal.Service.ChainService
         private IMapper _mapper;
         private List<CliCredential> _lstCreds;
         private ILogger<AssetService> _logger;
+        private IGrapheneConfig _gConfig;
 
         public AssetService(ILogger<AssetService> logger,
             MapperConfiguration mapperConfiguration,
-            IWebSocketClientFactory webSocketClientFactory)
+            IWebSocketClientFactory webSocketClientFactory,
+            IGrapheneConfig gConfig)
         {
             _logger = logger;
             _mapper = mapperConfiguration.CreateMapper();
             _webSocketClientFactory = webSocketClientFactory;
+            _gConfig = gConfig;
 
             _lstCreds = new List<CliCredential>()
             {
                 new CliCredential()
                 {
-                    Url = "ws://217.182.230.164:8092",
-                    Username = "lycmainwallet",
-                    Password = "p"
+                    Url = _gConfig.GrapheneWalletWs,
+                    Username = "",
+                    Password = ""
                 },
                 new CliCredential()
                 {
-                    Url = "ws://217.182.230.164:8094",
-                    Username = "lycblockchain",
-                    Password = "p"
+                    Url = _gConfig.GrapheneBlockchainWs,
+                    Username = "",
+                    Password = ""
                 }
             };
         }

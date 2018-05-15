@@ -55,7 +55,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [Route("/v1/token/claimList")]
         [SwaggerOperation("ClaimListGet")]
         [ProducesResponseType(typeof(JsonResult), 200)]
-        [Authorize]
         public virtual IActionResult ClaimListGet()
         {
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
