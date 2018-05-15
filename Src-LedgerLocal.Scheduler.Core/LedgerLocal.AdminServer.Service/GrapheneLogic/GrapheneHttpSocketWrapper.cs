@@ -129,11 +129,12 @@ namespace LedgerLocal.Service.GrapheneLogic
 
                 var conv9 = new DictionaryTwoArrayConverter<GrapheneOperation>(new List<JsonConverter>());
                 var conv10 = new DictionaryTwoArrayConverter<GrapheneOpContainer<GrapheneOperation>>(new List<JsonConverter>() { conv9 });
+                var conv11 = new DictionaryTwoArrayConverter<GrapheneOpContainerMain>(new List<JsonConverter>() { conv10 });
 
                 try
                 {
                     GrapheneSocketResponse<T> decoded = JsonConvert.DeserializeObject<GrapheneSocketResponse<T>>(message,
-                    conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv9, conv10
+                    conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv9, conv10, conv11
                     );
 
                     if (decoded.Id == id.ToString())
