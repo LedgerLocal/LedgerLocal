@@ -13,6 +13,7 @@ using CoinMarketCap;
 using System.Diagnostics;
 using AutoMapper;
 using System.Threading.Tasks;
+using LedgerLocal.Service.ChainService;
 
 namespace LedgerLocal.AdminServer.Service.BusinessImplService
 {
@@ -26,6 +27,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
         private IServiceProvider _serviceProvider;
         private CoinMarketCapClient _coinMarketCapClient;
         private DateTime _startDate;
+        private IAccountService _accountService;
 
         private long _currentChatId = 0;
         private long _currentPublicChatId = 0;
@@ -36,6 +38,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             IServiceProvider serviceProvider,
             MapperConfiguration mapperConfig,
             ITelegramClientFactory telegramClientFactory,
+            IAccountService accountService,
             ILogger<BotService> logger)
         {
 
@@ -44,6 +47,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             _mapper = mapperConfig.CreateMapper();
             _serviceProvider = serviceProvider;
             _telegramClientFactory = telegramClientFactory;
+            _accountService = accountService;
 
             _started = false;
             Running = true;
@@ -144,6 +148,16 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                         Environment.Exit(0);
                         break;
 
+                    case "/history":
+
+                        var resHisto = await _accountService.ListHistory("1.2.800691", 0, 5, 5);
+
+                        await _telegramBotClient.SendTextMessageAsync(
+                            channelId,
+                            JsonConvert.SerializeObject(resHisto, Formatting.Indented),
+                            replyMarkup: new ReplyKeyboardRemove());
+                        break;
+
                     case "/info":
 
                         await _telegramBotClient.SendTextMessageAsync(
@@ -158,6 +172,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
 /totalAmountRaised
 
+/history
 /info
 
 ";
