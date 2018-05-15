@@ -151,19 +151,39 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                     case "/history":
 
-                        var resHisto = await _accountService.ListHistory("tst-ll-admin", 10);
-
-                        var strBuilder = new StringBuilder();
-
-                        foreach (var s1 in resHisto)
+                        if (arInput.Count() < 2)
                         {
-                            strBuilder.AppendLine(s1.Description);
+                            await _telegramBotClient.SendTextMessageAsync(
+                            channelId,
+                            "Usage => /history num",
+                            replyMarkup: new ReplyKeyboardRemove());
+
+                            break;
                         }
 
-                        await _telegramBotClient.SendTextMessageAsync(
-                            channelId,
-                            strBuilder.ToString(),
-                            replyMarkup: new ReplyKeyboardRemove());
+                        try
+                        {
+
+                            var resHisto = await _accountService.ListHistory("tst-ll-admin", Convert.ToUInt32(arInput[1]));
+
+                            var strBuilder = new StringBuilder();
+
+                            foreach (var s1 in resHisto)
+                            {
+                                strBuilder.AppendLine(s1.Description);
+                            }
+
+                            await _telegramBotClient.SendTextMessageAsync(
+                                channelId,
+                                strBuilder.ToString(),
+                                replyMarkup: new ReplyKeyboardRemove());
+                            
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Error history");
+                        }
+
                         break;
 
                     case "/info":
@@ -180,7 +200,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
 /totalAmountRaised
 
-/history
+/history 10
 /info
 
 ";
@@ -191,7 +211,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                             replyMarkup: new ReplyKeyboardRemove());
                         break;
                 }
-                }
+            }
             catch(Exception ex1)
             {
                 _logger.LogError(ex1, "Error process msg1");
@@ -205,6 +225,11 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                 var now = DateTime.UtcNow;
 
                 var message = messageEventArgs.Message;
+
+                if ((now - message.Date).TotalSeconds > 10)
+                {
+                    return;
+                }
 
                 _currentChatId = messageEventArgs.Message.Chat.Id;
                 _currentPublicChatId = messageEventArgs.Message.Chat.Id;
