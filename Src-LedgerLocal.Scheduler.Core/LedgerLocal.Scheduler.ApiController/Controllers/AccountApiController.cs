@@ -72,7 +72,7 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
         [HttpGet]
         [Route("/v1/account/historyList")]
         [SwaggerOperation("AccountHistoryListGet")]
-        [ProducesResponseType(typeof(List<GrapheneOpContainer>), 200)]
+        [ProducesResponseType(typeof(List<GrapheneOpContainerMain>), 200)]
         public virtual async Task<IActionResult> AccountHistoryListGet([FromQuery]string accountId, [FromQuery]uint start, [FromQuery]uint stop, [FromQuery]uint limit)
         {
             var lstBalances = await _accountService.ListHistory(accountId, limit);

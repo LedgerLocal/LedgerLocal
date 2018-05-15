@@ -814,16 +814,16 @@ if __name__ == '__main__':
         public string Description { get; set; }
 
         [JsonProperty("op")]
-        public GrapheneOpContainer Op { get; set; }
+        public GrapheneOpContainer<GrapheneOperation> Op { get; set; }
     }
 
-    public class GrapheneOpContainer
+    public class GrapheneOpContainer<T>
     {
         [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("op")]
-        public Dictionary<int, GrapheneOperation> Op { get; set; }
+        public Dictionary<int, T> Op { get; set; }
 
         [JsonProperty("result")]
         public Dictionary<int, object> Result { get; set; }
@@ -850,7 +850,7 @@ if __name__ == '__main__':
         public string Description { get; set; }
 
         [JsonProperty("op")]
-        public GrapheneOpContainer Op { get; set; }
+        public GrapheneOpContainer<GrapheneOperation> Op { get; set; }
     }
 
     public class GrapheneApiIndex
