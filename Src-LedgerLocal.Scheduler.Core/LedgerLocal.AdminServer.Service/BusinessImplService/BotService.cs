@@ -150,7 +150,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                     case "/history":
 
-                        var resHisto = await _accountService.ListHistory("1.2.800691", 10);
+                        var resHisto = await _accountService.ListHistory("tst-ll-admin", 10);
 
                         await _telegramBotClient.SendTextMessageAsync(
                             channelId,
