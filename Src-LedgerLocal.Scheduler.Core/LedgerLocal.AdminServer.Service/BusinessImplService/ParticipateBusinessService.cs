@@ -164,89 +164,112 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         public async Task FinalizeTrades(string currencyId)
         {
-            var now = DateTime.UtcNow;
-
-            var lstTrades = await _accountService.ListHistory("tst-ll-admin", 1);
-            var a1 = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).FirstOrDefault();
-            //var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
-            //var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
-
-            if (a1 != null)
+            try
             {
-                var t1 = lstTrades.First();
 
-                if (currencyId == "1.3.0")
+                var now = DateTime.UtcNow;
+
+                var lstTrades = await _accountService.ListHistory("tst-ll-admin", 1);
+                var a1 = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).FirstOrDefault();
+                //var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
+                //var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
+
+                if (a1 != null)
                 {
-                    a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount / 100000);
-                    a1.AmountDecimal = t1.Op.Op.First().Value.Amount.Amount / 100000;
-                    var tradeExchange1 = (await _limitOrderService.GetLimitOrderHistory("1.3.0", "1.3.121", 1)).First();
-                    a1.Amountusd = a1.AmountDecimal * tradeExchange1.Price;
-                }
-                else
-                {
-                    a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount / 10000);
-                    a1.AmountDecimal = t1.Op.Op.First().Value.Amount.Amount / 10000;
-                    a1.Amountusd = a1.AmountDecimal;
-                }
+                    var t1 = lstTrades.First();
 
-                a1.Paidonbc = false;
-                a1.Cryptoconfirmed = true;
-
-                var cal1 = CalculateTokenAmountAndPrice(a1.Amountusd);
-
-                if (cal1.Count > 1)
-                {
-                    foreach (var i1 in cal1.Skip(1))
+                    if (currencyId == "1.3.0")
                     {
-                        var newTrans = new Transactions();
-
-                        newTrans.Memobc = a1.Memobc;
-                        newTrans.Paidonbc = false;
-                        newTrans.Godfathercode = a1.Godfathercode;
-                        newTrans.Cryptocurrency = a1.Cryptocurrency;
-                        newTrans.Cryptoconfirmed = a1.Cryptoconfirmed;
-
-                        newTrans.Amounttoken = i1.Item1;
-                        newTrans.Purchaseprice = i1.Item2;
-                        newTrans.Amount = a1.Amount;
-                        newTrans.Amountusd = a1.Amountusd;
-                        newTrans.Createdon = now;
-                        newTrans.Modifiedon = now;
-                        newTrans.Createdby = "System";
-                        newTrans.Modifiedby = "System";
-
-                        await _transRepository.AddAsync(a1);
-
-                        var errorCurs = _unitOfWork.CommitHandled();
-                        if (!errorCurs)
-                        {
-                            _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(errorCurs, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
-                        }
-
+                        a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount / 100000);
+                        a1.AmountDecimal = t1.Op.Op.First().Value.Amount.Amount / 100000;
+                        var tradeExchange1 = (await _limitOrderService.GetLimitOrderHistory("1.3.0", "1.3.121", 1)).First();
+                        a1.Amountusd = a1.AmountDecimal * tradeExchange1.Price;
                     }
-                }
-
-                a1.Modifiedon = now;
-
-                await _transRepository.UpdateAsync(a1);
-
-                var error1 = _unitOfWork.CommitHandled();
-                if (!error1)
-                {
-                    _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
-                }
-
-                var guidString = Guid.NewGuid().ToString();
-                await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString,
-                    new ActionEventDefinition()
+                    else
                     {
-                        ActionName = "FinalizeTradeTriggered",
-                        Message = "New participation initiated",
-                        Timestamp = DateTime.UtcNow,
-                        Success = true,
-                        Reason = "Subscription"
-                    });
+                        a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount / 10000);
+                        a1.AmountDecimal = t1.Op.Op.First().Value.Amount.Amount / 10000;
+                        a1.Amountusd = a1.AmountDecimal;
+                    }
+
+                    a1.Paidonbc = false;
+                    a1.Cryptoconfirmed = true;
+                    a1.Modifiedon = now;
+
+                    await _transRepository.UpdateAsync(a1);
+
+                    var error0 = _unitOfWork.CommitHandled();
+                    if (!error0)
+                    {
+                        _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error0, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
+                    }
+
+                    var cal1 = CalculateTokenAmountAndPrice(a1.Amountusd);
+
+                    if (cal1.Count > 1)
+                    {
+                        foreach (var i1 in cal1.Skip(1))
+                        {
+                            var newTrans = new Transactions();
+
+                            newTrans.Memobc = a1.Memobc;
+                            newTrans.Paidonbc = false;
+                            newTrans.Godfathercode = a1.Godfathercode;
+                            newTrans.Cryptocurrency = a1.Cryptocurrency;
+                            newTrans.Cryptoconfirmed = a1.Cryptoconfirmed;
+
+                            newTrans.Amounttoken = i1.Item1;
+                            newTrans.Purchaseprice = i1.Item2;
+                            newTrans.Amount = a1.Amount;
+                            newTrans.Amountusd = a1.Amountusd;
+                            newTrans.Createdon = now;
+                            newTrans.Modifiedon = now;
+                            newTrans.Createdby = "System";
+                            newTrans.Modifiedby = "System";
+
+                            await _transRepository.AddAsync(a1);
+
+                            var errorCurs = _unitOfWork.CommitHandled();
+                            if (!errorCurs)
+                            {
+                                _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(errorCurs, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
+                            }
+
+                        }
+                    }
+
+                    var a22 = _transRepository.DbSet.First(dd => dd.Transactionid == a1.Transactionid);
+
+                    a22.Modifiedon = now;
+
+                    a22.Purchaseprice = cal1.First().Item2;
+                    a22.Amounttoken = cal1.First().Item1;
+
+                    await _transRepository.UpdateAsync(a1);
+
+                    var error1 = _unitOfWork.CommitHandled();
+                    if (!error1)
+                    {
+                        _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
+                    }
+
+                    var guidString = Guid.NewGuid().ToString();
+                    await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString,
+                        new ActionEventDefinition()
+                        {
+                            ActionName = "FinalizeTradeTriggered",
+                            Message = string.Format($"[LedgerLocal][Participation][Success] New participation of { a1.Amountusd } USD => {a22.Amounttoken} Token"),
+                            Timestamp = DateTime.UtcNow,
+                            Success = true,
+                            Reason = "Subscription"
+                        });
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error Finalizing");
+            }
+
 
         }
     }
