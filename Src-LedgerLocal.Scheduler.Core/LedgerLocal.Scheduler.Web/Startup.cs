@@ -146,6 +146,9 @@ namespace Quartz.Web
 
             services.AddTransient(typeof(IGenericCrudService<,>), typeof(GenericCrudService<,>));
 
+            services.AddTransient(typeof(IParticipateBusinessService), typeof(ParticipateBusinessService));
+            
+
             //Job
             services.AddTransient(typeof(DummyJob), typeof(DummyJob));
 
