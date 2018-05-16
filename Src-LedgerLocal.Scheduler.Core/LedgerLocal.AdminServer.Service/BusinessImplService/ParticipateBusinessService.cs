@@ -87,7 +87,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             var now = DateTime.UtcNow;
             var memoGuid = Guid.NewGuid().ToString();
 
-            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingdev[_mappingTradingExchange[inputCoinType]], "tst-ll-admin", memoGuid);
+            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, inputCoinType, "tst-ll-admin", memoGuid);
 
             var objTrans = new Transactions();
 
