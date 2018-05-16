@@ -21,6 +21,8 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
 
         public ParticipateBusinessApiController(IParticipateBusinessService participateBusinessService, ICommonMessageService commonMessageService)
         {
+            _participateBusinessService = participateBusinessService;
+            _commonMessageService = commonMessageService;
         }
 
         [HttpGet]
