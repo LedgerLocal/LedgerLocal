@@ -29,11 +29,11 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         private Dictionary<string, string> _mappingTradingExchange = new Dictionary<string, string>()
         {
-            { "bitcoin", "bitusd" },
-            { "dash", "bitshares2" },
-            { "dogecoin", "bitshares2" },
-            { "ethereum", "bitshares2" },
-            { "litecoin", "bitshares2" },
+            { "btc", "bitusd" },
+            { "dash", "bts" },
+            { "doge", "bts" },
+            { "eth", "bts" },
+            { "ltc", "bts" },
             { "steem", "bitusd" }
         };
 
@@ -87,7 +87,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             var now = DateTime.UtcNow;
             var memoGuid = Guid.NewGuid().ToString();
 
-            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, inputCoinType, "tst-ll-admin", memoGuid);
+            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingExchange[inputCoinType], "tst-ll-admin", memoGuid);
 
             var objTrans = new Transactions();
 
