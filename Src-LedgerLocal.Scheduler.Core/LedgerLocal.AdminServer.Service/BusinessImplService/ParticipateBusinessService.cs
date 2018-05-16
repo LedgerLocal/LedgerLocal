@@ -37,6 +37,17 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             { "steem", "bitusd" }
         };
 
+        private Dictionary<string, string> _mappingTradingdev = new Dictionary<string, string>()
+        {
+            { "bitcoin", "btc" },
+            { "bitusd", "bitusd" },
+            { "dash", "dash" },
+            { "dogecoin", "doge" },
+            { "ethereum", "eth" },
+            { "litecoin", "ltc" },
+            { "steem", "steem" }
+        };
+
         public ParticipateBusinessService(IBlockTradeService blockTradeService,
             ICommonMessageService commonMessageService,
             ILimitOrderService limitOrderService,
@@ -61,7 +72,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
         public async Task<List<string>> ListPaymentCrypto()
         {
             var lst1 = await _blockTradeService.GetActiveWalletType();
-            return lst1;
+            return lst1.Select(x => _mappingTradingdev[x]).ToList();
         }
 
         public async Task<OutputEstimateInfo> CalculateOutputBitshares2(string cryptoInput, decimal amountInput)
@@ -75,7 +86,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             var now = DateTime.UtcNow;
             var memoGuid = Guid.NewGuid().ToString();
 
-            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingExchange[inputCoinType], "BTS8HPJam2yfDFwisb4JvTGo7m4CPXbgd6YSKoBwcWUKycsnWtRGR", memoGuid);
+            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingdev[_mappingTradingExchange[inputCoinType]], "tst-ll-admin", memoGuid);
 
             var objTrans = new Transactions();
 
