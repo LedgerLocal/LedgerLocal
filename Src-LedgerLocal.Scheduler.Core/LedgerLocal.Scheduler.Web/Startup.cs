@@ -29,6 +29,9 @@ using System.IO;
 using LedgerLocal.AdminServer.Service.Contract;
 using LedgerLocal.Service.GrapheneLogic;
 using LedgerLocal.Service.ChainService;
+using Common.Data.Infrastructure;
+using LedgerLocal.AdminServer.Data.FullDomain.Infrastructure;
+using LedgerLocal.AdminServer.Data.FullDomain;
 //using Quartz.Web.LiveLog;
 
 namespace Quartz.Web
@@ -65,11 +68,22 @@ namespace Quartz.Web
 
             var now = DateTime.UtcNow;
 
-            Log.Logger = new LoggerConfiguration()
+            Serilog.Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
                 .WriteTo.Seq(Configuration["SeqServer"])
                 .CreateLogger();
+
+            var connectionString = Configuration["ConnString"];
+
+            //EF
+            services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
+
+            services.AddScoped(typeof(ILedgerLocalDbFullDomainRepository<>), typeof(LedgerLocalDbFullDomainRepositoryBase<>));
+
+            services.AddScoped(typeof(ILedgerLocalDbFullDomainUnitOfWork), typeof(LedgerLocalDbFullDomainUnitOfWorkBase));
+
+            services.AddTransient(typeof(IDbContextService), typeof(DbContextService));
 
             var gConf = new GlobalConfig()
             {
@@ -129,6 +143,8 @@ namespace Quartz.Web
             services.AddTransient(typeof(IAccountService), typeof(AccountService));
 
             services.AddTransient(typeof(ILimitOrderService), typeof(LimitOrderService));
+
+            services.AddTransient(typeof(IGenericCrudService<,>), typeof(GenericCrudService<,>));
 
             //Job
             services.AddTransient(typeof(DummyJob), typeof(DummyJob));
@@ -202,7 +218,7 @@ namespace Quartz.Web
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             loggerFactory.AddSerilog();
-            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
+            appLifetime.ApplicationStopped.Register(Serilog.Log.CloseAndFlush);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

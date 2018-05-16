@@ -8264,6 +8264,12 @@ namespace LedgerLocal.AdminServer.Data.FullDomain
 
                 entity.Property(e => e.Paidonbc).HasColumnName("paidonbc");
 
+                entity.Property(e => e.Cryptoaddress).HasColumnName("cryptoaddress");
+
+                entity.Property(e => e.Cryptoconfirmed).HasColumnName("cryptoconfirmed");
+
+                entity.Property(e => e.Cryptocurrency).HasColumnName("cryptocurrency");
+
                 entity.Property(e => e.Purchaseprice).HasColumnName("purchaseprice");
 
                 entity.Property(e => e.Userid).HasColumnName("userid");

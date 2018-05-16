@@ -15,6 +15,13 @@ namespace LedgerLocal.AdminServer.Data.FullDomain
         public decimal? Purchaseprice { get; set; }
         public string Memobc { get; set; }
         public bool? Paidonbc { get; set; }
+
+        public string Cryptoaddress { get; set; }
+
+        public string Cryptocurrency { get; set; }
+
+        public bool Cryptoconfirmed { get; set; }
+
         public DateTime Createdon { get; set; }
         public DateTime Modifiedon { get; set; }
         public string Createdby { get; set; }

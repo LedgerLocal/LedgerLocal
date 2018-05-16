@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LedgerLocal.AdminServer.Service.BusinessImplService.Contract
 {
-    public interface ILedgerLocalBusinessService
+    public interface IWithdrawBusinessService
     {
     }
 }

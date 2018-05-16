@@ -29,8 +29,6 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
 
         public ParticipateBusinessApiController(IBlockTradeService blockTradeService, ICommonMessageService commonMessageService)
         {
-            _blockTradeService = blockTradeService;
-            _commonMessageService = commonMessageService;
         }
 
         [HttpGet]
@@ -43,14 +41,18 @@ namespace LedgerLocal.AdminServer.ApiController.Controllers
 
             var lstWallets = await _blockTradeService.GetActiveWalletType();
 
-            await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString, new ActionEventDefinition()
-            {
-                ActionName = "ListPaymentCryptoAvailable",
-                Message = string.Concat("Returning crypto: ", lstWallets.Count),
-                Timestamp = DateTime.UtcNow,
-                Success = true,
-                Reason = "Call"
-            });
+            return new ObjectResult(lstWallets);
+        }
+
+        [HttpGet]
+        [Route("/v1/participate/initiateTrade")]
+        [SwaggerOperation("InitiateTradeGet")]
+        [ProducesResponseType(typeof(List<string>), 200)]
+        public virtual async Task<IActionResult> InitiateTradeGet([FromQuery] string inputCoin, [FromQuery] string destinationCoin, [FromQuery] string address, [FromQuery] string memo)
+        {
+            var guidString = Guid.NewGuid().ToString();
+
+            var lstWallets = await _blockTradeService.InitiateTrade(inputCoin, destinationCoin, address, memo);
 
             return new ObjectResult(lstWallets);
         }
