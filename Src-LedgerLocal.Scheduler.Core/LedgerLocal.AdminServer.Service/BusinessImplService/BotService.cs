@@ -164,7 +164,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                         try
                         {
 
-                            var resHisto = await _accountService.ListHistory("tst-ll-admin", Convert.ToUInt32(arInput[1]));
+                            var resHisto = await _accountService.ListHistory("tst-ll-reception", Convert.ToUInt32(arInput[1]));
 
                             _logger.LogInformation(JsonConvert.SerializeObject(resHisto, Formatting.Indented));
 

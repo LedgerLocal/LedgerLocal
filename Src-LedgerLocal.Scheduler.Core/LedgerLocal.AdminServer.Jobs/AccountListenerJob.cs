@@ -41,7 +41,7 @@ namespace LedgerLocal.AdminServer.Jobs
 
             IList<Task<WebSocketSession>> tasks = new List<Task<WebSocketSession>>();
 
-            tasks.Add(_accountService.SubscribeToAccountBalance("1.2.800691", new string[] { "2.5.1362979", "2.5.2060980" }, async (a1) =>
+            tasks.Add(_accountService.SubscribeToAccountBalance("1.2.800691", new string[] { "2.5.2077230", "2.5.2077225" }, async (a1) =>
             {
 
                 var jObj = JObject.Parse(a1);

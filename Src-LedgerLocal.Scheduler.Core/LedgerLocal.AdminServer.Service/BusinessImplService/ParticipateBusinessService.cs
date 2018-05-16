@@ -87,7 +87,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             var now = DateTime.UtcNow;
             var memoGuid = Guid.NewGuid().ToString();
 
-            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingExchange[inputCoinType], "tst-ll-admin", memoGuid);
+            var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingExchange[inputCoinType], "tst-ll-reception", memoGuid);
 
             var objTrans = new Transactions();
 
@@ -169,7 +169,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                 var now = DateTime.UtcNow;
 
-                var lstTrades = await _accountService.ListHistory("tst-ll-admin", 1);
+                var lstTrades = await _accountService.ListHistory("tst-ll-reception", 1);
                 var a1 = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).FirstOrDefault();
                 //var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
                 //var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
