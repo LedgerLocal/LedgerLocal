@@ -42,6 +42,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             { "bitcoin", "btc" },
             { "bitusd", "bitusd" },
             { "dash", "dash" },
+            { "bitshares2", "bts" },
             { "dogecoin", "doge" },
             { "ethereum", "eth" },
             { "litecoin", "ltc" },
@@ -72,7 +73,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
         public async Task<List<string>> ListPaymentCrypto()
         {
             var lst1 = await _blockTradeService.GetActiveWalletType();
-            return lst1.Select(x => _mappingTradingdev[x]).ToList();
+            return lst1.Select(x => _mappingTradingdev.ContainsKey(x) ? _mappingTradingdev[x] : x).ToList();
         }
 
         public async Task<OutputEstimateInfo> CalculateOutputBitshares2(string cryptoInput, decimal amountInput)
