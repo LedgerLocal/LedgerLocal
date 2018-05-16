@@ -162,24 +162,33 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             return res1;
         }
 
-        public async Task FinalizeTrades()
+        public async Task FinalizeTrades(string currencyId)
         {
             var now = DateTime.UtcNow;
-
-            var tradeExchange1 = (await _limitOrderService.GetLimitOrderHistory("1.3.121", "1.3.0", 1)).First();
 
             var lstTrades = await _accountService.ListHistory("tst-ll-admin", 1);
             var a1 = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).FirstOrDefault();
             //var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
-
             //var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
 
             if (a1 != null)
             {
                 var t1 = lstTrades.First();
 
-                a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount);
-                a1.Amountusd = a1.Amount * tradeExchange1.Price;
+                if (currencyId == "1.3.0")
+                {
+                    a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount / 100000);
+                    a1.AmountDecimal = t1.Op.Op.First().Value.Amount.Amount / 100000;
+                    var tradeExchange1 = (await _limitOrderService.GetLimitOrderHistory("1.3.0", "1.3.121", 1)).First();
+                    a1.Amountusd = a1.AmountDecimal * tradeExchange1.Price;
+                }
+                else
+                {
+                    a1.Amount = Convert.ToInt64(t1.Op.Op.First().Value.Amount.Amount / 10000);
+                    a1.AmountDecimal = t1.Op.Op.First().Value.Amount.Amount / 10000;
+                    a1.Amountusd = a1.AmountDecimal;
+                }
+
                 a1.Paidonbc = false;
                 a1.Cryptoconfirmed = true;
 

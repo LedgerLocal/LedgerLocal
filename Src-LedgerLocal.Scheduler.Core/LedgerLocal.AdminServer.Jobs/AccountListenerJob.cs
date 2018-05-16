@@ -9,6 +9,7 @@ using LedgerLocal.AdminServer.Api.Web.Models;
 using System.Linq;
 using LedgerLocal.Service.GrapheneLogic;
 using LedgerLocal.AdminServer.Service.BusinessImplService.Contract;
+using Newtonsoft.Json.Linq;
 
 namespace LedgerLocal.AdminServer.Jobs
 {
@@ -42,7 +43,11 @@ namespace LedgerLocal.AdminServer.Jobs
 
             tasks.Add(_accountService.SubscribeToAccountBalance("1.2.800691", new string[] { "2.5.1362979", "2.5.2060980" }, async (a1) =>
             {
-                
+
+                var jObj = JObject.Parse(a1);
+                var jArr1 = (JArray)jObj["params"];
+                var t1 = jArr1[1][0][0]["asset_type"];
+
                 var guidString = Guid.NewGuid().ToString();
                 await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString, 
                     new ActionEventDefinition()
@@ -54,7 +59,7 @@ namespace LedgerLocal.AdminServer.Jobs
                         Reason = "Subscription"
                     });
 
-                await _participateBusinessService.FinalizeTrades();
+                await _participateBusinessService.FinalizeTrades(t1.ToString());
                 
             }));
 

@@ -9,6 +9,9 @@ namespace LedgerLocal.AdminServer.Data.FullDomain
         public int? Currencyid { get; set; }
         public int? Userid { get; set; }
         public long Amount { get; set; }
+
+        public decimal AmountDecimal { get; set; }
+
         public decimal Amountusd { get; set; }
         public long Amounttoken { get; set; }
         public long? Godfathercode { get; set; }

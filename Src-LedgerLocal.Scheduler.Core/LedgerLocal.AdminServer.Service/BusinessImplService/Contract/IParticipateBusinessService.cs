@@ -15,7 +15,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService.Contract
 
         Task<SimpleTradeInfo> InitiateTrade(string inputCoinType, decimal? amount);
 
-        Task FinalizeTrades();
+        Task FinalizeTrades(string currencyId);
 
     }
 }

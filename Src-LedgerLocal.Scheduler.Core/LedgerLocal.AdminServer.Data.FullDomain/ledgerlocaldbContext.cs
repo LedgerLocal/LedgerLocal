@@ -8232,6 +8232,8 @@ namespace LedgerLocal.AdminServer.Data.FullDomain
 
                 entity.Property(e => e.Amount).HasColumnName("amount");
 
+                entity.Property(e => e.AmountDecimal).HasColumnName("amountdecimal");
+
                 entity.Property(e => e.Amounttoken).HasColumnName("amounttoken");
 
                 entity.Property(e => e.Amountusd).HasColumnName("amountusd");
