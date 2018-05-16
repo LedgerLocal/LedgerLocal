@@ -169,14 +169,14 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                 var now = DateTime.UtcNow;
 
-                var lstTrades = await _accountService.ListHistory("tst-ll-reception", 1);
-                var a1 = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).FirstOrDefault();
-                //var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
-                //var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
+                var lstTrades = await _accountService.ListHistory("tst-ll-reception", 4);
+                var lstTransNotFilled = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).ToList();
+                var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
+                var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
 
-                if (a1 != null)
+                foreach (var a1 in itemToProcess)
                 {
-                    var t1 = lstTrades.First();
+                    var t1 = lstTrades.First(xx1 => xx1.Memo == a1.Memobc);
 
                     if (currencyId == "1.3.0")
                     {
