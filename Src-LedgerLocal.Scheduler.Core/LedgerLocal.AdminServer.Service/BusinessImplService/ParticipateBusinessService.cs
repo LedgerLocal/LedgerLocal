@@ -229,7 +229,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                             newTrans.Createdby = "System";
                             newTrans.Modifiedby = "System";
 
-                            await _transRepository.AddAsync(a1);
+                            await _transRepository.AddAsync(newTrans);
 
                             var errorCurs = _unitOfWork.CommitHandled();
                             if (!errorCurs)
@@ -247,7 +247,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                     a22.Purchaseprice = cal1.First().Item2;
                     a22.Amounttoken = cal1.First().Item1;
 
-                    await _transRepository.UpdateAsync(a1);
+                    await _transRepository.UpdateAsync(a22);
 
                     var error1 = _unitOfWork.CommitHandled();
                     if (!error1)
