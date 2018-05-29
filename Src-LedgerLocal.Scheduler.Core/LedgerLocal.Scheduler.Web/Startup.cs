@@ -140,7 +140,7 @@ namespace Quartz.Web
 
             services.AddTransient(typeof(IAssetService), typeof(AssetService));
 
-            services.AddSingleton(typeof(IAccountService), typeof(AccountService));
+            services.AddTransient(typeof(IAccountService), typeof(AccountService));
 
             services.AddTransient(typeof(ILimitOrderService), typeof(LimitOrderService));
 
