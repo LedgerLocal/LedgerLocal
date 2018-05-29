@@ -204,9 +204,6 @@ namespace Quartz.Web
 
             var sp = ConfigureQuartz(services);
 
-            var as1 = sp.GetService<IAccountService>();
-            as1.StartAndConnect();
-
             ServiceLocatorSingleton.Instance.ServiceProvider = sp;
             ServiceLocatorSingleton.Instance.UtcStartDate = DateTime.UtcNow;
 

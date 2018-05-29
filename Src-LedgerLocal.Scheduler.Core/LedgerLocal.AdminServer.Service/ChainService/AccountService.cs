@@ -24,6 +24,7 @@ namespace LedgerLocal.Service.ChainService
         private ILogger<AccountService> _logger;
         private IGrapheneConfig _grapheneConfig;
         private GrapheneWallet _grapheneWallet;
+        private object _sync = new object();
 
         public AccountService(MapperConfiguration mapperConfiguration,
             IWebSocketClientFactory webSocketClientFactory,
@@ -54,15 +55,20 @@ namespace LedgerLocal.Service.ChainService
 
         public async Task StartAndConnect()
         {
-            var cli = new GrapheneWallet(_webSocketClientFactory);
-            await cli.StartAndConnect(_creds);
-            _grapheneWallet = cli;
+            if (_grapheneWallet == null)
+            {
+                var cli = new GrapheneWallet(_webSocketClientFactory);
+                await cli.StartAndConnect(_creds);
+                _grapheneWallet = cli;
+            }
         }
 
         public async Task<List<AccountProfileSimple>> ListAccount(string lowerBound, int limit)
         {
             _logger.LogInformation($"[BlockchainApi] ListAccount: lowerBound {lowerBound}, limit {limit}");
-            
+
+            await StartAndConnect();
+
             var lstAccount = _grapheneWallet.ListAccounts(lowerBound, limit).ToList();
 
             var lstRes = new List<GrapheneAccountSimple>();
@@ -75,9 +81,7 @@ namespace LedgerLocal.Service.ChainService
                     Id = r.Skip(1).First()
                 });
             }
-
-            await Task.Run(() => { });
-
+            
             return _mapper.Map<List<GrapheneAccountSimple>, List<AccountProfileSimple>>(lstRes);
         }
 
@@ -85,10 +89,10 @@ namespace LedgerLocal.Service.ChainService
         {
             _logger.LogInformation($"[BlockchainApi] ListBalance: accountId {accountId}");
 
+            await StartAndConnect();
+
             var lstBalances = _grapheneWallet.ListAccountBalances(accountId).ToList();
-
-            await Task.Run(() => { });
-
+            
             return _mapper.Map<List<GrapheneAmount>, List<AmountDescriptionSimple>>(lstBalances);
         }
 
@@ -96,10 +100,10 @@ namespace LedgerLocal.Service.ChainService
         {
             _logger.LogInformation($"[BlockchainApi] ListHistory: accountId {accountId}");
 
+            await StartAndConnect();
+
             var lstHisto1 = _grapheneWallet.GetAccountHistory(accountId, limit).ToList();
-
-            await Task.Run(() => { });
-
+            
             return lstHisto1;
         }
 
@@ -107,17 +111,17 @@ namespace LedgerLocal.Service.ChainService
         {
             _logger.LogInformation($"[BlockchainApi] Transfer: from {from}, to {to}, amount {amount}, symbol {symbol}, memo {memo}, broadcast {broadcast}");
 
+            await StartAndConnect();
+
             var transferDico = _grapheneWallet.Transfer(from, to, amount, symbol, memo);
-
-            await Task.Run(() => { });
-
+            
             return _mapper.Map<Dictionary<string, GrapheneTransactionRecord<GrapheneOperation>>, Dictionary<string, TransactionRecordDescription>>(transferDico);
         }
 
         public async Task<WebSocketSession> SubscribeToAccountBalance(string account, string[] objectIds, Action<string> cb)
         {
             _logger.LogInformation($"[AccountService] SubscribeToAccountBalance: account {account}, objectIds {string.Join("-", objectIds)}");
-
+            
             var lastDt = DateTime.Now;
             
             var notifier = new GrapheneWitnessNotifier(_webSocketClientFactory, _grapheneConfig);
