@@ -100,7 +100,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
             objTrans.Cryptoaddress = r1.InputAddress;
             objTrans.Cryptocurrency = r1.InputCoinType;
-            objTrans.Memobc = r1.InputMemo;
+            objTrans.Memobc = memoGuid;
 
             objTrans.Modifiedby = "System";
             objTrans.Createdby = "System";
