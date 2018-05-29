@@ -8,6 +8,8 @@ namespace LedgerLocal.Service.ChainService
 {
     public interface IAccountService
     {
+        Task StartAndConnect();
+
         Task<List<AccountProfileSimple>> ListAccount(string lowerBound, int limit);
 
         Task<List<AmountDescriptionSimple>> ListBalance(string accountId);
