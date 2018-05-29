@@ -128,9 +128,9 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             return r1;
         }
 
-        private List<Tuple<long, decimal>> CalculateTokenAmountAndPrice(decimal amountUsd)
+        private List<Tuple<long, decimal, Tokenprice>> CalculateTokenAmountAndPrice(decimal amountUsd)
         {
-            var res1 = new List<Tuple<long, decimal>>();
+            var res1 = new List<Tuple<long, decimal, Tokenprice>>();
 
             var allPrices = _tokenpriceRepository.DbSet.OrderBy(x1 => x1.Priceusd).ToList();
             var allTransactionsValid = _transRepository.DbSet.Where(x1 => x1.Cryptoconfirmed).ToList();
@@ -147,12 +147,12 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                     if (qty < (cursToken - totalToken))
                     {
-                        res1.Add(new Tuple<long, decimal>(qty, it1.Priceusd.Value));
+                        res1.Add(new Tuple<long, decimal, Tokenprice>(qty, it1.Priceusd.Value, it1));
                         break;
                     }
                     else
                     {
-                        res1.Add(new Tuple<long, decimal>(qty, it1.Priceusd.Value));
+                        res1.Add(new Tuple<long, decimal, Tokenprice>(qty, it1.Priceusd.Value, it1));
                         totalToken = totalToken + qty;
                         continue;
                     }
@@ -237,6 +237,14 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                                 _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(errorCurs, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
                             }
 
+                            i1.Item3.Remainingtokens = i1.Item3.Remainingtokens - i1.Item1;
+                            await _tokenpriceRepository.UpdateAsync(i1.Item3);
+
+                            var errorCursTokenPriceSub = _unitOfWork.CommitHandled();
+                            if (!errorCursTokenPriceSub)
+                            {
+                                _logger.LogError($"Can't Update TokenPrice ! {JsonConvert.SerializeObject(errorCursTokenPriceSub, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
+                            }
                         }
                     }
 
@@ -253,6 +261,17 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                     if (!error1)
                     {
                         _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
+                    }
+
+                    var tprice1 = cal1.First().Item3;
+
+                    tprice1.Remainingtokens = tprice1.Remainingtokens - cal1.First().Item1;
+                    await _tokenpriceRepository.UpdateAsync(tprice1);
+
+                    var errorCursTokenPrice = _unitOfWork.CommitHandled();
+                    if (!errorCursTokenPrice)
+                    {
+                        _logger.LogError($"Can't Update TockenPrice ! {JsonConvert.SerializeObject(errorCursTokenPrice, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
                     }
 
                     var guidString = Guid.NewGuid().ToString();
