@@ -3,6 +3,7 @@ using LedgerLocal.AdminServer.Api.Web.Models;
 using LedgerLocal.AdminServer.Data.FullDomain;
 using LedgerLocal.AdminServer.Data.FullDomain.Infrastructure;
 using LedgerLocal.AdminServer.Service.BusinessImplService.Contract;
+using LedgerLocal.AdminServer.Service.Contract;
 using LedgerLocal.Blockchain.Service.LycServiceContract;
 using LedgerLocal.Service.ChainService;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 {
     public class ParticipateBusinessService : IParticipateBusinessService
     {
+        private readonly IDbContextService _dbContextService;
         private readonly IBlockTradeService _blockTradeService;
         private readonly IAccountService _accountService;
         private readonly ICommonMessageService _commonMessageService;
@@ -55,6 +57,7 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             ILedgerLocalDbFullDomainRepository<Transactions> transRepository,
             ILedgerLocalDbFullDomainRepository<Tokenprice> tokenpriceRepository,
             IAccountService accountService,
+            IDbContextService dbContextService,
             ILedgerLocalDbFullDomainUnitOfWork unitOfWork,
             ILogger<ParticipateBusinessService> logger)
         {
@@ -64,6 +67,8 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             _tokenpriceRepository = tokenpriceRepository;
             _transRepository = transRepository;
             _unitOfWork = unitOfWork;
+
+            _dbContextService = dbContextService;
 
             _limitOrderService = limitOrderService;
 
@@ -84,10 +89,16 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         public async Task<SimpleTradeInfo> InitiateTrade(string inputCoinType, decimal? amount)
         {
+            _dbContextService.RefreshFullDomain();
+
+            _logger.LogInformation($"[InitiateTrade] Starting InitiateTrade with inputCoinType: {inputCoinType} and amount: {amount}");
+
             var now = DateTime.UtcNow;
             var memoGuid = Guid.NewGuid().ToString();
 
             var r1 = await _blockTradeService.InitiateTrade(inputCoinType, _mappingTradingExchange[inputCoinType], "tst-ll-reception", memoGuid);
+
+            _logger.LogInformation($"[InitiateTrade] Blocktrade reply: {JsonConvert.SerializeObject(r1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
 
             var objTrans = new Transactions();
 
@@ -114,6 +125,8 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                 _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
             }
 
+            _logger.LogInformation($"[InitiateTrade] Transaction created in DB: {JsonConvert.SerializeObject(objTrans, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
+
             var guidString = Guid.NewGuid().ToString();
             await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString,
                 new ActionEventDefinition()
@@ -135,27 +148,22 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
             var allPrices = _tokenpriceRepository.DbSet.OrderBy(x1 => x1.Priceusd).ToList();
             var allTransactionsValid = _transRepository.DbSet.Where(x1 => x1.Cryptoconfirmed).ToList();
 
-            var totalToken = allTransactionsValid.Sum(x1 => x1.Amounttoken);
+            decimal cursAmountUsd = amountUsd;
 
-            long cursToken = 0;
             foreach (var it1 in allPrices)
             {
-                cursToken = cursToken + it1.Remainingtokens.Value;
-                if (totalToken < cursToken)
-                {
-                    var qty = Convert.ToInt64(amountUsd / it1.Priceusd.Value);
+                var qty = Convert.ToInt64(cursAmountUsd / it1.Priceusd.Value);
 
-                    if (qty < (cursToken - totalToken))
-                    {
-                        res1.Add(new Tuple<long, decimal, Tokenprice>(qty, it1.Priceusd.Value, it1));
-                        break;
-                    }
-                    else
-                    {
-                        res1.Add(new Tuple<long, decimal, Tokenprice>(qty, it1.Priceusd.Value, it1));
-                        totalToken = totalToken + qty;
-                        continue;
-                    }
+                if (qty < it1.Remainingtokens.Value)
+                {
+                    res1.Add(new Tuple<long, decimal, Tokenprice>(qty, it1.Priceusd.Value, it1));
+                    break;
+                }
+                else
+                {
+                    res1.Add(new Tuple<long, decimal, Tokenprice>(it1.Remainingtokens.Value, it1.Priceusd.Value, it1));
+                    cursAmountUsd = cursAmountUsd - (it1.Remainingtokens.Value * it1.Priceusd.Value);
+                    continue;
                 }
             }
 
@@ -166,6 +174,9 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
         {
             try
             {
+                _dbContextService.RefreshFullDomain();
+
+                _logger.LogInformation("[FinalizeTrades] starting...");
 
                 var now = DateTime.UtcNow;
 
@@ -175,6 +186,8 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                 var lstTransNotFilled = _transRepository.DbSet.Where(x1 => !x1.Cryptoconfirmed).ToList();
                 var lstTradesOrdered = lstTrades.OrderByDescending(x1 => x1.Op.BlockNum);
                 var itemToProcess = lstTransNotFilled.Where(x1 => lstTradesOrdered.Select(x2 => x2.Memo).Contains(x1.Memobc));
+
+                _logger.LogInformation($"[FinalizeTrades] Transactions to be processed: {JsonConvert.SerializeObject(itemToProcess, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
 
                 foreach (var a1 in itemToProcess)
                 {
@@ -206,7 +219,11 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                         _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error0, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
                     }
 
+                    _logger.LogInformation($"[FinalizeTrades] Transaction Updated: {JsonConvert.SerializeObject(a1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
+
                     var cal1 = CalculateTokenAmountAndPrice(a1.Amountusd);
+
+                    _logger.LogInformation($"[FinalizeTrades] CalculateTokenAmountAndPrice result: {JsonConvert.SerializeObject(cal1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
 
                     if (cal1.Count > 1)
                     {
@@ -245,6 +262,9 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                             {
                                 _logger.LogError($"Can't Update TokenPrice ! {JsonConvert.SerializeObject(errorCursTokenPriceSub, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
                             }
+
+                            _logger.LogInformation($"[FinalizeTrades] Transaction created: {JsonConvert.SerializeObject(newTrans, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
+
                         }
                     }
 
@@ -263,16 +283,20 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
                         _logger.LogError($"Can't Add Transaction ! {JsonConvert.SerializeObject(error1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
                     }
 
+                    _logger.LogInformation($"[FinalizeTrades] TokenPrice updated: {JsonConvert.SerializeObject(a22, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
+
                     var tprice1 = cal1.First().Item3;
 
-                    tprice1.Remainingtokens = tprice1.Remainingtokens - cal1.First().Item1;
+                    tprice1.Remainingtokens = tprice1.Remainingtokens.Value - cal1.First().Item1;
                     await _tokenpriceRepository.UpdateAsync(tprice1);
 
                     var errorCursTokenPrice = _unitOfWork.CommitHandled();
                     if (!errorCursTokenPrice)
                     {
-                        _logger.LogError($"Can't Update TockenPrice ! {JsonConvert.SerializeObject(errorCursTokenPrice, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
+                        _logger.LogError($"Can't Update TokenPrice ! {JsonConvert.SerializeObject(errorCursTokenPrice, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })} ");
                     }
+
+                    _logger.LogInformation($"[FinalizeTrades] TokenPrice updated: {JsonConvert.SerializeObject(tprice1, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}");
 
                     var guidString = Guid.NewGuid().ToString();
                     await _commonMessageService.SendMessage<ActionEventDefinition>("llc-event-broadcast", guidString,
