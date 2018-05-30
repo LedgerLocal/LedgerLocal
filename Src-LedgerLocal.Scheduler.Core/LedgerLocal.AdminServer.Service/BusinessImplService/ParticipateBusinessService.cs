@@ -89,8 +89,6 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
         public async Task<SimpleTradeInfo> InitiateTrade(string inputCoinType, decimal? amount)
         {
-            _dbContextService.RefreshFullDomain();
-
             _logger.LogInformation($"[InitiateTrade] Starting InitiateTrade with inputCoinType: {inputCoinType} and amount: {amount}");
 
             var now = DateTime.UtcNow;
@@ -174,8 +172,6 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
         {
             try
             {
-                _dbContextService.RefreshFullDomain();
-
                 _logger.LogInformation("[FinalizeTrades] starting...");
 
                 var now = DateTime.UtcNow;
