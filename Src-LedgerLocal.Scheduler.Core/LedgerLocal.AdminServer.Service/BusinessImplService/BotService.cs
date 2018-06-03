@@ -163,10 +163,21 @@ namespace LedgerLocal.AdminServer.Service.BusinessImplService
 
                         try
                         {
+                            var numInput2 = Convert.ToUInt32(arInput[1]);
+
+                            if (numInput2 > 5)
+                            {
+                                await _telegramBotClient.SendTextMessageAsync(
+                                    channelId,
+                                    "5 is max history allowed",
+                                    replyMarkup: new ReplyKeyboardRemove());
+
+                                break;
+                            }
 
                             var obj22 = (IAccountService)ServiceLocatorSingleton.Instance.ServiceProvider.GetService(typeof(IAccountService));
 
-                            var resHisto = await obj22.ListHistory("tst-ll-reception", Convert.ToUInt32(arInput[1]));
+                            var resHisto = await obj22.ListHistory("tst-ll-reception", numInput2);
 
                             _logger.LogInformation(JsonConvert.SerializeObject(resHisto, Formatting.Indented));
 
