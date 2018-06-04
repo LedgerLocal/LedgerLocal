@@ -227,7 +227,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null, bool isTechnical = false)
+        public async Task<IActionResult> Register(LoginViewModel model, string returnUrl = null, bool isTechnical = false)
         {
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
@@ -655,7 +655,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -703,7 +703,7 @@ PS: Mehr zu LedgerLocal erfahren Sie auf unserer website www.ledgerlocal.ch
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(nameof(Login), model);
         }
 
         //
