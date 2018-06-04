@@ -20,19 +20,23 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-           WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            var a1 = new ConfigurationBuilder().AddCommandLine(args).Build();
+            MainConfig = a1;
+
+            return WebHost.CreateDefaultBuilder(args)
                 .UseKestrel(o1 => o1.Listen(IPAddress.Loopback, 4444, listenOptions =>
                 {
-                    var a1 = new ConfigurationBuilder().AddCommandLine(args).Build();
-                    MainConfig = a1;
-
                     listenOptions.UseHttps(a1["pfxpath"], a1["pfxpass"]);
-                }))   
+                }))
+            .UseConfiguration(a1)
             .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
+        }
+
     }
 }
