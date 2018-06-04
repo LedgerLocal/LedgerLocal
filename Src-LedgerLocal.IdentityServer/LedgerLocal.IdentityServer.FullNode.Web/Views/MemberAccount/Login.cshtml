@@ -13,30 +13,30 @@
     
 <div class="col_one_third nobottommargin">
     <div class="well well-lg dark" style="background-image: url('/images/page/bg1.jpg');">
-          <form asp-controller="MemberAccount" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" id="login-form" name="login-form" class="nobottommargin">
+          <form asp-controller="MemberAccount" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" name="login-form" class="nobottommargin">
                 <h3>Login to your Account</h3>
                 <div class="col_full">
                     <label for="login-form-username">Email:</label>
-                    <input type="text" id="register-form-email" name="register-form-email" value="" class="form-control" placeholder="" />
+                    <input type="text" name="register-form-email" value="" class="form-control" placeholder="" />
                 </div>
                 <div class="col_full">
                     <label for="login-form-password">Password:</label>
-                    <input type="password" id="login-form-password" name="login-form-password" value="" class="form-control" placeholder="" />
+                    <input type="password" name="login-form-password" value="" class="form-control" placeholder="" />
                 </div>
                 <div class="col_full nobottommargin">
-                    <button type="submit" class="button button-3d nomargin" id="login-form-submit" name="login-form-submit" value="login">Login</button>
+                    <button type="submit" class="button button-3d nomargin" name="login-form-submit" value="login">Login</button>
                 </div>
             </form>
 </div>
     <div class="well well-lg nobottommargin dark" style="background-image: url('/images/page/bg1.jpg');">
-            <form asp-controller="MemberAccount" asp-action="ForgotPassword" method="post" id="login-form" name="login-form" class="nobottommargin">
+            <form asp-controller="MemberAccount" asp-action="ForgotPassword" method="post" name="login-form" class="nobottommargin">
                 <h3>Forgot Password ?</h3>
                 <div class="col_full">
                     <label for="login-form-username">Email:</label>
-                    <input type="text" id="register-form-email" name="register-form-email" value="" class="form-control" placeholder="" />
+                    <input type="text" name="register-form-email" value="" class="form-control" placeholder="" />
                 </div>
                 <div class="col_full nobottommargin">
-                    <button type="submit" class="button button-3d nomargin" id="login-form-submit" name="login-form-submit">Send</button>
+                    <button type="submit" class="button button-3d nomargin" name="login-form-submit">Send</button>
                 </div>
             </form>
 </div>
@@ -44,7 +44,7 @@
 <div class="col_two_third col_last nobottommargin">
     <h3>Don't have an Account? Register Now.</h3>
     <p>Decentralized local exchange between fiat money and cryptocurrency, merchant accept any cryptocurrency and hedge their positions.</p>
-        <form asp-controller="MemberAccount" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" id="register-form" name="register-form" class="nobottommargin">
+        <form asp-controller="MemberAccount" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" name="register-form" class="nobottommargin">
             <div class="col_half">
                 <label for="register-form-firstname">First name:</label>
                 <input type="text" id="register-form-firstname" name="register-form-firstname" value="" class="form-control" />
@@ -304,12 +304,12 @@
             </div>
             <div class="clear"></div>
             <div class="col_full nobottommargin">
-                <button type="submit" class="button button-3d button-black nomargin" id="register-form-submit" name="register-form-submit" value="register">Register</button>
+                <button type="submit" class="button button-3d button-black nomargin" name="register-form-submit" value="register">Register</button>
             </div>
         </form>
 </div>    
 
-<div style="height: 50px"></div>
+<br /><br />
 
 <div class="line line-sm topmargin-sm"></div>
 <div>

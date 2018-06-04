@@ -128,7 +128,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(nameof(Login));
         }
 
         private async Task<string> GetToken(string userName, string audience)
@@ -247,13 +247,13 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
                 if (!model.IsAgree)
                 {
                     ModelState.AddModelError(string.Empty, "Please accept Terms and Conditions");
-                    return View(model);
+                    return View(nameof(Login), model);
                 }
 
                 if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Count() < 4)
                 {
                     ModelState.AddModelError(string.Empty, "Please use a 4 characters password.");
-                    return View(model);
+                    return View(nameof(Login), model);
                 }
 
                 var user = new User { UserName = model.Email, Email = model.Email, GodFatherId = model.GodFatherId };
@@ -337,7 +337,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(nameof(Login), model);
         }
 
         //
@@ -647,7 +647,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(nameof(Login));
         }
 
         //
