@@ -17,6 +17,11 @@ export class ParticipateViewComponent implements OnInit, AfterViewInit {
   public contentBlockList: any;
   public userData: any;
   public userName: string;
+  public listCrypto: string[];
+  public inputAddress: string;
+  public inputCoinType: string;
+  public amountRequested: number;
+  public cryptoRequested: string;
 
   private initAuthSubscription: Subscription;
 
@@ -28,6 +33,8 @@ export class ParticipateViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
+    this.amountRequested = 0;
+
   }
 
   ngAfterViewInit() {
@@ -35,6 +42,10 @@ export class ParticipateViewComponent implements OnInit, AfterViewInit {
     this.loService.scrollToTop();
 
     var refthis = this;
+
+    this.stService.getAvailableCrypto().subscribe(res => {
+      refthis.listCrypto = res;
+    });
 
     var val1 = this.userService.getAuthValue();
 
@@ -58,6 +69,19 @@ export class ParticipateViewComponent implements OnInit, AfterViewInit {
       });
 
     }
+  }
+
+  executeParticipation() {
+
+    var refthis = this;
+
+    this.stService.initiateTrade(this.cryptoRequested, this.amountRequested).subscribe(res => {
+
+      refthis.inputAddress = res.inputAddress;
+      refthis.inputCoinType = res.inputCoinType;
+
+    });
+
   }
 
 }

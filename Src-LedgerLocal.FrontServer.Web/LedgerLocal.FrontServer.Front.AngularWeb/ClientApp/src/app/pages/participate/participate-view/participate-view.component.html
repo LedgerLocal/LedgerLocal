@@ -5,7 +5,13 @@
     <div class="section notopmargin">
       <div class="container clearfix">
         <div class="center">
-          <h2>Please enter the infos {{ userName }}</h2>
+
+          <ul>
+            <li *ngFor="let item of listCrypto; let i = index">
+              {{i}} {{item}}
+            </li>
+          </ul>
+
         </div>
       </div>
     </div>
@@ -19,14 +25,14 @@
     <div class="section notopmargin">
       <div class="container clearfix">
         <div class="center">
-          <input type="text" class="form-control required" placeholder="Amount to invest">
+          <input type="text" class="form-control" placeholder="0" [(ngModel)]="amountRequested" name="amountRequestedForm">
         </div>
       </div>
     </div>
     <div class="section notopmargin">
       <div class="container clearfix">
         <div class="center">
-          <input type="text" class="form-control required" placeholder="Asset">
+          <input type="text" class="form-control" placeholder="litecoin" [(ngModel)]="cryptoRequested" name="cryptoForm">
         </div>
       </div>
     </div>
@@ -34,22 +40,35 @@
   </div>
 </section>
 
-<section id="content">
+<section id="content2">
   <div class="content-wrap">
 
     <div class="section notopmargin">
       <div class="container clearfix">
-        <div class="subscribe-widget">
-          <div class="widget-subscribe-form-result"></div>
-          <form id="widget-subscribe-form2" action="" role="form" method="post" class="nobottommargin">
-            <div class="input-group input-group-lg divcenter" style="max-width:600px;">
-              <span class="input-group-addon"><i class="icon-line2-envelope-open"></i></span>
-              <input type="text" class="form-control required" placeholder="Amount to invest">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="submit">Confirm</button>
-              </span>
-            </div>
-          </form>
+        <div class="center">
+          <button type="submit" class="btn btn-primary" (click)="executeParticipation()">Participate</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="content3">
+  <div class="content-wrap">
+
+    <div class="section notopmargin">
+      <div class="container clearfix">
+        <div class="center">
+          <h2>{{ inputCoinType }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="section notopmargin">
+      <div class="container clearfix">
+        <div class="center">
+          <h2>{{ inputAddress }}</h2>
         </div>
       </div>
     </div>
