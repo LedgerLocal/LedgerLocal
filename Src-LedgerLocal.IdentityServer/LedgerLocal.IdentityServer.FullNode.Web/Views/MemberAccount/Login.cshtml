@@ -34,9 +34,9 @@
             <form asp-controller="MemberAccount" asp-action="ForgotPassword" method="post" name="login-form" class="nobottommargin">
                 <h3>Forgot Password ?</h3>
                 <div class="col_full">
-                    <label asp-for="Email">Email:</label>
-                    <input asp-for="Email" class="form-control not-dark" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="EmailForgot">Email:</label>
+                    <input asp-for="EmailForgot" class="form-control not-dark" />
+                    <span asp-validation-for="EmailForgot" class="text-danger"></span>
                 </div>
                 <div class="col_full nobottommargin">
                     <button type="submit" class="button button-3d nomargin" name="login-form-submit">Send</button>
@@ -282,15 +282,15 @@
             </select>
         </div>
         <div class="col_half col_last">
-            <label asp-for="Email">Email:</label>
-            <input asp-for="Email" class="form-control not-dark" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <label asp-for="EmailRegister">Email:</label>
+            <input asp-for="EmailRegister" class="form-control not-dark" />
+            <span asp-validation-for="EmailRegister" class="text-danger"></span>
         </div>
         <div class="clear"></div>
         <div class="col_half">
-            <label asp-for="Password">Password:</label>
-            <input asp-for="Password" class="form-control not-dark" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+            <label asp-for="PasswordRegister">Password:</label>
+            <input asp-for="PasswordRegister" class="form-control not-dark" />
+            <span asp-validation-for="PasswordRegister" class="text-danger"></span>
         </div>
         <div class="col_half col_last">
             <label asp-for="ConfirmPassword">Confirm  Password:</label>

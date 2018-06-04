@@ -84,7 +84,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.RealEmail(), model.RealPassword(), true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -242,7 +242,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                _logger.LogInformation($"Registering starting: {model.Email}, redirect: {returnUrl}");
+                _logger.LogInformation($"Registering starting: {model.RealEmail()}, redirect: {returnUrl}");
 
                 if (!model.IsAgree)
                 {
@@ -250,14 +250,14 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
                     return View(nameof(Login), model);
                 }
 
-                if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Count() < 4)
+                if (string.IsNullOrWhiteSpace(model.RealPassword()) || model.RealPassword().Count() < 4)
                 {
                     ModelState.AddModelError(string.Empty, "Please use a 4 characters password.");
                     return View(nameof(Login), model);
                 }
 
-                var user = new User { UserName = model.Email, Email = model.Email, GodFatherId = model.GodFatherId };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var user = new User { UserName = model.RealEmail(), Email = model.RealEmail(), GodFatherId = model.GodFatherId };
+                var result = await _userManager.CreateAsync(user, model.RealPassword());
                 if (result.Succeeded)
                 {
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
@@ -268,19 +268,19 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
                     var message = @"LedgerLocal Register => {0}";
                     message = string.Format(message, callbackUrl);
 
-                    await _emailSender.SendEmailAsync(model.Email, "Confirm your account", message);
+                    await _emailSender.SendEmailAsync(model.RealEmail(), "Confirm your account", message);
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     
                     if (!isTechnical)
                     {
-                        var fNameCalculated = model.Email.Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
+                        var fNameCalculated = model.RealEmail().Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
 
                         var modelCust = new CustomerCreateOrUpdate()
                         {
                             FirstName = fNameCalculated != null && fNameCalculated.Length > 0 ? fNameCalculated.First() : string.Empty,
                             LastName = string.Empty,
-                            Email = model.Email,
+                            Email = model.RealEmail(),
                             Phone = string.Empty,
                             GodFatherId = !string.IsNullOrWhiteSpace(model.GodFatherId) ? model.GodFatherId : string.Empty
                         };
@@ -659,7 +659,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.RealEmail());
                 if (user == null)  //|| !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -697,7 +697,7 @@ PS: Mehr zu LedgerLocal erfahren Sie auf unserer website www.ledgerlocal.ch
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(nameof(ResetPassword), "MemberAccount", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 message = string.Format(message, callbackUrl);
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                await _emailSender.SendEmailAsync(model.RealEmail(), "Reset Password",
                    message);
                 return View("ForgotPasswordConfirmation");
             }

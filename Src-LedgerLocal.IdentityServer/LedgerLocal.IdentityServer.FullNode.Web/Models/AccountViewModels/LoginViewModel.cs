@@ -8,13 +8,55 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [EmailAddress]
+        public string EmailForgot { get; set; }
+
+        [EmailAddress]
+        public string EmailRegister { get; set; }
+
+        public string RealEmail()
+        {
+            if (!string.IsNullOrWhiteSpace(Email))
+            {
+                return Email;
+            }
+
+            if (!string.IsNullOrWhiteSpace(EmailForgot))
+            {
+                return EmailForgot;
+            }
+
+            if (!string.IsNullOrWhiteSpace(EmailRegister))
+            {
+                return EmailRegister;
+            }
+
+            return null;
+        }
+
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        public string PasswordRegister { get; set; }
+
+        public string RealPassword()
+        {
+            if (!string.IsNullOrWhiteSpace(Password))
+            {
+                return Password;
+            }
+
+            if (!string.IsNullOrWhiteSpace(PasswordRegister))
+            {
+                return PasswordRegister;
+            }
+            
+            return null;
+        }
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
