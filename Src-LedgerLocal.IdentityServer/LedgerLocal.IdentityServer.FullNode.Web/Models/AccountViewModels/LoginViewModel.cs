@@ -28,6 +28,15 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Models.AccountViewModels
         [Display(Name = "Address2")]
         public string Address2 { get; set; }
 
+        [Display(Name = "Zip")]
+        public string Zip { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
         [Display(Name = "Firstname")]
         public string Firstname { get; set; }
 
@@ -41,5 +50,8 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Models.AccountViewModels
 
         [Display(Name = "Terms and Conditions")]
         public bool IsAgree { get; set; }
+
+        [Display(Name = "Terms and Conditions")]
+        public bool IsAgree2 { get; set; }
     }
 }
