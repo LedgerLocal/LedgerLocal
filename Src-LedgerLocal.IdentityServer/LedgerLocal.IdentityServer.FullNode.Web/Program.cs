@@ -13,6 +13,8 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
     public class Program
     {
 
+        public static IConfigurationRoot MainConfig;
+
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
@@ -23,7 +25,8 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
                 .UseKestrel(o1 => o1.Listen(IPAddress.Loopback, 4444, listenOptions =>
                 {
                     var a1 = new ConfigurationBuilder().AddCommandLine(args).Build();
-                    
+                    MainConfig = a1;
+
                     listenOptions.UseHttps(a1["pfxpath"], a1["pfxpass"]);
                 }))   
             .UseContentRoot(Directory.GetCurrentDirectory())

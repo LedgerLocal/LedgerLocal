@@ -242,7 +242,7 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                _logger.LogInformation($"Registering starting: {model.RealEmail()}, redirect: {returnUrl}");
+                _logger.LogInformation($"Registering starting: {model.EmailRegister}, redirect: {returnUrl}");
 
                 if (!model.IsAgree)
                 {
@@ -250,82 +250,82 @@ namespace LedgerLocal.IdentityServer.FullNode.Web.Controllers
                     return View(nameof(Login), model);
                 }
 
-                if (string.IsNullOrWhiteSpace(model.RealPassword()) || model.RealPassword().Count() < 4)
+                if (string.IsNullOrWhiteSpace(model.PasswordRegister) || model.PasswordRegister.Count() < 4)
                 {
                     ModelState.AddModelError(string.Empty, "Please use a 4 characters password.");
                     return View(nameof(Login), model);
                 }
 
-                var user = new User { UserName = model.RealEmail(), Email = model.RealEmail(), GodFatherId = model.GodFatherId };
-                var result = await _userManager.CreateAsync(user, model.RealPassword());
+                var user = new User { UserName = model.EmailRegister, Email = model.EmailRegister, GodFatherId = model.GodFatherId };
+                var result = await _userManager.CreateAsync(user, model.PasswordRegister);
                 if (result.Succeeded)
                 {
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "MemberAccount", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+                    //// Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action(nameof(ConfirmEmail), "MemberAccount", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-                    var message = @"LedgerLocal Register => {0}";
-                    message = string.Format(message, callbackUrl);
+                    //var message = @"LedgerLocal Register => {0}";
+                    //message = string.Format(message, callbackUrl);
 
-                    await _emailSender.SendEmailAsync(model.RealEmail(), "Confirm your account", message);
+                    //await _emailSender.SendEmailAsync(model.RealEmail(), "Confirm your account", message);
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     
-                    if (!isTechnical)
-                    {
-                        var fNameCalculated = model.RealEmail().Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
+                    //if (!isTechnical)
+                    //{
+                    //    var fNameCalculated = model.RealEmail().Split(new string[] { "@" }, StringSplitOptions.RemoveEmptyEntries);
 
-                        var modelCust = new CustomerCreateOrUpdate()
-                        {
-                            FirstName = fNameCalculated != null && fNameCalculated.Length > 0 ? fNameCalculated.First() : string.Empty,
-                            LastName = string.Empty,
-                            Email = model.RealEmail(),
-                            Phone = string.Empty,
-                            GodFatherId = !string.IsNullOrWhiteSpace(model.GodFatherId) ? model.GodFatherId : string.Empty
-                        };
+                    //    var modelCust = new CustomerCreateOrUpdate()
+                    //    {
+                    //        FirstName = fNameCalculated != null && fNameCalculated.Length > 0 ? fNameCalculated.First() : string.Empty,
+                    //        LastName = string.Empty,
+                    //        Email = model.RealEmail(),
+                    //        Phone = string.Empty,
+                    //        GodFatherId = !string.IsNullOrWhiteSpace(model.GodFatherId) ? model.GodFatherId : string.Empty
+                    //    };
 
-                        var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
+                    //    var t1 = await GetToken("identityuser@tokengenerator.tek", "api.main");
 
-                        var _httpClient = new HttpClient();
-                        _httpClient.SetBearerToken(t1);
-                        var resFinal1 = await _httpClient.PostAsync($"https://www.ledgerlocal.com/api/customer/create",
-                            new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
-                        resFinal1.EnsureSuccessStatusCode();
+                    //    var _httpClient = new HttpClient();
+                    //    _httpClient.SetBearerToken(t1);
+                    //    var resFinal1 = await _httpClient.PostAsync($"https://www.ledgerlocal.com/api/customer/create",
+                    //        new StringContent(JsonConvert.SerializeObject(modelCust), Encoding.UTF8, "application/json"));
+                    //    resFinal1.EnsureSuccessStatusCode();
 
-                        var resModel1String = await resFinal1.Content.ReadAsStringAsync();
-                        var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
+                    //    var resModel1String = await resFinal1.Content.ReadAsStringAsync();
+                    //    var resModel1 = JsonConvert.DeserializeObject<CustomerProfile>(resModel1String);
 
-                        user.CustomerId = resModel1.CustomerId;
-                        user.GodFatherId = resModel1.GodFatherId;
+                    //    user.CustomerId = resModel1.CustomerId;
+                    //    user.GodFatherId = resModel1.GodFatherId;
 
-                        await _userManager.UpdateAsync(user);
+                    //    await _userManager.UpdateAsync(user);
 
-                        await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
-                        await _userManager.AddClaimAsync(user, new Claim("godfatherid", resModel1.GodFatherId));
+                    //    await _userManager.AddClaimAsync(user, new Claim("customerid", resModel1.CustomerId));
+                    //    await _userManager.AddClaimAsync(user, new Claim("godfatherid", resModel1.GodFatherId));
 
-                        //var lstRoles = new List<string>();
+                    //    //var lstRoles = new List<string>();
 
-                        //lstRoles.Add("mainasset");
-                        //lstRoles.Add("blockchainuser");
-                        //lstRoles.Add("branch");
-                        //lstRoles.Add("business");
-                        //lstRoles.Add("coin");
-                        //lstRoles.Add("coupon");
-                        //lstRoles.Add("customer");
-                        //lstRoles.Add("iot");
-                        //lstRoles.Add("order");
-                        //lstRoles.Add("point");
-                        //lstRoles.Add("pos");
-                        //lstRoles.Add("policy");
-                        //lstRoles.Add("program");
-                        //lstRoles.Add("qrcode");
-                        //lstRoles.Add("return");
-                        //lstRoles.Add("voucher");
-                        //lstRoles.Add("workflow");
+                    //    //lstRoles.Add("mainasset");
+                    //    //lstRoles.Add("blockchainuser");
+                    //    //lstRoles.Add("branch");
+                    //    //lstRoles.Add("business");
+                    //    //lstRoles.Add("coin");
+                    //    //lstRoles.Add("coupon");
+                    //    //lstRoles.Add("customer");
+                    //    //lstRoles.Add("iot");
+                    //    //lstRoles.Add("order");
+                    //    //lstRoles.Add("point");
+                    //    //lstRoles.Add("pos");
+                    //    //lstRoles.Add("policy");
+                    //    //lstRoles.Add("program");
+                    //    //lstRoles.Add("qrcode");
+                    //    //lstRoles.Add("return");
+                    //    //lstRoles.Add("voucher");
+                    //    //lstRoles.Add("workflow");
 
-                        //await _userManager.AddToRolesAsync(user, lstRoles);
-                    }
+                    //    //await _userManager.AddToRolesAsync(user, lstRoles);
+                    //}
                     
                     if (string.IsNullOrWhiteSpace(returnUrl))
                     {

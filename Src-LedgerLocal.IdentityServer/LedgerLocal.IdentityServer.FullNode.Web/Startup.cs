@@ -18,6 +18,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.DataProtection;
 using System.IO;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Serilog;
 
 namespace LedgerLocal.IdentityServer.FullNode.Web
 {
@@ -41,7 +42,8 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
             }
 
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
+
+            Configuration = Program.MainConfig;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -49,6 +51,12 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            Serilog.Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .Enrich.FromLogContext()
+                .WriteTo.Seq(Configuration["SeqServer"])
+                .CreateLogger();
+
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -166,12 +174,15 @@ namespace LedgerLocal.IdentityServer.FullNode.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime, IServiceProvider serviceProvider)
         {
             _environment = env;
 
             // this will do the initial DB population
             InitializeDatabase(app);
+
+            loggerFactory.AddSerilog();
+            appLifetime.ApplicationStopped.Register(Serilog.Log.CloseAndFlush);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
