@@ -13,22 +13,29 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
 {
     public class Program
     {
+        public static IConfigurationRoot MainConfig;
+
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Run();
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args) =>
-           WebHost.CreateDefaultBuilder(args)
-                .UseKestrel(o1 => o1.Listen(IPAddress.Any, 2132, listenOptions =>
-                {
-                    var a1 = new ConfigurationBuilder().AddCommandLine(args).Build();
+        public static IWebHost CreateWebHostBuilder(string[] args)
+        {
 
-                    listenOptions.UseHttps(a1["pfxpath"], a1["pfxpass"]);
-                }))
-            .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
+            var a3 = new ConfigurationBuilder().AddCommandLine(args).Build();
+            MainConfig = a3;
+
+            return WebHost.CreateDefaultBuilder(args)
+                 .UseKestrel(o1 => o1.Listen(IPAddress.Any, 2132, listenOptions =>
+                 {
+                     listenOptions.UseHttps(a3["pfxpath"], a3["pfxpass"]);
+                 }))
+             .UseConfiguration(a3)
+             .UseContentRoot(Directory.GetCurrentDirectory())
+                 .UseIISIntegration()
+                 .UseStartup<Startup>()
+                 .Build();
+        }
     }
 }

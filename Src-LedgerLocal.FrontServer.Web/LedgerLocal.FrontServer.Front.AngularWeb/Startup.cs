@@ -38,6 +38,8 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
         {
             _hostingEnv = env;
 
+            Configuration = Program.MainConfig;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddEnvironmentVariables()
@@ -60,7 +62,7 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
 
             //dependency injection
 
-            var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
+            var connectionString = Configuration["ConnString"];
 
             //EF
             services.AddScoped(typeof(IDatabaseFactory<LedgerLocalDbContext>), _ => new LedgerLocalDbFullDomainDatabaseFactory(connectionString));
