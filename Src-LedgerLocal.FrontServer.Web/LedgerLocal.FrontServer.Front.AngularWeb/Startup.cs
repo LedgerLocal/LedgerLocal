@@ -39,15 +39,7 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
             _hostingEnv = env;
 
             Configuration = Program.MainConfig;
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            Configuration = builder.Build();
-
+            
             Serilog.Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .Enrich.FromLogContext()
