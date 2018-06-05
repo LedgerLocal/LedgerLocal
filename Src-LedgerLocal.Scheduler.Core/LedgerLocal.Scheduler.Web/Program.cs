@@ -27,6 +27,7 @@ namespace Quartz.Web
         return WebHost.CreateDefaultBuilder(args)
                 .UseKestrel(o1 => o1.Listen(IPAddress.Any, 5544, listenOptions =>
                 {
+                    listenOptions.UseHttps(a1["pfxpath"], a1["pfxpass"]);
                 }))
                 .UseConfiguration(a1)
                 .UseContentRoot(Directory.GetCurrentDirectory())

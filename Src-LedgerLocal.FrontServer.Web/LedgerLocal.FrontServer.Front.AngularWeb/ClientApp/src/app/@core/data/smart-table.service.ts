@@ -9,13 +9,13 @@ export class SmartTableService {
 
   getAvailableCrypto() {
     return this.http.get<any>(
-      'http://www.ledgerlocal.com:5544/v1/participate/cryptoPaymentAvailable'
+      'https://www.ledgerlocal.com:5544/v1/participate/cryptoPaymentAvailable'
     );
   }
 
   initiateTrade(inputCoin: string, amount: Number) {
     return this.http.get<any>(
-      'http://www.ledgerlocal.com:5544/v1/participate/initiateTrade?inputCoin=' + inputCoin + '&amount=' + amount
+      'https://www.ledgerlocal.com:5544/v1/participate/initiateTrade?inputCoin=' + inputCoin + '&amount=' + amount
     );
   }
 
