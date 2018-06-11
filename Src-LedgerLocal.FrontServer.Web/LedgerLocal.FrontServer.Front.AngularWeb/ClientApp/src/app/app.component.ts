@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef, AfterViewInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { ContentService } from './@core/data/contentservice';
+import { OnlineService } from './@core/data/onlineservice';
 import { Router, NavigationStart } from '@angular/router';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     public oidcSecurityService: OidcSecurityService,
     private analytics: AnalyticsService,
     private cntService: ContentService,
+    private onlineService: OnlineService,
     private router: Router) {
     
     this.toastr.setRootViewContainerRef(vRef);
@@ -98,6 +100,33 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   ngAfterViewInit() {
+
+    var signalR = require("../../scripts/signalr.js");
+
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("/rtllc")
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+
+    connection.on('online', data => {
+
+      this.onlineService.sendMessage(Number(data));
+      this.toastr.info("Online => " + data);
+
+    });
+
+    //connection.on('blockNumberRefresh', data => {
+    //  //InvokeAsync("blockNumberRefresh",  new { HeadBlockNumber = fO1.HeadBlockNumber, HeadBlockId = idLadtBlock, CurrentWitness = fO1.CurrentWitness, LastActiveMobile = numLastMobileUSer });
+    //  this.lcBlockService.sendMessage(Number(data.headBlockNumber), data.headBlockId, data.currentWitness, Number(data.lastActiveMobile));
+    //});
+
+    //connection.on('lycStatRefresh', data => {
+
+    //  this.lcLsService.sendMessage(Number(data.totalUsers), Number(data.allPoints), data.lastCoinLedgerList);
+
+    //});
+
+    connection.start();
 
   }
 

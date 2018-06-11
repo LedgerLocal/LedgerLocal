@@ -98,6 +98,8 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
                 options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
             });
 
+            services.AddSignalR();
+
             services.AddSwaggerGen();
 
             services.ConfigureSwaggerGen(options =>
@@ -154,8 +156,16 @@ namespace LedgerLocal.FrontServer.Front.AngularWeb
 
             app.UseCors("SiteCorsPolicy");
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<LedgerLocalHub>("/rtllc");
+            });
+
             app.UseMvc(routes =>
             {
+                routes.MapRoute("siglyccurs", "rtllc/*");
+                routes.MapRoute("siglyc", "rtllc");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
